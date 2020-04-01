@@ -13,22 +13,43 @@
   </div>
 
   <div class="form">
-    <form class="form__post_request" action="">
+    <form class="form__textrequest" action="">
 
-      <input type="radio" name="type" value="universalis">Universalis &nbsp;&nbsp;
+      <!-- <input type="radio" name="type" value="universalis">Universalis &nbsp;&nbsp;
       <input type="radio" name="type" value="universalis">Série de chiffres &nbsp;&nbsp;
-      <input type="radio" name="type" value="universalis">Série de symboles &nbsp;&nbsp;
+      <input type="radio" name="type" value="universalis">Série de symboles &nbsp;&nbsp; -->
+
+      <div class="form__container-btns">
+        <button class="form__button" data-type="universalis">Universalis</button>
+        <button class="form__button" data-type="number">Chiffres</button>
+        <button class="form__button" data-type="symbol">Symboles</button>
+      </div>
       <br>
-      <label for="word">Saisir un mot : </label>
-      <input class="form__input-word" type="text" name="word" class="word">
-      <button type="submit">Valider</button>
+      <div class="form__container-input">
+        <input placeholder="Saisir un mot" class="form__input-word" type="text" name="word" class="word">
+        <button type="submit">Valider</button>
+      </div>
     </form>
   </div>
 
   <div class="text">
     <div class="text__text">
+      <!-- Loader -->
+      <div class="loader center-x" style="width: 200px; height: 200px;">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(255, 255, 255, 0.0) none repeat scroll 0% 0%; display: block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <g transform="translate(50,50)">
+          <g transform="scale(0.7)">
+          <circle cx="0" cy="0" r="50" fill="#084f5a"></circle>
+          <circle cx="0" cy="-28" r="15" fill="#38737f">
+            <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 0 0;360 0 0"></animateTransform>
+          </circle>
+          </g>
+        </g>
+        </svg>
+      </div>
+      <!-- Loader End -->
 
-    </div>
+
   </div>
 
 </body>

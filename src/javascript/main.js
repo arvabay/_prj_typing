@@ -16,6 +16,41 @@ fetcher.fetch('local', 'symbol').then( (res) => {
 });
 
 
+// Elements 
+const form__submitbtn = document.querySelector('.form__container-input button')
+const form__input = document.querySelector('.form__container-input input')
+const form = document.querySelector('.form__textrequest');
+const form__btns = document.querySelectorAll('.form__button'); 
+const loader = document.querySelector('.loader'); 
+
+console.warn(form__submitbtn);
+console.warn(form__input);
+console.warn(form);
+
+// form__btns.addEventListener('click', () => {
+  // });
+  
+form__btns.forEach(btn => btn.addEventListener('click', (e) => {
+  e.preventDefault();
+  const btn = event.target || event.srcElement;
+  const type = btn.dataset.type;
+  if (type === 'universalis') {
+    form__submitbtn.style.display = 'inline';
+    form__input.style.display = 'inline';
+  } else {
+    form__submitbtn.style.display = 'none';
+    form__input.style.display = 'none';
+  }
+}));
+
+
+
+
+
+
+
+
+
 
 const sendWord = function (word) {
   // Pas forcément besoin de crawler, finalement..
@@ -45,8 +80,6 @@ const sendWord = function (word) {
   }).catch(e => {
     console.log('error : ' + e);
   });
-
-
 }
 
 const wordEmitted = function(event) {
@@ -57,7 +90,6 @@ const wordEmitted = function(event) {
   // Faire les vérifications d'usage sur la variable word
   sendWord(word);
 }
-
 
 const elm_form = document.querySelector('.form__post_request');
 const elm_input = document.querySelector('.form__input-word');
