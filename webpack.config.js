@@ -13,6 +13,21 @@ module.exports = {
     // filename: 'bundle.js'
     filename: '[name].js',
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      chunks: ['main'],
+      template: './src/index.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'test.html',
+      chunks: ['test']
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css"
+    }),
+    // new CleanWebpackPlugin()
+  ],
   module: {
     rules: [
       {
@@ -68,21 +83,6 @@ module.exports = {
         ]
       }
     ],
-  },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      chunks: ['main'],
-      template: './src/index.html'
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'test.html',
-      chunks: ['test']
-    }),
-    new MiniCssExtractPlugin({
-      filename: "[name].css"
-    }),
-  ]
+  }
 
 }

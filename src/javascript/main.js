@@ -2,11 +2,19 @@
 // fetcher();
 
 import '../css/main.css';
+import { Fetcher } from './modules/Fetcher';
+const fetcher = new Fetcher();
 
-const url_server = "http://localhost:3000";
-const suburl_submit_word = "/submit-word";
 
-const url_fetch = 'https://www.universalis.fr/encyclopedie/';
+
+// TESTS
+fetcher.fetch('local', 'number').then( (res) => {
+  console.log(res);
+});
+fetcher.fetch('local', 'symbol').then( (res) => {
+  console.log(res);
+});
+
 
 
 const sendWord = function (word) {
@@ -21,7 +29,7 @@ const sendWord = function (word) {
       console.log('Erreur lors de la requête');
     }
   }).then( (html) => {
-    console.log(html);
+    // console.log(html);
     var parser = new DOMParser();
     var doc = parser.parseFromString(html, "text/html");
     // console.log(doc);
@@ -53,6 +61,6 @@ const wordEmitted = function(event) {
 
 const elm_form = document.querySelector('.form__post_request');
 const elm_input = document.querySelector('.form__input-word');
-const elm_text = document.querySelector('.text');
+const elm_text = document.querySelector('.text__text');
 const elm_flash = document.querySelector('.flash');
 elm_form.addEventListener('submit', wordEmitted);
