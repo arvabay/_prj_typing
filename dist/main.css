@@ -1,0 +1,35 @@
+
+@font-face {
+  font-family: 'palanquin-medium';
+  src:  url(fonts/5d861f8a373388b280cce89d24fcf4db.woff) format('woff'),
+        url(fonts/e85c37266ad23c4e39c67a90e3b71da1.woff2) format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+body {
+  background: #3c3c3c;
+  color: #cbb849;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'palanquin-medium';
+  background: linear-gradient(#1d1d1d, #2c2c2c);
+  /* hyphens: auto; */
+}
+
+.flash {
+  background: #ff7373;
+  border: 1px solid #e62020;
+  color: #a81313;
+  border-radius: 10px;
+  padding: 8px 20px;
+  display: none;
+  margin: 30px 50px;
+}
+
+.test {
+  background-image: url(images/410252726a95ea87cff1f909d1c04b92.jpg);
+  background-position: center center;
+  height: 100px;
+  width: 400px;
+}
