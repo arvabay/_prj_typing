@@ -1,30 +1,29 @@
 
-import urls from '../../assets/urls.json';
 import { SuitGenerator } from './SuitGenerator';
+import { OnlineSeeker } from './OnlineSeeker';
 
 class Fetcher {
 
   constructor() {
     this.generator = new SuitGenerator();
-    this.urls = urls;
-    this.method = null;
-    this.word = null;
-    this.fetch_type = null;
   }
 
-  getWord() {
-    return this.word;
-  }
-
-  getUrls() {
-    return this.urls;
-  }
-
-  async fetch(method, type) {
+  async fetch(method, type, word = null) {
     return new Promise( (resolve, reject) => {
+      // DISTANT CALL
       if (method === 'distant') {
-
-      } else if (method === 'local') {
+        if (!word) {
+          reject("Aucun mot passé.");
+        }
+        const seeker = new OnlineSeeker(word, type);
+        seeker.seek().then( (res) => {
+          resolve(res);
+        }).catch( (e) => {
+          reject(e);
+        })
+      }
+      // LOCALE GENERATION
+      else if (method === 'local') {
         this.generate(type).then( generated => {
           resolve(generated);
         });
@@ -44,8 +43,6 @@ class Fetcher {
     });
   }
 
-
 }
-
 
 export { Fetcher };

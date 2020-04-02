@@ -1,98 +1,76 @@
-// import * as fetcher from './fetch.js';
-// fetcher();
 
 import '../css/main.css';
 import { Fetcher } from './modules/Fetcher';
+
 const fetcher = new Fetcher();
-
-
-
-// TESTS
-fetcher.fetch('local', 'number').then( (res) => {
-  console.log(res);
-});
-fetcher.fetch('local', 'symbol').then( (res) => {
-  console.log(res);
-});
-
+let site = null;
 
 // Elements 
 const form__submitbtn = document.querySelector('.form__container-input button')
-const form__input = document.querySelector('.form__container-input input')
+const form__input = document.querySelector('.form__input-word')
 const form = document.querySelector('.form__textrequest');
 const form__btns = document.querySelectorAll('.form__button'); 
+const elm_text = document.querySelector('.text__textandbutton');
+const elm_flash = document.querySelector('.flash');
 const loader = document.querySelector('.loader'); 
 
-console.warn(form__submitbtn);
-console.warn(form__input);
-console.warn(form);
-
-// form__btns.addEventListener('click', () => {
-  // });
   
 form__btns.forEach(btn => btn.addEventListener('click', (e) => {
+  flashHide();
   e.preventDefault();
   const btn = event.target || event.srcElement;
   const type = btn.dataset.type;
-  if (type === 'universalis') {
+  if (type === 'online') {
+    site = btn.dataset.site;
+    // Input display for Online text fetch
     form__submitbtn.style.display = 'inline';
     form__input.style.display = 'inline';
+    setPreviewText();
   } else {
+    // locale generation
     form__submitbtn.style.display = 'none';
     form__input.style.display = 'none';
+    fetcher.fetch('local', type).then( (res) => {
+      console.log(res);
+      setPreviewText();
+      setPreviewText(res);
+    });
   }
 }));
 
+const setPreviewText = function(text = null) { 
+  if (!text) { elm_text.innerHTML = '' }
+  else {
+    const button_launch = "<a class='form__buttonlaunch'>Démarrer</a>";
+    elm_text.innerHTML = button_launch + "<p class='text__text'>" + text + "</p>";
+  }
+}
 
+const flashError = function(message) {
+  elm_flash.innerHTML = message;
+  elm_flash.style.display = "block";    
+}
 
+const flashHide = function() {
+  elm_flash.style.display = "none";
+}
 
-
-
-
-
-
-
-const sendWord = function (word) {
-  // Pas forcément besoin de crawler, finalement..
-  // fetch(url_server + suburl_submit_word);
-
-  fetch(url_fetch + word + '/').then( response => {
-    // console.log(response.headers.get('status'));
-    if (response.ok) {
-      return response.text();
-    } else {
-      console.log('Erreur lors de la requête');
-    }
-  }).then( (html) => {
-    // console.log(html);
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(html, "text/html");
-    // console.log(doc);
-    const body = doc.getElementsByTagName('body');
-    const corps = doc.getElementById('corps-prospect');
-    if (corps) {
-      const ps = corps.querySelector('p');
-      elm_text.innerHTML = ps.innerHTML;
-    } else {
-      elm_flash.innerHTML = "Aucun article trouvé";
-      elm_flash.style.display = "block";
-    }
-  }).catch(e => {
-    console.log('error : ' + e);
+// Online text fetch
+const wordEmitted = function(event) {
+  if (!site) {
+    flashError("Aucun site n'est actuellement sélectionné pour la recherche");
+  }
+  flashHide();
+  event.preventDefault();
+  const word = form__input.value;
+  // Faire les vérifications d'usage sur la variable word
+  // sendWord(word);
+  fetcher.fetch('distant', site, word).then( (res) => {
+    setPreviewText();
+    setPreviewText(res);    
+  }).catch( (e) => {
+    flashError(e);
   });
 }
 
-const wordEmitted = function(event) {
-  elm_text.innerHTML = '';
-  elm_flash.style.display = "none";
-  event.preventDefault();
-  const word = elm_input.value;
-  // Faire les vérifications d'usage sur la variable word
-  sendWord(word);
-}
-
-const elm_form = document.querySelector('.form__post_request');
-const elm_input = document.querySelector('.form__input-word');
-const elm_text = document.querySelector('.text__text');
-const elm_flash = document.querySelector('.flash');
-elm_form.addEventListener('submit', wordEmitted);
+form.addEventListener('submit', wordEmitted);

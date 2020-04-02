@@ -22,7 +22,7 @@ body {
   color: #cbb849;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-family: 'palanquin-medium';
-  background: linear-gradient(#1d1d1d, #2c2c2c);
+  background: linear-gradient(#131220, #2c2c2c);
   min-height: 100vh;
   padding-top: 40px;
   /* hyphens: auto; */
@@ -62,6 +62,22 @@ body {
 .form__container-btns, .form__container-input {
   display: flex;
   justify-content: center;
+}
+
+.form__buttonlaunch {
+  display: block;
+  width: 100%;
+  background: rgb(40, 109, 133);
+  background: linear-gradient(rgb(40, 109, 133), rgb(19, 74, 105));
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  box-shadow: 0 0 40px rgba(0,0,0, 0.5);
+  padding-top: 3px;
+  padding-bottom: 4px;
 }
 
 /* .test {
