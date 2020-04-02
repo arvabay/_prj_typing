@@ -41,10 +41,24 @@ form__btns.forEach(btn => btn.addEventListener('click', (e) => {
 const setPreviewText = function(text = null) { 
   if (!text) { elm_text.innerHTML = '' }
   else {
-    const button_launch = "<a class='form__buttonlaunch'>Démarrer</a>";
-    elm_text.innerHTML = button_launch + "<p class='text__text'>" + text + "</p>";
+    window.localStorage.setItem('text_to_type', text);
+    const xxx = "<a href='typing.html' class='form__buttonlaunch'>Démarrer</a>";
+    // const button_launch = "<a class='form__buttonlaunch'>Démarrer</a>";
+    elm_text.innerHTML = xxx + "<p class='text__text'>" + text + "</p>";
   }
 }
+
+// A SUPPRIMER
+//--------------
+// const setPreviewText = function(text = null) { 
+//   if (!text) { elm_text.innerHTML = '' }
+//   else {
+//     const xxx = "<form method='POST' action='typing.html'>"+
+//       "<input style='visibility: hidden' type='text' name='text' id='text' value='"+text+"'>"+
+//       "<button type='submit' class='form__buttonlaunch'>Démarrer</button></form>";
+//     elm_text.innerHTML = xxx + "<p class='text__text'>" + text + "</p>";
+//   }
+// }
 
 const flashError = function(message) {
   elm_flash.innerHTML = message;

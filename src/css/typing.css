@@ -1,0 +1,25 @@
+
+.typing__container {
+  background-color: rgba(65, 105, 225, 0.246);
+  display: inline-block;
+  position: relative;
+  left: 10%;
+  /* left: 50%;
+  transform: translateX(-50%); */
+}
+
+.typing__text {
+  font-size: 2rem;
+  display: inline;
+  position: relative;
+}
+
+.typing__cursor {
+  display: inline-block;
+  height: 2em;
+  width: 25px;
+  background: rgba(95, 212, 255, 0.315);
+  background: rgb(30, 102, 128);
+  font-size: 2rem;
+  text-align: right;
+}

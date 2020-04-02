@@ -68,7 +68,7 @@ body {
   display: block;
   width: 100%;
   background: rgb(40, 109, 133);
-  background: linear-gradient(rgb(40, 109, 133), rgb(19, 74, 105));
+  background: linear-gradient(rgb(38, 104, 126), rgb(19, 74, 105));
   color: white;
   cursor: pointer;
   border-radius: 5px;
@@ -78,6 +78,11 @@ body {
   box-shadow: 0 0 40px rgba(0,0,0, 0.5);
   padding-top: 3px;
   padding-bottom: 4px;
+  text-decoration: none;
+}
+
+.form__buttonlaunch:hover {
+  background: linear-gradient(rgb(38, 104, 126), rgb(14, 54, 77));
 }
 
 /* .test {
