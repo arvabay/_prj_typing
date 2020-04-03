@@ -3,7 +3,10 @@
   background-color: rgba(65, 105, 225, 0.246);
   display: inline-block;
   position: relative;
-  left: 10%;
+  left: 25%;
+  width: 50%;
+  height: 4rem;
+  overflow: hidden;
   /* left: 50%;
   transform: translateX(-50%); */
 }
@@ -18,8 +21,29 @@
   display: inline-block;
   height: 2em;
   width: 25px;
-  background: rgba(95, 212, 255, 0.315);
+  /* background: rgba(95, 212, 255, 0.315); */
   background: rgb(30, 102, 128);
+  /* background: rgb(163, 26, 33); */
   font-size: 2rem;
   text-align: right;
+}
+
+.text-all {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.success {
+  display: none;
+  text-align: center;
+  font-size: 4rem;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  color: green;
+  border: 2px solid green;
+  border-radius: 10px;
+  margin-bottom: 90px;
+  padding-bottom: 10px;
 }
