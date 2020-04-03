@@ -13,8 +13,10 @@ const form__btns = document.querySelectorAll('.form__button');
 const elm_text = document.querySelector('.text__textandbutton');
 const elm_flash = document.querySelector('.flash');
 const loader = document.querySelector('.loader'); 
+const CHANGE_LENGTH = 60;
+let current_text = '';
+let cut_position = null;
 
-  
 form__btns.forEach(btn => btn.addEventListener('click', (e) => {
   flashHide();
   e.preventDefault();
@@ -38,27 +40,91 @@ form__btns.forEach(btn => btn.addEventListener('click', (e) => {
   }
 }));
 
+const change_text_length = function(elm_minus, elm_plus, target, direction, length) {
+  // prevent click if buttons isn't enabled
+  if (!direction && !elm_minus.classList.contains('enabled') ||
+        direction && !elm_plus.classList.contains('enabled') 
+  ) {
+    return;
+  }
+  // minus click
+  if (direction === false) {
+    cut_position = cut_position - length;
+    if (cut_position <= 0) {
+      cut_position = 0;
+      elm_minus.classList.remove('enabled');
+    }
+  }
+  // plus click
+  else {
+    cut_position = cut_position + length;
+    if (cut_position >= current_text.length) {
+      cut_position = current_text.length;
+      elm_plus.classList.remove('enabled');
+    }
+  }
+  target.innerHTML = current_text.substring(
+    0, cut_position);
+  
+  // enabling / disabling buttons
+  if (cut_position > 0) {
+    !elm_minus.classList.contains('enabled') ? elm_minus.classList.add('enabled') : '';
+  }
+  if (cut_position < current_text.length) {
+    !elm_plus.classList.contains('enabled') ? elm_plus.classList.add('enabled') : '';
+  }
+}
+
 const setPreviewText = function(text = null) { 
   if (!text) { elm_text.innerHTML = '' }
   else {
     window.localStorage.setItem('text_to_type', text);
-    const xxx = "<a href='typing.html' class='form__buttonlaunch'>Démarrer</a>";
-    // const button_launch = "<a class='form__buttonlaunch'>Démarrer</a>";
-    elm_text.innerHTML = xxx + "<p class='text__text'>" + text + "</p>";
+    //const button = "<a href='typing.html' class='form__buttonlaunch'>Démarrer</a>";
+    const button = document.createElement('a');
+    button.classList.add('form__buttonlaunch');
+    button.innerText = 'Démarrer';
+    button.addEventListener('click', () => {
+      // delete last char if it's a space
+      let text_transmitted = '';
+      if (p.innerText.charCodeAt(p.innerText.length) === 31 || p.innerText.charCodeAt(p.innerText.length) === 32) {
+        text_transmitted = p.innerText.substring(0, p.innerText.length - 1);
+      } else {
+        text_transmitted = p.innerText;
+      }
+      window.localStorage.setItem('text_to_type', text_transmitted);
+      window.location.href = 'typing.html';
+    })
+    // button.href = 'typing.html';
+    const container = document.createElement('div');
+    container.classList.add('text__container');
+    const buttons = document.createElement('div');
+    buttons.classList.add('text__buttons');
+    const button_less = document.createElement('a');
+    button_less.innerText = "-";
+    button_less.classList.add('text__button', 'enabled');
+    const button_plus = document.createElement('a');
+    button_plus.innerText = "+";
+    button_plus.classList.add('text__button');
+    buttons.appendChild(button_less);
+    buttons.appendChild(button_plus);
+    const p = document.createElement('p');
+    button_less.addEventListener('click', () => {
+      change_text_length(button_less, button_plus, p, false, CHANGE_LENGTH);
+    });
+    button_plus.addEventListener('click', () => {
+      change_text_length(button_less, button_plus, p, true, CHANGE_LENGTH);
+    });
+    container.appendChild(buttons);
+    container.appendChild(p);
+    //---------------------------
+    p.classList.add('text__text');
+    p.innerHTML = text;
+    current_text = p.innerText;
+    cut_position = current_text.length;
+    elm_text.appendChild(button);
+    elm_text.appendChild(container);
   }
 }
-
-// A SUPPRIMER
-//--------------
-// const setPreviewText = function(text = null) { 
-//   if (!text) { elm_text.innerHTML = '' }
-//   else {
-//     const xxx = "<form method='POST' action='typing.html'>"+
-//       "<input style='visibility: hidden' type='text' name='text' id='text' value='"+text+"'>"+
-//       "<button type='submit' class='form__buttonlaunch'>Démarrer</button></form>";
-//     elm_text.innerHTML = xxx + "<p class='text__text'>" + text + "</p>";
-//   }
-// }
 
 const flashError = function(message) {
   elm_flash.innerHTML = message;
