@@ -65,6 +65,7 @@ body {
 }
 
 .form__buttonlaunch {
+  user-select: none;
   display: block;
   width: 100%;
   background: rgb(40, 109, 133);
@@ -83,6 +84,11 @@ body {
 
 .form__buttonlaunch:hover {
   background: linear-gradient(rgb(38, 104, 126), rgb(14, 54, 77));
+}
+
+.form__buttonlaunch.disabled {
+  background: linear-gradient(rgb(128, 128, 128), rgb(110, 110, 110));
+  color: rgb(83, 83, 83);
 }
 
 .text__container {
