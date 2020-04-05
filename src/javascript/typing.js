@@ -12,13 +12,15 @@ const elm_text_all = document.querySelector('.text-all');
 const elm_text_to_type = document.querySelector('.typing__text');
 const elm_cursor = document.querySelector('.typing__cursor');
 const elm_success = document.querySelector('.success');
+const elm_typing_container = document.querySelector('.typing__container');
 const text_to_type_lgth = 80;
 let nb_chars_valid = 0;
 let char_to_type = null;
 let hit_state = true;
+let cursor_position = 0;
 const CURSOR_COLOR = {
-  true: "rgb(30, 102, 128)",
-  false: "rgb(163, 26, 33)"
+  true: getComputedStyle(document.documentElement).getPropertyValue('--color-main'),
+  false: getComputedStyle(document.documentElement).getPropertyValue('--color-error')
 }
 
 
@@ -63,19 +65,40 @@ document.onkeypress = function (e) {
   e.preventDefault();
   e = e || window.event;
   // console.log(String.fromCharCode(e.keyCode));
+  // KEY PRESSED CORRECT  
   if(char_to_type === String.fromCharCode(e.keyCode)) {
+    cursor_position++;
     hit_state = true;
     elm_cursor.style.background = CURSOR_COLOR.true;
+    elm_typing_container.style.border = "4px solid var(--color-main)";
+    elm_text_to_type.style.color = "var(--color-main)";
     nb_chars_valid++;
     console.log('offset : ' + nb_chars_valid);
     setTextToType(nb_chars_valid);
+  // KEY PRESSED INCORRECT
   } else {
     console.log('WRONG');
+    colorizeText(cursor_position);
     hit_state = false;
     elm_cursor.style.background = CURSOR_COLOR.false;
+    elm_typing_container.style.border = "4px solid var(--color-error)";
+    elm_text_to_type.style.color = "var(--color-error)";
     if (char_to_type === ' ') {
       elm_cursor.style.color = CURSOR_COLOR.false;
     }
   }
 };
 
+const colorizeText = function(position) {
+  let text = elm_text_all.innerText;
+  let char = text.substring(position, position+1);
+  console.log(char);
+  char = "<span class='color-error'>" + char + "</span>";
+  text = text.substring(0, position) +
+          char +
+          text.substring(position+1, text.length);
+  elm_text_all.innerHTML = text;
+  
+  
+  
+}

@@ -1,5 +1,6 @@
 
 import '../css/main.css';
+import '../css/index.css';
 import { Fetcher } from './modules/Fetcher';
 import { TextPreviewer } from './modules/TextPreviewer';
 
@@ -38,7 +39,6 @@ form__btns.forEach(btn => btn.addEventListener('click', (e) => {
     form__submitbtn.style.display = 'none';
     form__input.style.display = 'none';
     fetcher.fetch('local', type).then( (res) => {
-      console.log(res);
       previewer.setPreviewText();
       previewer.setPreviewText(res);
     });
