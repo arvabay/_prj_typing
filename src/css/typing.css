@@ -33,12 +33,6 @@
   /* transition: background 0.05s; */
 }
 
-.text-all {
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .success {
   display: none;
   text-align: center;
@@ -51,4 +45,32 @@
   border-radius: 10px;
   margin-bottom: 90px;
   padding-bottom: 10px;
+}
+
+.text-all {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.textall {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.textall__prev {
+}
+
+.textall__prev-cursorsuccess {
+  border-right: 1px solid white;
+}
+
+.textall__prev-cursorerror {
+  /* background: linear-gradient(to right, red 10px,  rgba(0,0,0, 0.0) 100%); */
+  background-image: -webkit-linear-gradient(right, white 10px, rgba(0,0,0, 0.0) 1px, rgba(0,0,0, 0.0) 100%);
+}
+
+
+.textall__current {
 }
