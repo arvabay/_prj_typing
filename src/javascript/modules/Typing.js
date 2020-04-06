@@ -1,16 +1,18 @@
 
+
 class TypingMain {
 
-  constructor(elm_text_to_type, elm_cursor, elm_typing_container, text, CURSOR_COLOR, TEXT_TO_TYPE_LGTH) {
+
+  constructor(elm_text_to_type, elm_cursor, elm_typing_container, CURSOR_COLOR) {
     this.elm_text_to_type = elm_text_to_type;
     this.elm_cursor = elm_cursor;
     this.elm_typing_container = elm_typing_container;
-    this.text = text;
     this.CURSOR_COLOR = CURSOR_COLOR;
-    this.TEXT_TO_TYPE_LGTH = TEXT_TO_TYPE_LGTH;
   }
 
-  setText(offset, char_to_type) {
+
+  typingSuccess(text) {
+    let char_to_type = text.substring(0,1); 
     this.elm_cursor.style.background = this.CURSOR_COLOR.true;
     this.elm_typing_container.style.border = "4px solid var(--color-main)";
     this.elm_text_to_type.style.color = "var(--color-main)";
@@ -29,21 +31,21 @@ class TypingMain {
       this.elm_cursor.style.color= "white";
       this.elm_cursor.innerText = char_to_type;
     }
-    // console.log('char to type : ' + char_to_type + ' (code : ' + char_to_type.charCodeAt(0) + ')');
-    this.elm_text_to_type.innerHTML = this.text.substring(offset + 1, offset + this.TEXT_TO_TYPE_LGTH);
+    this.elm_text_to_type.innerHTML = text.substring(1, text.length);
   }
 
-  errorTyping(char_to_type) {
+
+  typingError(char_to_type) {
     this.elm_cursor.style.background = this.CURSOR_COLOR.false;
     this.elm_typing_container.style.border = "4px solid var(--color-error)";
     this.elm_text_to_type.style.color = "var(--color-error)";
-    // Need to render fake character invisible
+    // Need to render fake character invisible again (because background color changed)
     if (char_to_type === ' ') {
       this.elm_cursor.style.color = this.CURSOR_COLOR.false;
     }
   }
 
-}
 
+}
 
 export { TypingMain };

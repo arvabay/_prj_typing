@@ -28,18 +28,17 @@ form__btns.forEach(btn => btn.addEventListener('click', (e) => {
   e.preventDefault();
   const btn = event.target || event.srcElement;
   const type = btn.dataset.type;
+  previewer.setPreviewText();
   if (type === 'online') {
     site = btn.dataset.site;
     // Input display for Online text fetch
     form__submitbtn.style.display = 'inline';
     form__input.style.display = 'inline';
-    previewer.setPreviewText();
   } else {
     // locale generation
     form__submitbtn.style.display = 'none';
     form__input.style.display = 'none';
     fetcher.fetch('local', type).then( (res) => {
-      previewer.setPreviewText();
       previewer.setPreviewText(res);
     });
   }
