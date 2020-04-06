@@ -1,7 +1,7 @@
 
 import '../css/main.css';
 import '../css/typing.css';
-import { TypingMain } from './modules/TypingMain';
+import { TypingMain } from './modules/Typing';
 
 let text_all = window.localStorage.getItem('text_to_type');
 const regexp = /(«|»|–|—|œ|’)/g;
@@ -23,32 +23,12 @@ const CURSOR_COLOR = {
   true: getComputedStyle(document.documentElement).getPropertyValue('--color-main'),
   false: getComputedStyle(document.documentElement).getPropertyValue('--color-error')
 }
-const typing_main = new TypingMain();
 
 
 //////////////////////////////////////////
 // SHORT TEXT MECANISM (TOP OF THE PAGE)
 //////////////////////////////////////////
-const setTextToType = function(offset) {
-  char_to_type = text_all.substring(offset, offset + 1);
-  // Security, we don't want to block mechanism in case of unexpected character
-  if (isNaN(char_to_type.charCodeAt(0)) || char_to_type.charCodeAt(0) === 160 ) {
-    console.warn('nan encountered');
-    char_to_type = ' ';
-  }
-  // Need to keep the right dimension of div cursor.
-  // Let's fill it with an invisible char
-  if (char_to_type === ' ') {
-    elm_cursor.style.color = CURSOR_COLOR.true
-    elm_cursor.innerText = '~';
-  }
-  else {
-    elm_cursor.style.color= "white";
-    elm_cursor.innerText = char_to_type;
-  }
-  console.log('char to type : ' + char_to_type + ' (code : ' + char_to_type.charCodeAt(0) + ')');
-  elm_text_to_type.innerHTML = text_all.substring(offset + 1, offset + TEXT_TO_TYPE_LGTH);
-}
+
 //////////////////////////////////////////
 
 
@@ -83,23 +63,20 @@ const moveCharInGlobalText = function(elm_origin, elm_target) {
 const keyPressed = function(e) {
   e.preventDefault();
   e = e || window.event;
+  // console.log(String.fromCharCode(e.keyCode));
+  const char_to_type = text_all.substring(nb_chars_valid, nb_chars_valid + 1);
+  // console.log(char_to_type);
   // KEY PRESSED CORRECT  
   if(char_to_type === String.fromCharCode(e.keyCode)) {
     colorizeCharInGlobalText(true);
-    elm_cursor.style.background = CURSOR_COLOR.true;
-    elm_typing_container.style.border = "4px solid var(--color-main)";
-    elm_text_to_type.style.color = "var(--color-main)";
     nb_chars_valid++;
-    setTextToType(nb_chars_valid);
+    const next_char = text_all.substring(nb_chars_valid, nb_chars_valid + 1);
+    typing_main.setText(nb_chars_valid, next_char);
+    // setTextToType(nb_chars_valid);
   // KEY PRESSED INCORRECT
   } else {
     colorizeCharInGlobalText(false);
-    elm_cursor.style.background = CURSOR_COLOR.false;
-    elm_typing_container.style.border = "4px solid var(--color-error)";
-    elm_text_to_type.style.color = "var(--color-error)";
-    if (char_to_type === ' ') {
-      elm_cursor.style.color = CURSOR_COLOR.false;
-    }
+    typing_main.errorTyping(char_to_type);
   }
   // Text typing is over.
   if (nb_chars_valid >= text_all.length) {
@@ -117,7 +94,15 @@ if (text.substring(text.length-1, text.length) === " ") {
   elm_textall_curr.innerText = text.substring(0, text.length - 1);
 }
 text_all = elm_textall_curr.innerText;
-setTextToType(0);
+const typing_main = new TypingMain( elm_text_to_type,
+                                    elm_cursor,
+                                    elm_typing_container,
+                                    text_all,
+                                    CURSOR_COLOR,
+                                    TEXT_TO_TYPE_LGTH);
+// typing_main.setText(0);
+typing_main.setText(0, text_all.substring(0,1));
+// setTextToType(0);
 document.onkeypress = function(e) { 
   if (elm_textall_curr.innerText.length > 0) {
     keyPressed(e);
