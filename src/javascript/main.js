@@ -1,8 +1,8 @@
 
 import '../css/main.css';
 import '../css/index.css';
-import { Fetcher } from './modules/Fetcher';
-import { TextPreviewer } from './modules/TextPreviewer';
+import { Fetcher } from './classes/Fetcher';
+import { TextPreviewer } from './classes/TextPreviewer';
 
 
 // Constants (DOM Elements) 

@@ -1,8 +1,8 @@
 
 import '../css/main.css';
 import '../css/typing.css';
-import { TypingMain } from './modules/Typing';
-import { TypingOverview } from './modules/TypingOverview';
+import { TypingMain } from './classes/Typing';
+import { TypingOverview } from './classes/TypingOverview';
 
 
 // VARIABLES (DOM elements)
@@ -36,13 +36,13 @@ const keyPressed = function(e) {
   const char_to_type = text.substring(nb_chars_valid, nb_chars_valid + 1);
   // KEY PRESSED CORRECT  
   if(char_to_type === String.fromCharCode(e.keyCode)) {
-    typing_overview.colorize(true);
+    typing_overview.manageChar(true);
     const next_text = text.substring(nb_chars_valid + 1, nb_chars_valid + TEXT_TO_TYPE_LGTH);
     typing_main.typingSuccess(next_text);
     nb_chars_valid++;
   // KEY PRESSED INCORRECT
   } else {
-    typing_overview.colorize(false);
+    typing_overview.manageChar(false);
     typing_main.typingError(char_to_type);
   }
   // Is typing over ?
