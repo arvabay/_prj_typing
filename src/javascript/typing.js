@@ -1,6 +1,7 @@
 
 import '../css/main.css';
 import '../css/typing.css';
+import { TypingMain } from './modules/TypingMain';
 
 let text_all = window.localStorage.getItem('text_to_type');
 const regexp = /(«|»|–|—|œ|’)/g;
@@ -22,6 +23,7 @@ const CURSOR_COLOR = {
   true: getComputedStyle(document.documentElement).getPropertyValue('--color-main'),
   false: getComputedStyle(document.documentElement).getPropertyValue('--color-error')
 }
+const typing_main = new TypingMain();
 
 
 //////////////////////////////////////////
