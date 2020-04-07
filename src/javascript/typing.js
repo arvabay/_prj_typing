@@ -24,16 +24,26 @@ const CURSOR_COLOR = {
 
 // TEXT FETCH
 let text = window.localStorage.getItem('text_to_type');
+// basics 'hard to type' chars replacement
 const regexp = /(«|»|–|—|œ|’)/g;
 text = text.replace(regexp, ()=>{return '-'});
 
 
 
+// Debug key pressed
+function debugPress(e, char_to_type) {
+  console.log('char typed : ' + String.fromCharCode(e.keyCode) + ', code : ' + e.keyCode);
+  console.log('char to type : ' + char_to_type + ', code : ' + char_to_type.charCodeAt() );
+}
+
 // When key pressed
 const keyPressed = function(e) {
   e.preventDefault();
   e = e || window.event;
-  const char_to_type = text.substring(nb_chars_valid, nb_chars_valid + 1);
+  let char_to_type = text.substring(nb_chars_valid, nb_chars_valid + 1);
+  // Transforming non-breaking space into breaking space
+  char_to_type = char_to_type.charCodeAt() === 160 ? " " : char_to_type;
+  //debugPress(e, char_to_type);
   // KEY PRESSED CORRECT  
   if(char_to_type === String.fromCharCode(e.keyCode)) {
     typing_overview.manageChar(true);
@@ -51,7 +61,6 @@ const keyPressed = function(e) {
   }
 };
 
-
 // Script beginning
 const typing_main = new TypingMain(elm_text_to_type, elm_cursor, elm_typing_container, CURSOR_COLOR);
 const typing_overview = new TypingOverview(elm_textall_prev, elm_textall_curr, elm_textall_error);
@@ -59,7 +68,6 @@ const typing_overview = new TypingOverview(elm_textall_prev, elm_textall_curr, e
 typing_overview.setCurrentHTML(text);
 text = typing_overview.getCurrentText();
 typing_main.typingSuccess(text);
-
 document.onkeypress = function(e) { 
   if (elm_textall_curr.innerText.length > 0) {
     keyPressed(e);
