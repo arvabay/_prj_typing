@@ -1,63 +1,61 @@
 
-
+/**
+ * 
+ * @classdesc Build DOM representation of text supposed to be typed.
+ * Build following blocks in a given root_element : button start, 
+ * buttons minus / plus (reduce or increase text length), and text
+ */
 class TextPreviewer {
 
-
-
+  /**
+   * 
+   * @param {Element} elm_root - The DOM Element in wich text and buttons will be append
+   * @param {number} CHANGE_LENGTH - The number of chars added / removed at each change of text length 
+   */
   constructor(elm_root, CHANGE_LENGTH) {
     this.elm_root = elm_root;
     this.CHANGE_LENGTH = CHANGE_LENGTH;
-    this.current_text = '';
-    this.cut_position = null;
-    this.elm_minus = null;
-    this.elm_plus = null;
-    this.elm_start = null;
-    this.eml_p = null;
+    this.current_text = ''; // used for text length changes and text dislay
+    this.cut_position = null; // used for text length changes
+    this.elm_minus = document.createElement('a');
+    this.elm_minus.addEventListener('click', () => {
+      this.change_text_length(false, this.CHANGE_LENGTH);
+    });
+    this.elm_plus = document.createElement('a');
+    this.elm_plus.addEventListener('click', () => {
+      this.change_text_length(true, this.CHANGE_LENGTH);
+    });
+    this.elm_start = document.createElement('a');
+    this.elm_start.addEventListener('click', () => { 
+      this.start();
+    });
+    this.elm_p = document.createElement('p');
   }
 
-
+  /**
+   * 
+   * Initialize DOM blocks (representating what is supposed to type) with given text
+   * @param {string} text
+   * @returns {Void} 
+   */
   setPreviewText(text = null) { 
     if (!text) { 
       this.elm_root.innerHTML = '';
       return;
     }
     window.localStorage.setItem('text_to_type', text);
-    this.elm_start = document.createElement('a');
     this.elm_start.classList.add('form__buttonlaunch');
     this.elm_start.innerText = 'Démarrer';
-    this.elm_start.addEventListener('click', () => {
-      if (this.elm_start.classList.contains('disabled')) {
-        return;
-      }
-      // delete last char if it's a space
-      let text_transmitted = '';
-      if (this.elm_p.innerText.charCodeAt(this.elm_p.innerText.length) === 31 || this.elm_p.innerText.charCodeAt(this.elm_p.innerText.length) === 32) {
-        text_transmitted = this.elm_p.innerText.substring(0, this.elm_p.innerText.length - 1);
-      } else {
-        text_transmitted = this.elm_p.innerText;
-      }
-      window.localStorage.setItem('text_to_type', text_transmitted);
-      window.location.href = 'typing.html';
-    })
     const container = document.createElement('div');
     container.classList.add('text__container');
     const buttons = document.createElement('div');
     buttons.classList.add('text__buttons');
-    this.elm_minus = document.createElement('a');
     this.elm_minus.innerText = "-";
     this.elm_minus.classList.add('text__button', 'enabled');
-    this.elm_plus = document.createElement('a');
     this.elm_plus.innerText = "+";
     this.elm_plus.classList.add('text__button');
     buttons.appendChild(this.elm_minus);
     buttons.appendChild(this.elm_plus);
-    this.elm_p = document.createElement('this.elm_p');
-    this.elm_minus.addEventListener('click', () => {
-      this.change_text_length(false, this.CHANGE_LENGTH);
-    });
-    this.elm_plus.addEventListener('click', () => {
-      this.change_text_length(true, this.CHANGE_LENGTH);
-    });
     container.appendChild(buttons);
     container.appendChild(this.elm_p);
     //---------------------------
@@ -69,7 +67,34 @@ class TextPreviewer {
     this.elm_root.appendChild(container);
   }
 
+  /**
+   * 
+   * Result of a click button. Start typing : Delete last char of text if it's a space, set text in local storage for next page transmission, and go to typing URL
+   * @returns {Void}
+   * @private
+   */
+  start() {
+    if (this.elm_start.classList.contains('disabled')) {
+      return;
+    }
+    // delete last char if it's a space
+    let text_transmitted = '';
+    if (this.elm_p.innerText.charCodeAt(this.elm_p.innerText.length) === 31 || this.elm_p.innerText.charCodeAt(this.elm_p.innerText.length) === 32) {
+      text_transmitted = this.elm_p.innerText.substring(0, this.elm_p.innerText.length - 1);
+    } else {
+      text_transmitted = this.elm_p.innerText;
+    }
+    window.localStorage.setItem('text_to_type', text_transmitted);
+    window.location.href = 'typing.html';
+  }
 
+  /**
+   * 
+   * Result of a click button. Reduce / increase text length supposed to by typed. Disable minus / plus buttons if text is at its min / max size. Keep cut position to know where to apply next reduce / increase
+   * @param {boolean} direction 
+   * @returns {Void}
+   * @private
+   */
   change_text_length(direction) {
     // prevent click if buttons isn't enabled
     if (!direction && !this.elm_minus.classList.contains('enabled') ||
