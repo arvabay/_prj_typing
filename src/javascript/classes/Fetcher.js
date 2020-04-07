@@ -1,44 +1,80 @@
 
-import { SuitGenerator } from './SuitGenerator';
-import { OnlineSeeker } from './OnlineSeeker';
+import * as generator from '../modules/suitGenerator';
+import * as seekers from '../modules/fetchers';
 
+/**
+ *  @classdesc Manage specific task in order to return expected text :
+ * - Fetch online article using appropriate fetcher includes in ../modules/fetchers/
+ * - Request suit generation from locale suitGenerator 
+ */
 class Fetcher {
 
   constructor() {
-    this.generator = new SuitGenerator();
   }
 
-  async fetch(method, type, word = null) {
+  /**
+   * 
+   * Returns expected text by analysing type of request
+   * @param {*} name - Name of the seeker (web fetch), or name of suit type (algorithm)
+   * @param {*} word - only for web fetch - Search an article from the word
+   */
+  async fetch(name, word = null) {
     return new Promise( (resolve, reject) => {
       // DISTANT CALL
-      if (method === 'distant') {
-        if (!word) {
+      if (word !== null) {
+        if (word === '') {
           reject("Aucun mot passé.");
         }
-        const seeker = new OnlineSeeker(word, type);
-        seeker.seek().then( (res) => {
-          resolve(res);
+        this.findSeekerFunction(name)
+          .then( (fc) => {
+          return fc(word);
+        }).then( (text) => {
+          resolve(text);
         }).catch( (e) => {
-          reject(e);
-        })
+          reject(`Aucun article trouvé pour le mot <span class='strong'>${word}</span>
+                  sur le site <span class='strong'>${name}</span>`);          
+        });
       }
       // LOCALE GENERATION
-      else if (method === 'local') {
-        this.generate(type).then( generated => {
+      else {
+        this.generate(name).then( generated => {
           resolve(generated);
         });
       }
     });
   }
 
-  async generate(type) {
+  /**
+   * 
+   * Returns appropriate seeker-function from Name among all fetchers specified in ../modules/fetchers/
+   * @private
+   * @param {string} name 
+   */
+  async findSeekerFunction(name) {
     return new Promise( (resolve, reject) => {
-      if (type === 'number') {
-        resolve(this.generator.generateNumbers());
-      } else if (type === 'symbol') {
-        resolve(this.generator.generateSymbols());
+      Object.entries(seekers).forEach(([name, exported]) => {
+        if (name === name) {
+          resolve(exported);
+        }
+      });
+      reject(`Aucune fonction trouvée pour le seeker '${name}'`);
+    });
+  }
+
+  /**
+   * 
+   * Call appropriate function from ../modules/suitGenerator based on suit Name
+   * @private
+   * @param {string} name - 'number' or 'symbol'
+   */
+  async generate(name) {
+    return new Promise( (resolve, reject) => {
+      if (name === 'number') {
+        resolve(generator.generateNumbers());
+      } else if (name === 'symbol') {
+        resolve(generator.generateSymbols());
       } else {
-        reject('type inconnu');
+        reject('name inconnu');
       }
     });
   }

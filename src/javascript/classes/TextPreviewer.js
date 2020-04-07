@@ -1,3 +1,4 @@
+import { addClass, removeClass } from '../modules/helpers'
 
 /**
  * 
@@ -70,8 +71,8 @@ class TextPreviewer {
   /**
    * 
    * Result of a click button. Start typing : Delete last char of text if it's a space, set text in local storage for next page transmission, and go to typing URL
-   * @returns {Void}
    * @private
+   * @returns {Void}
    */
   start() {
     if (this.elm_start.classList.contains('disabled')) {
@@ -96,44 +97,40 @@ class TextPreviewer {
    * @private
    */
   change_text_length(direction) {
-    // prevent click if buttons isn't enabled
+    // prevent clicks if buttons aren't enabled
     if (!direction && !this.elm_minus.classList.contains('enabled') ||
-          direction && !this.elm_plus.classList.contains('enabled') 
-    ) {
-      return;
-    }
-    // minus click
+          direction && !this.elm_plus.classList.contains('enabled') )
+    {return;}
+    // Minus click
     if (direction === false) {
       this.cut_position = this.cut_position - this.CHANGE_LENGTH;
       if (this.cut_position <= 0) {
         this.cut_position = 0;
-        this.elm_minus.classList.remove('enabled');
-        this.elm_start.classList.add('disabled');
+        removeClass(this.elm_minus, 'enabled');
+        addClass(this.elm_start, 'disabled');
       }
     }
-    // plus click
+    // Plus click
     else {
-      if (this.elm_start.classList.contains('disabled')) {
-        this.elm_start.classList.remove('disabled');
-      }
+      removeClass(this.elm_start, 'disabled');
       this.cut_position = this.cut_position + this.CHANGE_LENGTH;
       if (this.cut_position >= this.current_text.length) {
         this.cut_position = this.current_text.length;
         this.elm_plus.classList.remove('enabled');
       }
     }
+    // Text block update
     this.elm_p.innerHTML = this.current_text.substring(
       0, this.cut_position);
-    
-    // enabling / disabling buttons
+  
+    // Enabling / disabling buttons
     if (this.cut_position > 0) {
-      !this.elm_minus.classList.contains('enabled') ? this.elm_minus.classList.add('enabled') : '';
+      addClass(this.elm_minus, 'enabled');
     }
     if (this.cut_position < this.current_text.length) {
-      !this.elm_plus.classList.contains('enabled') ? this.elm_plus.classList.add('enabled') : '';
+      addClass(this.elm_plus, 'enabled');
     }
   }
-  
 
 
 }

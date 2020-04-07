@@ -3,13 +3,14 @@ import '../css/main.css';
 import '../css/index.css';
 import { Fetcher } from './classes/Fetcher';
 import { TextPreviewer } from './classes/TextPreviewer';
+import * as fetchers from './modules/fetchers'
 
 
 // Constants (DOM Elements) 
+const form__buttons = document.querySelector('.form__container-btns');
 const form__submitbtn = document.querySelector('.form__container-input button')
 const form__input = document.querySelector('.form__input-word')
 const form = document.querySelector('.form__textrequest');
-const form__btns = document.querySelectorAll('.form__button'); 
 const elm_text = document.querySelector('.text__textandbutton');
 const elm_flash = document.querySelector('.flash');
 const loader = document.querySelector('.loader'); 
@@ -22,14 +23,26 @@ let site = null;
 
 
 
-// Buttons for text generation clicks
+// Buttons generation (some are by default -directly in html template-, others depends on fetchers added in /modules/fetchers/)
+Object.entries(fetchers).forEach(([name, exported]) => {
+  const button = document.createElement('button');
+  button.classList.add('form__button');
+  button.dataset.type = 'online';
+  button.dataset.site = name;
+  button.innerText = name;
+  form__buttons.appendChild(button);
+});
+const form__btns = document.querySelectorAll('.form__button');
+
+
+
+// Text generation after Buttons clicks
 form__btns.forEach(btn => btn.addEventListener('click', (e) => {
-  flashHide();
   e.preventDefault();
-  const btn = event.target || event.srcElement;
-  const type = btn.dataset.type;
+  flashHide();
   previewer.setPreviewText();
-  if (type === 'online') {
+  const btn = event.target || event.srcElement;
+  if (btn.dataset.type === 'online') {
     site = btn.dataset.site;
     // Input display for Online text fetch
     form__submitbtn.style.display = 'inline';
@@ -38,11 +51,13 @@ form__btns.forEach(btn => btn.addEventListener('click', (e) => {
     // locale generation
     form__submitbtn.style.display = 'none';
     form__input.style.display = 'none';
-    fetcher.fetch('local', type).then( (res) => {
+    fetcher.fetch(btn.dataset.type).then( (res) => {
       previewer.setPreviewText(res);
     });
   }
 }));
+
+
 
 // Online text fetch
 const wordEmitted = function(event) {
@@ -52,8 +67,9 @@ const wordEmitted = function(event) {
   flashHide();
   event.preventDefault();
   const word = form__input.value;
-  // Faire les vérifications d'usage sur la variable word
-  fetcher.fetch('distant', site, word).then( (res) => {
+  // !!!!
+  // !!!! A FAIRE : les vérifications d'usage sur la variable word
+  fetcher.fetch(site, word).then( (res) => {
     previewer.setPreviewText();
     previewer.setPreviewText(res);    
   }).catch( (e) => {
@@ -62,12 +78,13 @@ const wordEmitted = function(event) {
 }
 form.addEventListener('submit', wordEmitted);
 
+
+
 // Flash messages monitoring : Display a message
 const flashError = function(message) {
   elm_flash.innerHTML = message;
   elm_flash.style.display = "block";    
 }
-
 // Flash messages monitoring : Remove any messages
 const flashHide = function() {
   elm_flash.style.display = "none";

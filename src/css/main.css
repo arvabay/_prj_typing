@@ -19,6 +19,10 @@ html, body {
   margin: 0;
 }
 
+.strong {
+  font-weight: bold;
+}
+
 .center-x {
   margin-left: auto;
   margin-right: auto;
