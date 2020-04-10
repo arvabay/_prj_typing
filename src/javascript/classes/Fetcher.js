@@ -48,16 +48,16 @@ class Fetcher {
    * 
    * Returns appropriate seeker-function from Name among all fetchers specified in ../modules/fetchers/
    * @private
-   * @param {string} name 
+   * @param {string} param_name 
    */
-  async findSeekerFunction(name) {
+  async findSeekerFunction(param_name) {
     return new Promise( (resolve, reject) => {
       Object.entries(seekers).forEach(([name, exported]) => {
-        if (name === name) {
+        if (param_name === name) {
           resolve(exported);
         }
       });
-      reject(`Aucune fonction trouvée pour le seeker '${name}'`);
+      reject(`Aucune fonction trouvée pour le seeker '${param_name}'`);
     });
   }
 

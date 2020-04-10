@@ -3,6 +3,7 @@ import '../css/main.css';
 import '../css/typing.css';
 import { TypingMain } from './classes/TypingMain';
 import { TypingOverview } from './classes/TypingOverview';
+import { appendMenu } from './modules/domMenu';
 
 
 // VARIABLES (DOM elements)
@@ -13,6 +14,7 @@ const elm_typing_container = document.querySelector('.typing__container');
 const elm_textall_prev = document.querySelector('.textall__prev');
 const elm_textall_curr = document.querySelector('.textall__current');
 const elm_textall_error = document.querySelector('.textall__error');
+const elm_menu = document.querySelector('.menu');
 
 // VARIABLES (others)
 let nb_chars_valid = 0;
@@ -64,6 +66,8 @@ const keyPressed = function(e) {
 // Script beginning
 const typing_main = new TypingMain(elm_text_to_type, elm_cursor, elm_typing_container, CURSOR_COLOR);
 const typing_overview = new TypingOverview(elm_textall_prev, elm_textall_curr, elm_textall_error);
+// Menu
+appendMenu(elm_menu, true);
 // We need a clean text (without html tags)
 typing_overview.setCurrentHTML(text);
 text = typing_overview.getCurrentText();

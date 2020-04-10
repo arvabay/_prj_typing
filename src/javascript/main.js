@@ -3,7 +3,8 @@ import '../css/main.css';
 import '../css/index.css';
 import { Fetcher } from './classes/Fetcher';
 import { TextPreviewer } from './classes/TextPreviewer';
-import * as fetchers from './modules/fetchers'
+import * as fetchers from './modules/fetchers';
+import { appendMenu } from './modules/domMenu';
 
 
 // Constants (DOM Elements) 
@@ -13,6 +14,7 @@ const form__input = document.querySelector('.form__input-word')
 const form = document.querySelector('.form__textrequest');
 const elm_text = document.querySelector('.text__textandbutton');
 const elm_flash = document.querySelector('.flash');
+const elm_menu = document.querySelector('.menu');
 const loader = document.querySelector('.loader'); 
 
 // Variables / Constants
@@ -22,6 +24,8 @@ const previewer = new TextPreviewer(elm_text, CHANGE_LENGTH);
 let site = null;
 
 
+// Menu
+appendMenu(elm_menu, false);
 
 // Buttons generation (some are by default -directly in html template-, others depends on fetchers added in /modules/fetchers/)
 Object.entries(fetchers).forEach(([name, exported]) => {
