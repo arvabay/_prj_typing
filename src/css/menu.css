@@ -79,15 +79,16 @@
   cursor: pointer;
   margin-right: 6px;
   border: 3px solid white;
+  transition: opacity .18s;
 }
 
 .menu__colors-deploy-reverse {
-  animation: reply_menu__colors 0.2s ease-out;
+  animation: reply_menu__colors 0.14s ease-out;
   animation-fill-mode: forwards;
 }
 
 .menu__colors-deploy {
-  animation: deploy_menu__colors 0.3s ease-out;
+  animation: deploy_menu__colors 0.24s ease-out;
   animation-fill-mode: forwards;
 }
 
