@@ -1,10 +1,13 @@
 
 import color_themes from '../../../config/color-themes.json';
 
-// const color_themes = [];
 
 const CURRENT_ICON_COLOR_OPACITY = 0.25;
 
+/**
+ * 
+ * @param {*} menu - Instance of class Menu. Needed for coloring menu DOM icon elements
+ */
 export const changeColorTheme = function(menu) {
   let storage_color = window.localStorage.getItem('color-theme');
   const obj = findTheme(storage_color);
