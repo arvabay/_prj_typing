@@ -3,8 +3,10 @@ import '../css/main.css';
 import '../css/index.css';
 import { Fetcher } from './classes/Fetcher';
 import { TextPreviewer } from './classes/TextPreviewer';
+// import { appendMenu } from './modules/domMenu';
+import { Menu } from './classes/Menu';
+import { changeColorTheme } from './modules/colorManager';
 import * as fetchers from './modules/fetchers';
-import { appendMenu } from './modules/domMenu';
 
 
 // Constants (DOM Elements) 
@@ -23,9 +25,10 @@ const fetcher = new Fetcher();
 const previewer = new TextPreviewer(elm_text, CHANGE_LENGTH);
 let site = null;
 
-
-// Menu
-appendMenu(elm_menu, false);
+// Menu DOM generation
+const menu = new Menu(elm_menu, false);
+// colorManager Module call
+changeColorTheme(menu);
 
 // Buttons generation (some are by default -directly in html template-, others depends on fetchers added in /modules/fetchers/)
 Object.entries(fetchers).forEach(([name, exported]) => {

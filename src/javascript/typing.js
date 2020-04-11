@@ -3,8 +3,9 @@ import '../css/main.css';
 import '../css/typing.css';
 import { TypingMain } from './classes/TypingMain';
 import { TypingOverview } from './classes/TypingOverview';
-import { appendMenu } from './modules/domMenu';
-
+// import { appendMenu } from './modules/domMenu';
+import { Menu } from './classes/Menu';
+import { changeColorTheme } from './modules/colorManager';
 
 // VARIABLES (DOM elements)
 const elm_text_to_type = document.querySelector('.typing__text');
@@ -19,9 +20,13 @@ const elm_menu = document.querySelector('.menu');
 // VARIABLES (others)
 let nb_chars_valid = 0;
 const TEXT_TO_TYPE_LGTH = 80;
+// const CURSOR_COLOR = {
+//   true: getComputedStyle(document.documentElement).getPropertyValue('--color-main'),
+//   false: getComputedStyle(document.documentElement).getPropertyValue('--color-error')
+// }
 const CURSOR_COLOR = {
-  true: getComputedStyle(document.documentElement).getPropertyValue('--color-main'),
-  false: getComputedStyle(document.documentElement).getPropertyValue('--color-error')
+  true: 'var(--color-main)',
+  false: 'var(--color-error)'
 }
 
 // TEXT FETCH
@@ -66,8 +71,11 @@ const keyPressed = function(e) {
 // Script beginning
 const typing_main = new TypingMain(elm_text_to_type, elm_cursor, elm_typing_container, CURSOR_COLOR);
 const typing_overview = new TypingOverview(elm_textall_prev, elm_textall_curr, elm_textall_error);
-// Menu
-appendMenu(elm_menu, true);
+// Menu DOM generation
+const menu = new Menu(elm_menu, true);
+// colorManager Module call
+changeColorTheme(menu);
+
 // We need a clean text (without html tags)
 typing_overview.setCurrentHTML(text);
 text = typing_overview.getCurrentText();

@@ -11,7 +11,7 @@ html {
   --color-main: #0ABDD2;
   --color-success: #baf5fc;
   --color-error: rgb(255, 0, 98);
-  /* --error-color: #FF00A1; */
+  --color-gradient: #272939;
 }
 
 html, body {
@@ -41,7 +41,7 @@ body {
   /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
   font-family: 'palanquin-medium', sans-serif;
   /* background: linear-gradient(#131220, #2c2c2c); */
-  background: linear-gradient(#030616, #272939);
+  background: linear-gradient(#030616 45%, var(--color-gradient));
   min-height: 100vh;
   /* hyphens: auto; */
 
