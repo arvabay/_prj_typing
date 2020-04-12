@@ -1,6 +1,6 @@
 import '../../css/menu.css';
 import { removeClass, addClass } from '../modules/helpers';
-import { changeColorTheme } from '../modules/colorManager';
+import { setColorTheme } from '../modules/colorManager';
 import color_themes from '../../../config/color-themes.json'
 
 export class Menu {
@@ -38,9 +38,7 @@ export class Menu {
    * @private
    */
   clickOnIconColor(color_name) {
-    window.localStorage.setItem('color-theme', color_name);
-    // colorManager Module call
-    changeColorTheme(this);
+    setColorTheme(this, color_name);
   }
 
   /**

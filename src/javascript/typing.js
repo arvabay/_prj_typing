@@ -4,7 +4,7 @@ import { TypingMain } from './classes/TypingMain';
 import { TypingOverview } from './classes/TypingOverview';
 // import { appendMenu } from './modules/domMenu';
 import { Menu } from './classes/Menu';
-import { changeColorTheme } from './modules/colorManager';
+import { loadColorTheme } from './modules/colorManager';
 
 // VARIABLES (DOM elements)
 const elm_text_to_type = document.querySelector('.typing__text');
@@ -73,7 +73,7 @@ const typing_overview = new TypingOverview(elm_textall_prev, elm_textall_curr, e
 // Menu DOM generation
 const menu = new Menu(elm_menu, true);
 // colorManager Module call
-changeColorTheme(menu);
+loadColorTheme(menu);
 
 // We need a clean text (without html tags)
 typing_overview.setCurrentHTML(text);

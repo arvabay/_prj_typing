@@ -6,7 +6,7 @@ import { TextPreviewer } from './classes/TextPreviewer';
 import { removeClass, addClass } from './modules/helpers';
 // import { appendMenu } from './modules/domMenu';
 import { Menu } from './classes/Menu';
-import { changeColorTheme } from './modules/colorManager';
+import { loadColorTheme } from './modules/colorManager';
 import * as fetchers from './modules/fetchers';
 
 
@@ -29,7 +29,7 @@ let site = null;
 // Menu DOM generation
 const menu = new Menu(elm_menu, false);
 // colorManager Module call
-changeColorTheme(menu);
+loadColorTheme(menu);
 
 // Buttons generation (some are by default -directly in html template-, others depends on fetchers added in /modules/fetchers/)
 Object.entries(fetchers).forEach(([name, exported]) => {
