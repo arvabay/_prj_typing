@@ -1,4 +1,6 @@
 
+/* Properties common to ALL pages */
+
 @font-face {
   font-family: 'palanquin-medium';
   src:  url('../assets/fonts/palanquin-medium.woff') format('woff'),
