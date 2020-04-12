@@ -1,4 +1,3 @@
-
 import '../../css/menu.css';
 import { removeClass, addClass } from '../modules/helpers';
 import { changeColorTheme } from '../modules/colorManager';

@@ -39,7 +39,7 @@ html, body {
 body {
   color: var(--color-main);
   /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
-  font-family: 'palanquin-medium', sans-serif;
+  font-family: palanquin-medium, sans-serif;
   /* background: linear-gradient(#131220, #2c2c2c); */
   background: linear-gradient(#030616 45%, var(--color-gradient));
   min-height: 100vh;

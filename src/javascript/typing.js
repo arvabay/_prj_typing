@@ -1,4 +1,3 @@
-
 import '../css/main.css';
 import '../css/typing.css';
 import { TypingMain } from './classes/TypingMain';

@@ -1,8 +1,9 @@
-
 import '../css/main.css';
 import '../css/index.css';
+import '../css/resets/resetButton.css';
 import { Fetcher } from './classes/Fetcher';
 import { TextPreviewer } from './classes/TextPreviewer';
+import { removeClass, addClass } from './modules/helpers';
 // import { appendMenu } from './modules/domMenu';
 import { Menu } from './classes/Menu';
 import { changeColorTheme } from './modules/colorManager';
@@ -10,7 +11,7 @@ import * as fetchers from './modules/fetchers';
 
 
 // Constants (DOM Elements) 
-const form__buttons = document.querySelector('.form__container-btns');
+const form__buttons_text = document.querySelector('.form__btns-text');
 const form__submitbtn = document.querySelector('.form__container-input button')
 const form__input = document.querySelector('.form__input-word')
 const form = document.querySelector('.form__textrequest');
@@ -37,7 +38,8 @@ Object.entries(fetchers).forEach(([name, exported]) => {
   button.dataset.type = 'online';
   button.dataset.site = name;
   button.innerText = name;
-  form__buttons.appendChild(button);
+  form__buttons_text.appendChild(button);
+  form__buttons_text.innerHTML = form__buttons_text.innerHTML + " ";
 });
 const form__btns = document.querySelectorAll('.form__button');
 
@@ -49,6 +51,8 @@ form__btns.forEach(btn => btn.addEventListener('click', (e) => {
   flashHide();
   previewer.setPreviewText();
   const btn = event.target || event.srcElement;
+  addClass(btn, 'form__button-selected');
+  removeBtnsSelection(btn);
   if (btn.dataset.type === 'online') {
     site = btn.dataset.site;
     // Input display for Online text fetch
@@ -64,6 +68,14 @@ form__btns.forEach(btn => btn.addEventListener('click', (e) => {
   }
 }));
 
+
+const removeBtnsSelection = function(elm_btn) {
+  for (let i = 0; i < form__btns.length; i++) {
+    if (form__btns[i] !== elm_btn) {
+      removeClass(form__btns[i], 'form__button-selected')
+    }
+  }
+}
 
 
 // Online text fetch
