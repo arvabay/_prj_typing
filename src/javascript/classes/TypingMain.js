@@ -2,7 +2,7 @@
 /**
  * 
  * @classdesc Represents the main graphical rendering of what users are typing.
- * Take DOMElements in order to be updated at each key pressed 
+ * Take DOMElements parameters in order to update them at each key pressed 
  */
 class TypingMain {
 

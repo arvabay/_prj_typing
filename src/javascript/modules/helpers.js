@@ -1,7 +1,7 @@
 
 /**
  * 
- * Add given class name on Element only if it doesn't already has this class
+ * Add given class name on Element only if it doesn't already has
  * @param {Element} elem 
  * @param {string} class_name 
  */
@@ -11,7 +11,7 @@ export const addClass = function(elem, class_name) {
 
 /**
  * 
- * Remove given class from Element only if it has this class
+ * Remove given class from Element only if it has
  * @param {Element} elem 
  * @param {string} class_name 
  */

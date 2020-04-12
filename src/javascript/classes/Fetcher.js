@@ -4,8 +4,8 @@ import * as seekers from '../modules/fetchers';
 
 /**
  *  @classdesc Manage specific task in order to return expected text :
- * - Fetch online article using appropriate fetcher includes in ../modules/fetchers/
- * - Request suit generation from locale suitGenerator 
+ * <p> - Fetch online article using appropriate fetcher included in ../modules/fetchers/ </p>
+ * <p> - Request suit generation from module suitGenerator  </p>
  */
 class Fetcher {
 

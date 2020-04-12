@@ -5,8 +5,9 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-dev": "webpack --mode=development --config webpack.config.js --watch --watchOptions:{ignored: '/node_modules/'}",
-    "build-prod": "cross-env NODE_ENV=production webpack --mode=production --config webpack.config.js"
+    "watch-dev": "webpack --mode=development --config webpack.config.js --watch --watchOptions:{ignored: '/node_modules/'}",
+    "build-prod": "npm run build-doc && cross-env NODE_ENV=production webpack --mode=production --config webpack.config.js",
+    "build-doc": "jsdoc -r src/javascript"
   },
   "author": "",
   "license": "ISC",
