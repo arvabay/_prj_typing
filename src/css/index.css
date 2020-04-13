@@ -9,16 +9,15 @@
   display: none;
 }
 
-.form__container-btns {
-  padding-top: 100px;
-}
-
 .form__container-btns, .form__container-input {
   display: flex;
   justify-content: center;
 }
 
-.form__button {
+
+
+
+/* .form__button {
   border: 2px solid var(--color-main);
   padding: 6px 20px;
   font-weight: bold;
@@ -27,21 +26,76 @@
 .form__button:hover, .form__button-selected {
   border: 2px solid var(--color-success);
   color: var(--color-success);
+} */
+
+.buttons {
+  margin-top: 26px;
+  margin-left: 24px;
 }
 
-.form__button:first-child {
+.buttons__button {
+  font-family: baloo-regular;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  text-transform: uppercase;
+  /* padding: 18px 16px 7px 16px; */
+  margin: 18px 16px 7px 16px;
+  color: #bebebe;
+  border-radius: 10px;
+  /* margin-right: 10px; */
+  transition: all .3s;
+  background: linear-gradient(transparent, transparent);
+  position: relative;
+  padding: 0 0;
+}
+
+.buttons__button:hover {
+  color: white;
+}
+
+.buttons__button-selected {
+  color: white;
+  padding: 18px 16px 7px 16px;
+  margin: 0 0;
+  animation: btn-selected .3s forwards;
+}
+
+@keyframes btn-selected {
+  0% {
+    /* background: linear-gradient(transparent, transparent); */
+    background: transparent;
+  }
+  100% {
+    background: linear-gradient(var(--color-main), var(--color-maindark));
+    /* background: blue; */
+  }
+}
+
+/* .form__button:first-child {
   border-radius: 10px 0px 0px 10px;
 }
 
 .form__button:last-child {
   border-radius: 0px 10px 10px 0px;
+} */
+
+
+
+
+
+
+.text {
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  margin-top: 10vh;
 }
 
 .form__btns-suits {
   margin-right: 30px;
 }
 
-.form__buttonlaunch {
+/* .form__buttonlaunch {
   user-select: none;
   display: block;
   width: 100%;
@@ -57,15 +111,49 @@
   padding-top: 3px;
   padding-bottom: 4px;
   text-decoration: none;
+} */
+
+.form__buttonlaunch {
+  margin-left: auto;
+  margin-right: auto;
+  text-transform: uppercase;
+  user-select: none;
+  display: block;
+  width: 260px;
+  /* background: rgb(40, 109, 133); */
+  /* background: linear-gradient(rgb(38, 104, 126), rgb(19, 74, 105)); */
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 30px;
+  /* box-shadow: 0 0 40px rgba(0,0,0, 0.5); */
+  padding-top: 3px;
+  padding-bottom: 4px;
+  text-decoration: none;
+  margin-bottom: 40px;
+  border: 2px solid var(--color-main);
+  transform: translateX(25px);
 }
 
 .form__buttonlaunch:hover {
-  background: linear-gradient(rgb(38, 104, 126), rgb(14, 54, 77));
+  /* background: linear-gradient(rgb(38, 104, 126), rgb(14, 54, 77)); */
+  border: 2px solid transparent;
+  background: linear-gradient(var(--color-main), var(--color-maindark));
 }
 
 .form__buttonlaunch.disabled {
-  background: linear-gradient(rgb(128, 128, 128), rgb(110, 110, 110));
+  /* background: linear-gradient(rgb(128, 128, 128), rgb(110, 110, 110)); */
   color: rgb(83, 83, 83);
+  border: 2px solid rgb(83, 83, 83);
+}
+
+.form__buttonlaunch.disabled:hover {
+  background: none;
+}
+
+.text__text {
+  color: lightgray;
 }
 
 .text__container {
@@ -73,7 +161,7 @@
 }
 
 .text__buttons {
-  margin-right: 20px;
+  margin-right: 50px;
 }
 
 
@@ -93,8 +181,9 @@ p {
 
 .text__button {
   user-select: none;
-  background: rgb(167, 167, 167);
+  /* background: rgb(167, 167, 167); */
   color: rgb(116, 116, 116);
+  border: 2px solid rgb(116, 116, 116);
   box-shadow: 0 0 40px rgba(0,0,0, 0.5);
   border-radius: 5px;
   font-weight: bold;
@@ -104,16 +193,43 @@ p {
   width: 30px;
   text-align: center;
   cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 60;
 }
 
-.text__button.enabled {
+.text__button:last-child {
+  transform: translateY(-2px);
+}
+
+/* .text__button.enabled {
   background: rgb(38, 104, 126);
   color: white;
 }
 
 .text__button.enabled:hover {
   background:rgb(25, 84, 117);
+} */
+
+.text__button.enabled {
+  border: 2px solid var(--color-main);
+  background: none;
+  color: white;
+  z-index: 61;
 }
+
+.text__button.enabled:hover {
+  background: var(--color-main);
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -131,10 +247,4 @@ p {
   margin-left: auto;
   margin-right: auto;
   width: 500px;
-}
-
-.text {
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
 }

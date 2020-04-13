@@ -11,7 +11,7 @@ import * as fetchers from './modules/fetchers';
 
 
 // Constants (DOM Elements) 
-const form__buttons_text = document.querySelector('.form__btns-text');
+const elm_buttons = document.querySelector('.buttons');
 const form__submitbtn = document.querySelector('.form__container-input button')
 const form__input = document.querySelector('.form__input-word')
 const form = document.querySelector('.form__textrequest');
@@ -34,24 +34,27 @@ loadColorTheme(menu);
 // Buttons generation (some are by default -directly in html template-, others depends on fetchers added in /modules/fetchers/)
 Object.entries(fetchers).forEach(([name, exported]) => {
   const button = document.createElement('button');
-  button.classList.add('form__button');
+  button.classList.add('buttons__button');
   button.dataset.type = 'online';
   button.dataset.site = name;
   button.innerText = name;
-  form__buttons_text.appendChild(button);
-  form__buttons_text.innerHTML = form__buttons_text.innerHTML + " ";
+  elm_buttons.appendChild(button);
 });
-const form__btns = document.querySelectorAll('.form__button');
+const btns = document.querySelectorAll('.buttons__button');
 
 
 
 // Text generation after Buttons clicks
-form__btns.forEach(btn => btn.addEventListener('click', (e) => {
+btns.forEach(btn => btn.addEventListener('click', (e) => {
   e.preventDefault();
   flashHide();
   previewer.setPreviewText();
   const btn = event.target || event.srcElement;
-  addClass(btn, 'form__button-selected');
+  
+
+  // setTimeout(()=>{addClass(btn, 'buttons__button-selected');}, 50);
+  addClass(btn, 'buttons__button-selected');
+
   removeBtnsSelection(btn);
   if (btn.dataset.type === 'online') {
     site = btn.dataset.site;
@@ -70,9 +73,9 @@ form__btns.forEach(btn => btn.addEventListener('click', (e) => {
 
 
 const removeBtnsSelection = function(elm_btn) {
-  for (let i = 0; i < form__btns.length; i++) {
-    if (form__btns[i] !== elm_btn) {
-      removeClass(form__btns[i], 'form__button-selected')
+  for (let i = 0; i < btns.length; i++) {
+    if (btns[i] !== elm_btn) {
+      removeClass(btns[i], 'buttons__button-selected')
     }
   }
 }

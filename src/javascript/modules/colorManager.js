@@ -35,6 +35,7 @@ const changeCssColors = function(obj) {
   document.documentElement.style.setProperty('--color-main', obj.main);
   document.documentElement.style.setProperty('--color-success', obj.success);
   document.documentElement.style.setProperty('--color-gradient', obj.gradient);
+  document.documentElement.style.setProperty('--color-maindark', obj.maindark);
 }
 
 /**

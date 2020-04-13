@@ -9,8 +9,17 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'baloo-regular';
+  src:  url('../assets/fonts/BalooTammudu2-Regular.woff') format('woff'),
+        url('../assets/fonts/BalooTammudu2-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html {
   --color-main: #0ABDD2;
+  --color-maindark: #0D7F8B;
   --color-success: #baf5fc;
   --color-error: rgb(255, 0, 98);
   --color-gradient: #272939;

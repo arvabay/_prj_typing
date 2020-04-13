@@ -1,7 +1,7 @@
 {
   "list": [
-      {"color": "blue", "main": "#0ABDD2", "success": "#baf5fc", "gradient": "#272939"},
-      {"color": "green", "main": "#67D20A", "success": "#e3ffdc", "gradient": "#152507"},
-      {"color": "orange", "main": "#FF9646", "success": "#ffe6d9", "gradient": "#110100"}
+      {"color": "blue", "main": "#0ABDD2", "maindark": "#0D7F8B", "success": "#baf5fc", "gradient": "#272939"},
+      {"color": "green", "main": "#67D20A", "maindark": "#629c31", "success": "#e3ffdc", "gradient": "#152507"},
+      {"color": "orange", "main": "#FF9646", "maindark": "#e4753a", "success": "#ffe6d9", "gradient": "#110100"}
   ]
 }
