@@ -39,7 +39,7 @@
   line-height: 1.2rem;
   text-transform: uppercase;
   /* padding: 18px 16px 7px 16px; */
-  margin: 18px 16px 7px 16px;
+  margin: 16px 16px 4px 16px;
   color: #bebebe;
   border-radius: 10px;
   /* margin-right: 10px; */
@@ -55,7 +55,7 @@
 
 .buttons__button-selected {
   color: white;
-  padding: 18px 16px 7px 16px;
+  padding: 16px 16px 4px 16px;
   margin: 0 0;
   animation: btn-selected .3s forwards;
 }
@@ -120,37 +120,57 @@
   user-select: none;
   display: block;
   width: 260px;
-  /* background: rgb(40, 109, 133); */
-  /* background: linear-gradient(rgb(38, 104, 126), rgb(19, 74, 105)); */
   color: white;
   cursor: pointer;
   border-radius: 5px;
   text-align: center;
   margin-top: 30px;
-  /* box-shadow: 0 0 40px rgba(0,0,0, 0.5); */
-  padding-top: 3px;
-  padding-bottom: 4px;
   text-decoration: none;
   margin-bottom: 40px;
-  border: 2px solid var(--color-main);
   transform: translateX(25px);
+  box-sizing: border-box;
+  height: 40px;
+  line-height: 40px;
+  position: relative;
 }
 
+/* BORDER-TWEAK */
+.form__buttonlaunch:before {
+  border: 2px solid var(--color-main);
+  content: "";
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: -2px;
+  right: -2px;
+  border-radius: 5px;
+}
+.form__buttonlaunch:hover:before {
+  border: 0px solid var(--color-main);
+}
 .form__buttonlaunch:hover {
-  /* background: linear-gradient(rgb(38, 104, 126), rgb(14, 54, 77)); */
-  border: 2px solid transparent;
   background: linear-gradient(var(--color-main), var(--color-maindark));
 }
 
-.form__buttonlaunch.disabled {
-  /* background: linear-gradient(rgb(128, 128, 128), rgb(110, 110, 110)); */
+.form__buttonlaunch.disabled:before {
   color: rgb(83, 83, 83);
   border: 2px solid rgb(83, 83, 83);
+  content: "";
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: -2px;
+  right: -2px;
+  border-radius: 5px;
 }
-
+.form__buttonlaunch.disabled {
+  color: rgb(83, 83, 83);
+}
 .form__buttonlaunch.disabled:hover {
   background: none;
 }
+
+
 
 .text__text {
   color: lightgray;
@@ -202,15 +222,6 @@ p {
   transform: translateY(-2px);
 }
 
-/* .text__button.enabled {
-  background: rgb(38, 104, 126);
-  color: white;
-}
-
-.text__button.enabled:hover {
-  background:rgb(25, 84, 117);
-} */
-
 .text__button.enabled {
   border: 2px solid var(--color-main);
   background: none;
@@ -221,14 +232,6 @@ p {
 .text__button.enabled:hover {
   background: var(--color-main);
 }
-
-
-
-
-
-
-
-
 
 
 
