@@ -54,7 +54,8 @@ html, body {
 }
 
 .color-success {
-  color: var(--color-success);
+  /* color: var(--color-success); */
+  color: var(--color-main);
 }
 
 body {

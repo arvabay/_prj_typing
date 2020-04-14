@@ -12,9 +12,9 @@ import * as fetchers from './modules/fetchers';
 
 // Constants (DOM Elements) 
 const elm_buttons = document.querySelector('.buttons');
-const form__submitbtn = document.querySelector('.form__container-input button')
-const form__input = document.querySelector('.form__input-word')
-const form = document.querySelector('.form__textrequest');
+const form__submitbtn = document.querySelector('.textrequest__container button')
+const form__input = document.querySelector('.textrequest__container input')
+const form = document.querySelector('.textrequest');
 const elm_text = document.querySelector('.text__textandbutton');
 const elm_flash = document.querySelector('.flash');
 const elm_menu = document.querySelector('.menu');
