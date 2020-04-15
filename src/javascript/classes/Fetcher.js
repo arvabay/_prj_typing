@@ -1,6 +1,7 @@
 
 import * as generator from '../modules/suitGenerator';
 import * as seekers from '../modules/fetchers';
+import { TERMS_NB_IN_SUIT, SUIT_TERM_LENGTH, NB_SPACES_IN_SYMBOLS_SUIT } from '../../../config/constants.json';
 
 /**
  *  @classdesc Manage specific task in order to return expected text :
@@ -70,9 +71,9 @@ class Fetcher {
   async generate(name) {
     return new Promise( (resolve, reject) => {
       if (name === 'number') {
-        resolve(generator.generateNumbers());
+        resolve(generator.generateNumbers(SUIT_TERM_LENGTH, TERMS_NB_IN_SUIT));
       } else if (name === 'symbol') {
-        resolve(generator.generateSymbols());
+        resolve(generator.generateSymbols(SUIT_TERM_LENGTH, TERMS_NB_IN_SUIT, NB_SPACES_IN_SYMBOLS_SUIT));
       } else {
         reject('name inconnu');
       }

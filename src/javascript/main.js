@@ -50,11 +50,7 @@ btns.forEach(btn => btn.addEventListener('click', (e) => {
   flashHide();
   previewer.setPreviewText();
   const btn = event.target || event.srcElement;
-  
-
-  // setTimeout(()=>{addClass(btn, 'buttons__button-selected');}, 50);
   addClass(btn, 'buttons__button-selected');
-
   removeBtnsSelection(btn);
   if (btn.dataset.type === 'online') {
     site = btn.dataset.site;
@@ -70,7 +66,6 @@ btns.forEach(btn => btn.addEventListener('click', (e) => {
     });
   }
 }));
-
 
 const removeBtnsSelection = function(elm_btn) {
   for (let i = 0; i < btns.length; i++) {
