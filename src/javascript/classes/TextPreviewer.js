@@ -63,8 +63,8 @@ class TextPreviewer {
     this.elm_p.classList.add('text__text');
     this.elm_p.innerHTML = text;
     this.current_text = this.elm_p.innerText;
+    this.elm_p.innerHTML = this.current_text;
     this.cut_position = this.current_text.length;
-    // this.elm_p.style.height = this.elm_p.clientHeight;
     this.elm_root.appendChild(this.elm_start);
     this.elm_root.appendChild(container);
   }
