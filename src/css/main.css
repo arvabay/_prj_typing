@@ -44,6 +44,10 @@ html, body {
   font-weight: bold;
 }
 
+.upper {
+  text-transform: uppercase;
+}
+
 .center-x {
   margin-left: auto;
   margin-right: auto;

@@ -19,6 +19,7 @@ const elm_text = document.querySelector('.text__textandbutton');
 const elm_flash = document.querySelector('.flash');
 const elm_menu = document.querySelector('.menu');
 const loader = document.querySelector('.loader'); 
+let close = null;
 
 // Variables / Constants
 const CHANGE_LENGTH = 70;
@@ -96,11 +97,23 @@ const wordEmitted = function(event) {
 form.addEventListener('submit', wordEmitted);
 
 
+const createCloseElm = function() {
+  close = document.createElement("span");
+  close.classList.add("flash-close");
+  close.innerHTML = "&nbsp;&nbsp;X&nbsp;&nbsp;";
+  close.addEventListener('click', function() {
+    console.log('close');
+    flashHide();
+  })
+}
 
 // Flash messages monitoring : Display a message
 const flashError = function(message) {
+  if ( close === null ) { createCloseElm(); }
+
   elm_flash.innerHTML = message;
-  elm_flash.style.display = "block";    
+  elm_flash.appendChild(close);
+  elm_flash.style.display = "inline";    
 }
 // Flash messages monitoring : Remove any messages
 const flashHide = function() {

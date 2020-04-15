@@ -32,8 +32,8 @@ class Fetcher {
         }).then( (text) => {
           resolve(text);
         }).catch( (e) => {
-          reject(`Aucun article trouvé pour le mot <span class='strong'>${word}</span>
-                  sur le site <span class='strong'>${name}</span>`);          
+          reject(`Aucun article trouvé pour le mot <span class='strong upper'>${word}</span>
+                  sur le site ${name}`);          
         });
       }
       // LOCALE GENERATION

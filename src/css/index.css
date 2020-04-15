@@ -6,14 +6,37 @@
 }
 
 
+.flash-container {
+  position: absolute;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
 .flash {
   background: #ff7373;
   border: 1px solid #e62020;
-  color: #a81313;
-  border-radius: 10px;
-  padding: 8px 20px;
+  border-top: none;
+  color: #4a0909;
+  font-size: 1.2rem;
+  font-family: baloo-regular, sans-serif;
+  padding: 12px 20px 0px;
+  padding-right: 30px;
   display: none;
-  margin: 30px 50px;
+  z-index: 100;
+  border-radius: 0px 0px 5px 5px;
+  transform: translateX(20px);
+}
+
+.flash-close {
+  position: relative;
+  top: -6px;
+  left: 15px;
+  font-size: 1.3rem;
+}
+
+.flash-close:hover {
+  cursor: pointer;
 }
 
 .textrequest {
