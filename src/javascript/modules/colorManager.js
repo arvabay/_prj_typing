@@ -32,12 +32,8 @@ export const setColorTheme = function(menu, color_name) {
  * @param {Object} name - item of list in Colors config file
  */
 const changeCssColors = function(obj) {
-
   Object.entries(obj).forEach( (entry) => {
-    if (entry[0] === "color") {return;}
-    console.log('--color-'+entry[0]);
-    console.log();
-    
+    if (entry[0] === "color") { return; }
     document.documentElement.style.setProperty('--color-'+entry[0], entry[1]);
   });
 }
