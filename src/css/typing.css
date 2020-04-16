@@ -76,7 +76,7 @@
   15% {
     border-right: 1px solid white;
   }
-  50%{
+  50%{ 
     border-right: 1px solid rgba(255,255,255, 0.0);
   }
   85% {
@@ -86,3 +86,110 @@
     border-right: 1px solid white;
   }
 }
+
+
+
+/* MODAL ============================= */
+
+/* MODAL-BG ================ */
+.container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(#030616 45%, var(--color-gradient));
+  z-index: 50;
+}
+.modalbg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: black;
+  opacity: 0;
+  z-index: 49;
+}
+.opacity-100 {
+  animation: opacity-100 .5s forwards;
+}
+@keyframes opacity-100 {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.72;
+  }
+}
+/* MODAL-BG END ============ */
+
+
+/* MODAL-BOX =============== */
+/* effet : zoom + translation + opacity */
+.modalbox {
+  font-family: baloo-regular;
+  color: white;
+  z-index: 48;
+  position: absolute;
+  height: 500px;
+  width: 50vw;
+  background-color: var(--color-modalbox);
+  top: 40%;
+  left: 50%;
+  border: 1px solid var(--color-modalborder);
+  box-shadow: 0 0 30px var(--color-modalborder);
+  transform: translate(-50%, -40%) scale(0.94);
+}
+.box-appear {
+  animation: box-appear .3s forwards ease-out;
+}
+@keyframes box-appear {
+  0% {
+    transform: translate(-50%, -40%) scale(0.94);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.modalbox__title {
+  text-align: center;
+  padding-top: 60px;
+  margin-bottom: 80px;
+}
+.modalbox__title h1 {
+  display: inline;
+  border: 1px solid #4F5575;
+  padding: 10px 30px 0px 30px;
+  font-size: 1.7rem;
+}
+.modalbox__infos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  margin-bottom: 120px
+}
+.modalbox__info {
+  /* padding-left: 100px; */
+  width: 25vw;
+  font-size: 1.2rem;
+}
+.modalbox__info-left span {
+  padding-left: 55%;
+}
+.modalbox__info-right span {
+  padding-left: 20%;
+}
+
+.modalbox__btns {
+  display: flex;
+  justify-content: center;
+}
+.modalbox__btn {
+  width: 40px;
+  height: 40px;
+  background: white;
+  cursor: pointer;
+  margin: 0px 15px;
+}
+/* MODAL-BOX END =========== */
+
+
+/* MODAL END ========================= */

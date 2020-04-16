@@ -5,6 +5,7 @@ import { TypingOverview } from './classes/TypingOverview';
 // import { appendMenu } from './modules/domMenu';
 import { Menu } from './classes/Menu';
 import { loadColorTheme } from './modules/colorManager';
+import { addClass } from './modules/helpers';
 
 // VARIABLES (DOM elements)
 const elm_text_to_type = document.querySelector('.typing__text');
@@ -15,6 +16,8 @@ const elm_textall_prev = document.querySelector('.textall__prev');
 const elm_textall_curr = document.querySelector('.textall__current');
 const elm_textall_error = document.querySelector('.textall__error');
 const elm_menu = document.querySelector('.menu');
+const elm_modalbg = document.querySelector('.modalbg');
+const elm_modalbox = document.querySelector('.modalbox');
 
 // VARIABLES (others)
 let nb_chars_valid = 0;
@@ -42,6 +45,14 @@ function debugPress(e, char_to_type) {
   console.log('char to type : ' + char_to_type + ', code : ' + char_to_type.charCodeAt() );
 }
 
+// Typing is over
+const terminate = function() {
+  elm_modalbg.style.zIndex = "51";
+  addClass(elm_modalbg, "opacity-100");
+  elm_modalbox.style.zIndex = "52";
+  addClass(elm_modalbox, "box-appear");
+}
+
 // When key pressed
 const keyPressed = function(e) {
   e.preventDefault();
@@ -63,7 +74,8 @@ const keyPressed = function(e) {
   }
   // Is typing over ?
   if (nb_chars_valid >= text.length) {
-    elm_success.style.display = 'block';
+    // elm_success.style.display = 'block';
+    terminate();
   }
 };
 

@@ -32,10 +32,14 @@ export const setColorTheme = function(menu, color_name) {
  * @param {Object} name - item of list in Colors config file
  */
 const changeCssColors = function(obj) {
-  document.documentElement.style.setProperty('--color-main', obj.main);
-  document.documentElement.style.setProperty('--color-success', obj.success);
-  document.documentElement.style.setProperty('--color-gradient', obj.gradient);
-  document.documentElement.style.setProperty('--color-maindark', obj.maindark);
+
+  Object.entries(obj).forEach( (entry) => {
+    if (entry[0] === "color") {return;}
+    console.log('--color-'+entry[0]);
+    console.log();
+    
+    document.documentElement.style.setProperty('--color-'+entry[0], entry[1]);
+  });
 }
 
 /**
