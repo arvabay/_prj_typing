@@ -8,6 +8,7 @@ import { removeClass, addClass } from './modules/helpers';
 import { Menu } from './classes/Menu';
 import { loadColorTheme } from './modules/colorManager';
 import * as fetchers from './modules/fetchers';
+import { TERMS_NB_IN_SUIT } from '../../config/constants.json';
 
 
 // Constants (DOM Elements) 
@@ -58,10 +59,12 @@ btns.forEach(btn => btn.addEventListener('click', (e) => {
     // Input display for Online text fetch
     form__submitbtn.style.display = 'inline';
     form__input.style.display = 'inline';
+    window.localStorage.removeItem('terms_number');
   } else {
     // locale generation
     form__submitbtn.style.display = 'none';
     form__input.style.display = 'none';
+    window.localStorage.setItem('terms_number', TERMS_NB_IN_SUIT);
     fetcher.fetch(btn.dataset.type).then( (res) => {
       previewer.setPreviewText(res);
     });

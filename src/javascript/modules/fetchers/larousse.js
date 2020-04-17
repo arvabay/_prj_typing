@@ -2,7 +2,6 @@
 const url = "https://www.larousse.fr/dictionnaires/francais/";
 
 export const larousse = function(word) {
-  // return 'wikipedia seeker !';
 
   return new Promise( (resolve, reject) => {
     fetch(url + word + '/').then( response => {
@@ -18,9 +17,9 @@ export const larousse = function(word) {
       var doc = parser.parseFromString(html, "text/html");
       // console.log(doc);
       const corps = doc.querySelector('.DivisionDefinition');
-      console.log(corps);
+      // console.log(corps);
       if (corps) {
-        console.log(corps.innerHTML);
+        // console.log(corps.innerHTML);
         resolve(corps.innerHTML);
       } else {
         reject(not_found);
