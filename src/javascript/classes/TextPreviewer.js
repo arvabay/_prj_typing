@@ -6,7 +6,7 @@ import { addClass, removeClass } from '../modules/helpers'
  * Build following blocks in a given root_element : button start, 
  * buttons minus / plus (reduce or increase text length), and text
  */
-class TextPreviewer {
+export default class TextPreviewer {
 
   /**
    * 
@@ -135,5 +135,3 @@ class TextPreviewer {
 
 
 }
-
-export { TextPreviewer };

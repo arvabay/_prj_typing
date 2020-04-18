@@ -1,6 +1,6 @@
 import { getTime, getWordsByMinute, getErrorsPercent } from '../modules/helpers';
 
-class TypingResult {
+export default class TypingResult {
 
   constructor(elm_root, text) {
     this.text_length = text.length;
@@ -43,7 +43,3 @@ class TypingResult {
   }
 
 }
-
-
-
-export { TypingResult };

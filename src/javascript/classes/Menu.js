@@ -3,7 +3,7 @@ import { removeClass, addClass } from '../modules/helpers';
 import { setColorTheme } from '../modules/colorManager';
 import color_themes from '../../../config/color-themes.json'
 
-export class Menu {
+export default class Menu {
   
   constructor(elm_root, append_home_icon) {
     this.elm_root = elm_root;

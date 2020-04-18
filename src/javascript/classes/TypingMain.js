@@ -4,7 +4,7 @@
  * @classdesc Represents the main graphical rendering of what users are typing.
  * Take DOMElements parameters in order to update them at each key pressed 
  */
-class TypingMain {
+export default class TypingMain {
 
 /**
  * 
@@ -67,5 +67,3 @@ class TypingMain {
 
 
 }
-
-export { TypingMain };

@@ -1,12 +1,15 @@
 import '../css/main.css';
 import '../css/typing.css';
-import { TypingMain } from './classes/TypingMain';
-import { TypingOverview } from './classes/TypingOverview';
-import { Menu } from './classes/Menu';
+import Menu from './classes/Menu';
+import TypingMain from './classes/TypingMain';
+import TypingOverview from './classes/TypingOverview';
+import TypingResult from './classes/TypingResult';
 import { loadColorTheme } from './modules/colorManager';
 import { addClass } from './modules/helpers';
-import { TypingResult } from './classes/TypingResult';
 
+
+// VARIABLES
+//=========================
 // VARIABLES (DOM elements)
 const elm_text_to_type = document.querySelector('.typing__text');
 const elm_cursor = document.querySelector('.typing__cursor');
@@ -19,7 +22,6 @@ const elm_modalbg = document.querySelector('.modalbg');
 const elm_modalbox = document.querySelector('.modalbox');
 const elm_modalbox_btnback = document.querySelector('.modalbox__btn-back');
 const elm_modalbox_btnagain = document.querySelector('.modalbox__btn-again');
-
 // VARIABLES (others)
 let nb_chars_valid = 0;
 const TEXT_TO_TYPE_LGTH = 80;
@@ -28,14 +30,9 @@ const CURSOR_COLOR = {
   false: 'var(--color-error)'
 }
 
-// TEXT FETCH
-let text = window.localStorage.getItem('text_to_type');
-// basics 'hard to type' chars replacement
-const regexp = /(«|»|–|—|œ|’)/g;
-text = text.replace(regexp, ()=>{return '-'});
 
-
-
+// FUNCTIONS
+//=========================
 // Debug key pressed
 function debugPress(e, char_to_type) {
   console.log('char typed : ' + String.fromCharCode(e.keyCode) + ', code : ' + e.keyCode);
@@ -46,6 +43,7 @@ function debugPress(e, char_to_type) {
 const terminate = function() {
   const errors_number = document.querySelectorAll('.color-error').length;
   typing_result.terminate(errors_number);
+  // Modal box end-report apparition
   elm_modalbg.style.zIndex = "51";
   addClass(elm_modalbg, "opacity-100");
   elm_modalbox.style.zIndex = "52";
@@ -77,29 +75,32 @@ const keyPressed = function(e) {
   }
 };
 
-// Script beginning
+
+// SCRIPT BEGINNING
+//=========================
+// Text fetch
+let text = window.localStorage.getItem('text_to_type');
+// basics 'hard to type' chars replacement
+const regexp = /(«|»|–|—|œ|’)/g;
+text = text.replace(regexp, ()=>{return '-'});
+// DOM typing mechanisms initializations
 const typing_main = new TypingMain(elm_text_to_type, elm_cursor, elm_typing_container, CURSOR_COLOR);
 const typing_overview = new TypingOverview(elm_textall_prev, elm_textall_curr, elm_textall_error);
-// Menu DOM generation
+// DOM Menu generation
 const menu = new Menu(elm_menu, true);
 // colorManager Module call
 loadColorTheme(menu);
-
 elm_modalbox_btnback.addEventListener('click', function() {
   window.location = "./index.html";
 });
 elm_modalbox_btnagain.addEventListener('click', function() {
   window.location.reload();
 });
-
-
 // We need a clean text (without html tags)
 typing_overview.setCurrentHTML(text);
 text = typing_overview.getCurrentText();
-
 // End typing Results statistics in modal-box 
 const typing_result = new TypingResult(elm_modalbox, text);
-
 typing_main.typingSuccess(text);
 document.onkeypress = function(e) { 
   if (elm_textall_curr.innerText.length > 0 || elm_textall_error.innerText.length > 0) {

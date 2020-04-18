@@ -7,7 +7,7 @@
  * colored in cases of success / error)
  */
 
-class TypingOverview {
+export default class TypingOverview {
 
 /**
  * 
@@ -107,5 +107,3 @@ class TypingOverview {
 
   
 }
-
-export { TypingOverview };

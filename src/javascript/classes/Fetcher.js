@@ -8,7 +8,7 @@ import { TERMS_NB_IN_SUIT, SUIT_TERM_LENGTH, NB_SPACES_IN_SYMBOLS_SUIT } from '.
  * <p> - Fetch online article using appropriate fetcher included in ../modules/fetchers/ </p>
  * <p> - Request suit generation from module suitGenerator  </p>
  */
-class Fetcher {
+export default class Fetcher {
 
   constructor() {
   }
@@ -81,5 +81,3 @@ class Fetcher {
   }
 
 }
-
-export { Fetcher };
