@@ -15,29 +15,68 @@ export default class TextPreviewer {
    */
   constructor(elm_root, CHANGE_LENGTH) {
     this.elm_root = elm_root;
+    this.cursor_initial_posY = null;
     this.CHANGE_LENGTH = CHANGE_LENGTH;
     this.current_text = ''; // used for text length changes and text dislay
     this.cut_position = null; // used for text length changes
-    
-        // this.elm_minus = document.createElement('a');
-        // this.elm_minus.addEventListener('click', () => {
-        //   this.change_text_length(false, this.CHANGE_LENGTH);
-        // });
-        // this.elm_plus = document.createElement('a');
-        // this.elm_plus.addEventListener('click', () => {
-        //   this.change_text_length(true, this.CHANGE_LENGTH);
-        // });
-        this.scroll_bar = document.createElement('div');
-        this.scroll_bar.classList.add('text__scrollbar');
-        this.scroll_cursor = document.createElement('div');
-        this.scroll_cursor.classList.add('text__scrollcursor');
-
+    this.scroll_bar = document.createElement('div');
+    this.scroll_bar.classList.add('text__scrollbar');
+    this.scroll_cursor = document.createElement('div');
+    this.scroll_cursor.classList.add('text__scrollcursor');
+    this.scrolling = false;
+    this.last_cursor_y_pos = null;
+    this.scroll_bar_rect = null;
+    this.scroll_cursor_offset = null;
+    this.scroll_cursor.addEventListener('mousedown', e=> {
+      e.preventDefault();
+      this.cursorMouseDown(e);
+    });
+    document.body.addEventListener('mouseup', e=> {
+      this.cursorMouseUp(e);
+    });
     this.elm_start = document.createElement('a');
     this.elm_start.addEventListener('click', () => { 
       this.start();
     });
     this.elm_p = document.createElement('p');
+    document.body.addEventListener('mousemove', e=> {
+      if(this.scrolling) { this.scrollEvent(e) };
+    });
   }
+
+
+  scrollEvent(e) {
+    const y_move = this.cursor_initial_posY - e.clientY + this.scroll_cursor_offset;
+    // console.log(y_move);
+    if (y_move > this.scroll_cursor.offsetHeight && y_move < this.scroll_bar.offsetHeight) {
+      this.scroll_cursor.style.bottom = y_move + "px";
+    }
+  }
+
+
+  cursorMouseDown(e) {
+    this.scrolling = true;
+    const scroll_interval = setInterval( ()=>{
+      // on écoute le changement en Y du curseur de la souris
+      //mouse_y = getYPosition(); 
+      // A la fin, éventuellement on arrête la boucle.
+      if (!this.scrolling) {
+        clearInterval(scroll_interval);
+        console.log(this.scrolling);
+        
+      }
+    }, 100);
+  }
+
+  cursorMouseUp(e) {
+    this.scrolling = false;
+  }
+
+
+
+  // getYPosition() {
+
+  // }
 
   /**
    * 
@@ -57,16 +96,8 @@ export default class TextPreviewer {
     container.classList.add('text__container');
     const scroll = document.createElement('div');
     scroll.classList.add('text__buttons');
-
-        // this.elm_minus.innerText = "-";
-        // this.elm_minus.classList.add('text__button', 'enabled');
-        // this.elm_plus.innerText = "+";
-        // this.elm_plus.classList.add('text__button');
-        // scroll.appendChild(this.elm_minus);
-        // scroll.appendChild(this.elm_plus);
     scroll.appendChild(this.scroll_bar);
     scroll.appendChild(this.scroll_cursor);
-
     container.appendChild(scroll);
     container.appendChild(this.elm_p);
     //---------------------------
@@ -77,6 +108,12 @@ export default class TextPreviewer {
     this.cut_position = this.current_text.length;
     this.elm_root.appendChild(this.elm_start);
     this.elm_root.appendChild(container);
+    console.log(this.scroll_cursor.offsetHeight + "px");
+    this.scroll_cursor.style.bottom = this.scroll_cursor.offsetHeight + "px";
+    this.scroll_bar_rect = this.scroll_bar.getBoundingClientRect();
+    const posY = Math.floor(this.scroll_bar_rect.top);
+    this.cursor_initial_posY = posY + this.scroll_bar.offsetHeight - this.scroll_cursor.offsetHeight;
+    this.scroll_cursor_offset = this.scroll_cursor.offsetHeight + this.scroll_cursor.offsetHeight / 2;
   }
 
   /**
