@@ -1,10 +1,13 @@
 
 /* Properties for page index.html */
 
+p {
+  margin: 0;
+}
+
 .loader {
   display: none;
 }
-
 
 .flash-container {
   position: absolute;
@@ -238,27 +241,22 @@ input:-webkit-autofill {
 }
 
 .text__buttons {
-  margin-right: 50px;
+  margin-right: 30px;
+  width: 40px;
+  position: relative;
 }
 
-
+/* 
 .text__button:first-child {
   border-radius: 5px 5px 0px 0px;
-  /* background: linear-gradient(rgb(38, 104, 126), rgb(19, 74, 105)); */
 }
 
 .text__button:nth-child(2) {
   border-radius: 0px 0px 5px 5px;
-  /* background: linear-gradient(rgb(19, 74, 105), rgb(38, 104, 126)); */
-}
-
-p {
-  margin: 0;
 }
 
 .text__button {
   user-select: none;
-  /* background: rgb(167, 167, 167); */
   color: rgb(116, 116, 116);
   border: 2px solid rgb(116, 116, 116);
   box-shadow: 0 0 40px rgba(0,0,0, 0.5);
@@ -288,4 +286,41 @@ p {
 
 .text__button.enabled:hover {
   background: var(--color-main);
+} */
+
+
+
+.text__scrollbar {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 100%;
+  background: var(--color-maindark);
+  box-shadow: inset 0px 0px 5px 1px rgba(0,0,0, 0.8);
+  /* background: linear-gradient(90deg, var(--color-maindark), #036b77); */
+  /* border: 1px solid var(--color-main); */
+  min-height: 80px;
+  max-height: 280px;
+  border-radius: 6px;
+}
+
+.text__scrollcursor {
+  position: relative;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  height: 16px;
+  width: 20px;
+  border: 2px solid var(--color-main);
+  border-radius: 6px;
+  cursor: pointer;
+  background: inherit;
+  transition: all .2s;
+  background: var(--color-main);
+  box-shadow: inset 0px 0px 5px 0px rgba(255,255,255, 0.4);
+}
+
+.text__scrollcursor:hover {
+  box-shadow: inset 0px 0px 10px 10px rgba(255,255,255, 0.8);
 }
