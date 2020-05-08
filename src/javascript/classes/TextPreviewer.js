@@ -123,7 +123,6 @@ export default class TextPreviewer {
     this.cut_position = this.current_text.length;
     this.elm_root.appendChild(this.elm_start);
     this.elm_root.appendChild(container);
-    this.elm_p.style.width = this.elm_p.offsetWidth + "px";
     container.style.height = container.offsetHeight + "px";
     // Scrollbar variables and Cursor initial position
     const scroll_bar_rect = this.scroll_bar.getBoundingClientRect();

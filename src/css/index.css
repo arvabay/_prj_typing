@@ -233,6 +233,7 @@ input:-webkit-autofill {
 .text__text {
   color: lightgray;
   display: block;
+  width: calc(100% - 80px);
 }
 
 .text__container {
@@ -257,7 +258,7 @@ input:-webkit-autofill {
   width: 20px;
   height: 100%;
   background: var(--color-mainreallydark);
-  /* box-shadow: inset 0px 0px 5px 1px rgba(0,0,0, 0.8); */
+  box-shadow: inset 0px 0px 5px 1px rgba(0,0,0, 0.8);
   box-shadow: inset 0px 0px 12px 5px rgba(0,0,0, 0.5);
   min-height: 80px;
   max-height: 280px;
@@ -270,7 +271,7 @@ input:-webkit-autofill {
   left: 50%;
   transform: translateX(-50%) translate3d(0,0,0);
   height: 23px;
-  width: 24px;
+  width: 26px;
   border: 2px solid var(black);
   border-radius: 6px;
   cursor: grab;
