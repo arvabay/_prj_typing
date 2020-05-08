@@ -19,7 +19,60 @@ export default class TypingMain {
     this.elm_cursor = elm_cursor;
     this.elm_typing_container = elm_typing_container;
     this.CURSOR_COLOR = CURSOR_COLOR;
+    this.first_success = true;
+    // Source position of animations
+    this.animation_position = { x: this.elm_cursor.getBoundingClientRect().left,
+                                y: this.elm_cursor.getBoundingClientRect().top + this.elm_cursor.offsetHeight / 2};
+    console.log(this.animation_position);
   }
+
+
+  createSprite() {
+    this.elm_test = document.createElement('div');
+    const nb = Math.round(this.getRandomNumber(1,3));
+    if (nb === 1) {
+      this.elm_test.classList.add('success-fade-out');
+    } else if (nb === 2) {
+      this.elm_test.classList.add('success-fade-out-slow');
+    } else {
+      this.elm_test.classList.add('success-fade-out-quick');
+    }
+    this.elm_test.style.width = this.getRandomNumber(4, 16) + 'px';
+    this.elm_test.style.height = this.getRandomNumber(4, 16) + 'px';
+    this.elm_test.style.borderRadius = this.getRandomNumber(4, 12) + 'px';
+    this.elm_test.style.background = 'var(--color-main)';
+    this.elm_test.style.position = 'absolute';
+    this.elm_test.style.zIndex = '51';
+    this.elm_test.style.boxShadow = '0px 0px 30px 10px var(--color-main)';
+    this.elm_test.style.top = this.animation_position.y + '10px';
+    this.elm_test.style.left = this.animation_position.x + '10px';
+    document.body.appendChild(this.elm_test);
+    this.animate_sprite(this.elm_test, 150, Math.random(1, 2), this.getRandomNumber(0.1, 0.35));
+  }
+
+  getRandomNumber(min, max) {
+    console.log(Math.random() * (max - min) + min);
+    return Math.random() * (max - min) + min;
+  }
+
+  animate_sprite(elm, max_cycles, x_increase, y_increase) {
+    let cycles = 0;
+    let x = 0;
+    let y = 0;
+    const y_direction = Math.random() >= 0.5 ? '-' : '';
+    const interval = setInterval( ()=>{
+      console.log('moving');
+      elm.style.transform = `translate(-${x}px, ${y_direction}${y}px)`;
+      x += x_increase;
+      y += y_increase;
+      cycles++;
+      if (cycles >= max_cycles) {
+        clearInterval(interval);
+        elm.parentNode.removeChild(elm);
+      }
+    }, 2);
+  }
+
 
 /**
  * 
@@ -28,6 +81,13 @@ export default class TypingMain {
  * @return {Void}
  */
   typingSuccess(text) {
+    if (this.first_success) {
+      this.first_success = false;
+    } else {
+      for (let index = 0; index < this.getRandomNumber(1, 3); index++) {
+        this.createSprite();
+      }
+    }
     let char_to_type = text.substring(0,1); 
     this.elm_cursor.style.background = this.CURSOR_COLOR.true;
     this.elm_typing_container.style.border = "4px solid var(--color-main)";
