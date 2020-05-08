@@ -22,9 +22,13 @@ export default class TextPreviewer {
     this.scroll_bar.classList.add('text__scrollbar');
     this.scroll_cursor = document.createElement('div');
     this.scroll_cursor.classList.add('text__scrollcursor');
-    this.cursor_initial_posY = null;
-    this.scrolling = false;
-    this.scroll_cursor_offset = null;
+    this.scrolling = false; // true when user is scrolling our custom scroll bar
+    this.scroll_cursor_Y_max = null; // cursor Y position shall never exceed this value 
+    this.scroll_bar_Y = null; // Y Position of our custom scroll bar
+    this.eventsInitialization();
+  }
+  
+  eventsInitialization() {
     this.scroll_cursor.addEventListener('mousedown', e=> {
       e.preventDefault();
       this.cursorMouseDown(e);
@@ -42,25 +46,48 @@ export default class TextPreviewer {
     });
   }
 
-
   scrollEvent(e) {
-    const y_move = this.cursor_initial_posY - e.clientY + this.scroll_cursor_offset;
-    // console.log(y_move);
-    if (y_move > this.scroll_cursor.offsetHeight && y_move < this.scroll_bar.offsetHeight) {
-      console.log('move...');
-      this.scroll_cursor.style.bottom = y_move + "px";
+    const y_pos = e.clientY - this.scroll_bar_Y;
+    self = this;
+    // Animation callback
+    function anim() {
+      self.scroll_cursor.style.top = y_pos + "px";
+      const top = parseInt(self.scroll_cursor.style.top.substring(0, self.scroll_cursor.style.top.length -2));
+      if (top < 0) {
+        self.scroll_cursor.style.top = 0 + "px";
+      }
+      else if (top > self.scroll_cursor_Y_max) {
+        self.scroll_cursor.style.top = self.scroll_cursor_Y_max + "px";
+      }
+      const top_after = parseInt(self.scroll_cursor.style.top.substring(0, self.scroll_cursor.style.top.length -2));
+      const percent = Math.ceil(top_after * 100 / self.scroll_cursor_Y_max);
+      self.changeTextLength(percent);
     }
+    // Proper animation call
+    window.requestAnimationFrame(anim);
   }
-
+  
+  /**
+   * 
+   * Reduce / increase displayed text length supposed to by typed, from a given percent
+   * @param {*} percent - Percent of text we want to show
+   */
+  changeTextLength(percent) {
+    percent = percent < 1 ? 1 : percent;
+    const cut_position = Math.ceil(percent * this.current_text.length / 100);
+    this.elm_p.innerHTML = this.current_text.substring(0, cut_position);
+  }
 
   cursorMouseDown(e) {
     this.scrolling = true;
+    this.scroll_cursor.classList.add("text__scrollcursor-scrolling");
+    document.body.style.cursor = "grab";
     const scroll_interval = setInterval( ()=>{
-      // A la fin, éventuellement on arrête la boucle.
+      // Not scrolling anymore ? (mouseup event detection on document.body)
       if (!this.scrolling) {
+        this.scroll_cursor.classList.remove("text__scrollcursor-scrolling");
+        document.body.style.cursor = "initial";
         clearInterval(scroll_interval);
-        console.log(this.scrolling);
-        
       }
     }, 100);
   }
@@ -83,7 +110,7 @@ export default class TextPreviewer {
     const container = document.createElement('div');
     container.classList.add('text__container');
     const scroll = document.createElement('div');
-    scroll.classList.add('text__buttons');
+    scroll.classList.add('text__scroll');
     scroll.appendChild(this.scroll_bar);
     scroll.appendChild(this.scroll_cursor);
     container.appendChild(scroll);
@@ -96,12 +123,14 @@ export default class TextPreviewer {
     this.cut_position = this.current_text.length;
     this.elm_root.appendChild(this.elm_start);
     this.elm_root.appendChild(container);
-    console.log(this.scroll_cursor.offsetHeight + "px");
-    this.scroll_cursor.style.bottom = this.scroll_cursor.offsetHeight + "px";
+    this.elm_p.style.width = this.elm_p.offsetWidth + "px";
+    container.style.height = container.offsetHeight + "px";
+    // Scrollbar variables and Cursor initial position
     const scroll_bar_rect = this.scroll_bar.getBoundingClientRect();
     const posY = Math.floor(scroll_bar_rect.top);
-    this.cursor_initial_posY = posY + this.scroll_bar.offsetHeight - this.scroll_cursor.offsetHeight;
-    this.scroll_cursor_offset = this.scroll_cursor.offsetHeight + this.scroll_cursor.offsetHeight / 2;
+    this.scroll_cursor_Y_max = this.scroll_bar.offsetHeight - this.scroll_cursor.offsetHeight;
+    this.scroll_bar_Y = posY + this.scroll_cursor.offsetHeight / 2;
+    this.scroll_cursor.style.top = this.scroll_bar.offsetHeight - this.scroll_cursor.offsetHeight + "px";
   }
 
   /**
@@ -123,49 +152,6 @@ export default class TextPreviewer {
     }
     window.localStorage.setItem('text_to_type', text_transmitted);
     window.location.href = 'typing.html';
-  }
-
-  /**
-   * 
-   * Result of a click button. Reduce / increase text length supposed to by typed. Disable minus / plus scroll if text is at its min / max size. Keep cut position to know where to apply next reduce / increase
-   * @param {boolean} direction 
-   * @returns {Void}
-   * @private
-   */
-  change_text_length(direction) {
-    // prevent clicks if scroll aren't enabled
-    if (!direction && !this.elm_minus.classList.contains('enabled') ||
-          direction && !this.elm_plus.classList.contains('enabled') )
-    {return;}
-    // Minus click
-    if (direction === false) {
-      this.cut_position = this.cut_position - this.CHANGE_LENGTH;
-      if (this.cut_position <= 0) {
-        this.cut_position = 0;
-        removeClass(this.elm_minus, 'enabled');
-        addClass(this.elm_start, 'disabled');
-      }
-    }
-    // Plus click
-    else {
-      removeClass(this.elm_start, 'disabled');
-      this.cut_position = this.cut_position + this.CHANGE_LENGTH;
-      if (this.cut_position >= this.current_text.length) {
-        this.cut_position = this.current_text.length;
-        this.elm_plus.classList.remove('enabled');
-      }
-    }
-    // Text block update
-    this.elm_p.innerHTML = this.current_text.substring(
-      0, this.cut_position);
-  
-    // Enabling / disabling scroll
-    if (this.cut_position > 0) {
-      addClass(this.elm_minus, 'enabled');
-    }
-    if (this.cut_position < this.current_text.length) {
-      addClass(this.elm_plus, 'enabled');
-    }
   }
 
 
