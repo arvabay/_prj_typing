@@ -1,7 +1,7 @@
 
 import * as generator from '../modules/suitGenerator';
 import * as seekers from '../modules/fetchers';
-import { TERMS_NB_IN_SUIT, SUIT_TERM_LENGTH, NB_SPACES_IN_SYMBOLS_SUIT } from '../../../config/constants.json';
+import { TERMS_NB_IN_SUIT, SUIT_TERM_LENGTH } from '../../../config/constants.json';
 
 /**
  *  @classdesc Manage specific task in order to return expected text :
@@ -73,7 +73,7 @@ export default class Fetcher {
       if (name === 'number') {
         resolve(generator.generateNumbers(SUIT_TERM_LENGTH, TERMS_NB_IN_SUIT));
       } else if (name === 'symbol') {
-        resolve(generator.generateSymbols(SUIT_TERM_LENGTH, TERMS_NB_IN_SUIT, NB_SPACES_IN_SYMBOLS_SUIT));
+        resolve(generator.generateSymbols(SUIT_TERM_LENGTH, TERMS_NB_IN_SUIT));
       } else {
         reject('name inconnu');
       }

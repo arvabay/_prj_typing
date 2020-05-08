@@ -35,19 +35,15 @@ const generate_symbols_suit = function(term_length) {
 export const generateNumbers = function(term_length, terms_nb) {
   let suit = "";
   for (let index = 0; index < terms_nb; index++) {
-    suit += generate_number_suit(term_length) + ' ';
+    suit += generate_number_suit(term_length) + ' &nbsp;';
   }
   return suit;
 }
   
-export const generateSymbols = function(term_length, terms_nb, nb_spaces) {
+export const generateSymbols = function(term_length, terms_nb) {
   let suit = "";
-  let concatenate_spaces = "";
-  for (let i = 0; i < nb_spaces; i++) {
-    concatenate_spaces += "&nbsp;";
-  }
   for (let index = 0; index < terms_nb; index++) {
-    const space = index === terms_nb - 1 ? '' : concatenate_spaces;
+    const space = index === terms_nb - 1 ? '' : " &nbsp;";
     suit += generate_symbols_suit(term_length) + space;
   }
   return suit;
