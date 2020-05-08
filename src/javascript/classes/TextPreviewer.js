@@ -15,7 +15,6 @@ export default class TextPreviewer {
    */
   constructor(elm_root, CHANGE_LENGTH) {
     this.elm_root = elm_root;
-    this.cursor_initial_posY = null;
     this.CHANGE_LENGTH = CHANGE_LENGTH;
     this.current_text = ''; // used for text length changes and text dislay
     this.cut_position = null; // used for text length changes
@@ -23,16 +22,15 @@ export default class TextPreviewer {
     this.scroll_bar.classList.add('text__scrollbar');
     this.scroll_cursor = document.createElement('div');
     this.scroll_cursor.classList.add('text__scrollcursor');
+    this.cursor_initial_posY = null;
     this.scrolling = false;
-    this.last_cursor_y_pos = null;
-    this.scroll_bar_rect = null;
     this.scroll_cursor_offset = null;
     this.scroll_cursor.addEventListener('mousedown', e=> {
       e.preventDefault();
       this.cursorMouseDown(e);
     });
     document.body.addEventListener('mouseup', e=> {
-      this.cursorMouseUp(e);
+      this.scrolling = false;
     });
     this.elm_start = document.createElement('a');
     this.elm_start.addEventListener('click', () => { 
@@ -49,6 +47,7 @@ export default class TextPreviewer {
     const y_move = this.cursor_initial_posY - e.clientY + this.scroll_cursor_offset;
     // console.log(y_move);
     if (y_move > this.scroll_cursor.offsetHeight && y_move < this.scroll_bar.offsetHeight) {
+      console.log('move...');
       this.scroll_cursor.style.bottom = y_move + "px";
     }
   }
@@ -57,8 +56,6 @@ export default class TextPreviewer {
   cursorMouseDown(e) {
     this.scrolling = true;
     const scroll_interval = setInterval( ()=>{
-      // on écoute le changement en Y du curseur de la souris
-      //mouse_y = getYPosition(); 
       // A la fin, éventuellement on arrête la boucle.
       if (!this.scrolling) {
         clearInterval(scroll_interval);
@@ -68,15 +65,6 @@ export default class TextPreviewer {
     }, 100);
   }
 
-  cursorMouseUp(e) {
-    this.scrolling = false;
-  }
-
-
-
-  // getYPosition() {
-
-  // }
 
   /**
    * 
@@ -110,8 +98,8 @@ export default class TextPreviewer {
     this.elm_root.appendChild(container);
     console.log(this.scroll_cursor.offsetHeight + "px");
     this.scroll_cursor.style.bottom = this.scroll_cursor.offsetHeight + "px";
-    this.scroll_bar_rect = this.scroll_bar.getBoundingClientRect();
-    const posY = Math.floor(this.scroll_bar_rect.top);
+    const scroll_bar_rect = this.scroll_bar.getBoundingClientRect();
+    const posY = Math.floor(scroll_bar_rect.top);
     this.cursor_initial_posY = posY + this.scroll_bar.offsetHeight - this.scroll_cursor.offsetHeight;
     this.scroll_cursor_offset = this.scroll_cursor.offsetHeight + this.scroll_cursor.offsetHeight / 2;
   }
