@@ -43,11 +43,12 @@ export default class TypingMain {
     this.elm_test.style.background = 'var(--color-main)';
     this.elm_test.style.position = 'absolute';
     this.elm_test.style.zIndex = '51';
-    this.elm_test.style.boxShadow = '0px 0px 30px 10px var(--color-main)';
+    const spread = this.getRandomNumber(4, 17) + 'px';
+    this.elm_test.style.boxShadow = `0px 0px 30px ${spread} var(--color-main)`;
     this.elm_test.style.top = this.animation_position.y + '10px';
     this.elm_test.style.left = this.animation_position.x + '10px';
     document.body.appendChild(this.elm_test);
-    this.animate_sprite(this.elm_test, 150, Math.random(1, 2), this.getRandomNumber(0.1, 0.35));
+    this.animate_sprite(this.elm_test, 150, this.getRandomNumber(0, 1.4), this.getRandomNumber(0.1, 0.35));
   }
 
   getRandomNumber(min, max) {
