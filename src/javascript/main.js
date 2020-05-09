@@ -20,11 +20,8 @@ const form = document.querySelector('.textrequest');
 const elm_text = document.querySelector('.text__textandbutton');
 const elm_flash = document.querySelector('.flash');
 const elm_menu = document.querySelector('.menu');
-const template_loader = document.getElementsByTagName('template')[0];
-// const elm_loader = template_loader.content.querySelector('.loader');
-
-let close = null;
 // VARIABLES (others)
+let close = null;
 const CHANGE_LENGTH = 70;
 const fetcher = new Fetcher();
 const previewer = new TextPreviewer(elm_text, CHANGE_LENGTH);
@@ -50,9 +47,9 @@ const wordEmitted = function(event) {
   event.preventDefault();
   const word = form__input.value;
   previewer.setPreviewText();
-  // Displaying loader from HTML template
-  var clon = template_loader.content.cloneNode(true);
-  const elm_loader = clon.children[0];
+  // Loader displaying ( Grafikart Library : <spinning-dots></spinning-dots> )
+  const elm_loader = document.createElement('spinning-dots');
+  elm_loader.classList.add('spinningdots');
   elm_text.appendChild(elm_loader);
   fetcher.fetch(site, word).then( (res) => {
     setTimeout( ()=> { 
@@ -62,12 +59,9 @@ const wordEmitted = function(event) {
   }).catch( (e) => {
     flashError(e);
   }).finally( () => {
-    // Loader Hiding
+    // Loader hiding
     elm_loader.classList.add('spinningdots-fadeout');
   });
-
-
-
 }
 
 const createCloseElm = function() {
