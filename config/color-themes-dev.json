@@ -1,7 +1,0 @@
-{
-  "list": [
-      {"color": "blue", "main": "#0ABDD2", "mainlight": "#8FF3FF", "maindark": "#0D7F8B", "mainreallydark": "#0D7F8B", "modalbox": "#070916", "modalborder": "rgba(10, 190, 210, 0.3)", "success": "#baf5fc", "gradient": "#272939"},
-      {"color": "green", "main": "#67D20A", "mainlight": "#C8FC9C", "maindark": "#629c31", "mainreallydark": "#416B1D", "modalbox": "#020A02", "modalborder": "rgba(103, 210, 10, 0.3)", "success": "#e3ffdc", "gradient": "#152507"},
-      {"color": "orange", "main": "#FF9646", "mainlight": "#FFC69B", "maindark": "#e4753a", "mainreallydark": "#e4753a", "modalbox": "#0D0707", "modalborder": "rgba(255, 150, 70, 0.3)", "success": "#ffe6d9", "gradient": "#110100"}
-  ]
-}
