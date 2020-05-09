@@ -6,7 +6,7 @@ p {
 }
 
 .loader {
-  display: none;
+  display: block;
 }
 
 .flash-container {

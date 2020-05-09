@@ -7,6 +7,23 @@
 </head>
 <body>
 
+
+  <!-- Loader -->
+  <template>
+    <div class="loader center-x" style="width: 200px; height: 200px;">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(255, 255, 255, 0.0) none repeat scroll 0% 0%; display: block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+      <g transform="translate(50,50)">
+        <g transform="scale(0.7)">
+        <circle cx="0" cy="0" r="50" fill="#084f5a"></circle>
+        <circle cx="0" cy="-28" r="15" fill="#38737f">
+          <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 0 0;360 0 0"></animateTransform>
+        </circle>
+        </g>
+      </g>
+      </svg>
+    </div>
+  </template>
+
   <!-- Node appended by JS  -->
   <div class="menu">
   </div>
@@ -32,19 +49,6 @@
 
     <div class="text">
       <div class="text__textandbutton">
-        <!-- Loader -->
-        <div class="loader center-x" style="width: 200px; height: 200px;">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(255, 255, 255, 0.0) none repeat scroll 0% 0%; display: block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-          <g transform="translate(50,50)">
-            <g transform="scale(0.7)">
-            <circle cx="0" cy="0" r="50" fill="#084f5a"></circle>
-            <circle cx="0" cy="-28" r="15" fill="#38737f">
-              <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 0 0;360 0 0"></animateTransform>
-            </circle>
-            </g>
-          </g>
-          </svg>
-      </div>
     </div>
         <!-- Loader End -->
     </div>

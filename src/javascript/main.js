@@ -20,7 +20,9 @@ const form = document.querySelector('.textrequest');
 const elm_text = document.querySelector('.text__textandbutton');
 const elm_flash = document.querySelector('.flash');
 const elm_menu = document.querySelector('.menu');
-const loader = document.querySelector('.loader'); 
+const template_loader = document.getElementsByTagName('template')[0];
+// const elm_loader = template_loader.content.querySelector('.loader');
+
 let close = null;
 // VARIABLES (others)
 const CHANGE_LENGTH = 70;
@@ -47,14 +49,25 @@ const wordEmitted = function(event) {
   flashHide();
   event.preventDefault();
   const word = form__input.value;
-  // !!!!
-  // !!!! A FAIRE : les vérifications d'usage sur la variable word
-  fetcher.fetch(site, word).then( (res) => {
-    previewer.setPreviewText();
-    previewer.setPreviewText(res);    
-  }).catch( (e) => {
-    flashError(e);
-  });
+  // >>>>>>> MONTRER LE LOADER
+  var clon = template_loader.content.cloneNode(true);
+  const elm_loader = clon.children[0];
+  console.log(elm_loader);
+  elm_text.appendChild(elm_loader);
+  elm_loader.style.display = 'block';
+  // >> simulation de recherche longue : Enlever le setTimeout pour passage en prod
+  setTimeout(()=>{
+    fetcher.fetch(site, word).then( (res) => {
+      // >>>>>>> CACHER LE LOADER
+      elm_loader.style.display = 'none';
+      previewer.setPreviewText();
+      previewer.setPreviewText(res);    
+    }).catch( (e) => {
+      flashError(e);
+    });
+  }, 1000);
+
+
 }
 
 const createCloseElm = function() {
