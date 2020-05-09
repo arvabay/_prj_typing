@@ -35,7 +35,8 @@ const generate_symbols_suit = function(term_length) {
 export const generateNumbers = function(term_length, terms_nb) {
   let suit = "";
   for (let index = 0; index < terms_nb; index++) {
-    suit += generate_number_suit(term_length) + ' &nbsp;';
+    const space = index === terms_nb - 1 ? '' : ' &nbsp;';
+    suit += generate_number_suit(term_length) + space;
   }
   return suit;
 }
