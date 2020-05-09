@@ -11,6 +11,7 @@ import { addClass } from './modules/helpers';
 // VARIABLES
 //=========================
 // VARIABLES (DOM elements)
+const elm_skip = document.querySelector('.typing__skip');
 const elm_text_to_type = document.querySelector('.typing__text');
 const elm_cursor = document.querySelector('.typing__cursor');
 const elm_typing_container = document.querySelector('.typing__container');
@@ -23,6 +24,7 @@ const elm_modalbox = document.querySelector('.modalbox');
 const elm_modalbox_btnback = document.querySelector('.modalbox__btn-back');
 const elm_modalbox_btnagain = document.querySelector('.modalbox__btn-again');
 // VARIABLES (others)
+let terminated = false;
 let nb_chars_valid = 0;
 const TEXT_TO_TYPE_LGTH = 80;
 const CURSOR_COLOR = {
@@ -41,6 +43,7 @@ function debugPress(e, char_to_type) {
 
 // Typing is over
 const terminate = function() {
+  terminated = true;
   const errors_number = document.querySelectorAll('.color-error').length;
   typing_result.terminate(errors_number);
   // Modal box end-report apparition
@@ -48,6 +51,20 @@ const terminate = function() {
   addClass(elm_modalbg, "opacity-100");
   elm_modalbox.style.zIndex = "52";
   addClass(elm_modalbox, "box-appear");
+}
+
+// Can be called if : 1- correct Key pressed OR 2- character skipped by skip button click 
+const success = function() {
+  typing_overview.manageChar(true);
+  elm_skip.style.display = "none";
+  elm_skip.classList.remove('skip-appear');
+  const next_text = text.substring(nb_chars_valid + 1, nb_chars_valid + TEXT_TO_TYPE_LGTH);
+  typing_main.typingSuccess(next_text);
+  nb_chars_valid++;
+  // Is typing over ?
+  if (nb_chars_valid >= text.length) {
+    terminate();
+  }
 }
 
 // When key pressed
@@ -60,20 +77,20 @@ const keyPressed = function(e) {
   // debugPress(e, char_to_type);
   // KEY PRESSED CORRECT  
   if(char_to_type === String.fromCharCode(e.keyCode)) {
-    typing_overview.manageChar(true);
-    const next_text = text.substring(nb_chars_valid + 1, nb_chars_valid + TEXT_TO_TYPE_LGTH);
-    typing_main.typingSuccess(next_text);
-    nb_chars_valid++;
+    success();
   // KEY PRESSED INCORRECT
   } else {
     typing_overview.manageChar(false);
     typing_main.typingError(char_to_type);
+    elm_skip.style.display = "inline-block";
+    elm_skip.classList.add('skip-appear');
   }
   // Is typing over ?
-  if (nb_chars_valid >= text.length) {
+  if (nb_chars_valid >= text.length && !terminated) {
     terminate();
   }
 };
+
 
 
 // SCRIPT BEGINNING
@@ -88,6 +105,8 @@ const typing_main = new TypingMain(elm_text_to_type, elm_cursor, elm_typing_cont
 const typing_overview = new TypingOverview(elm_textall_prev, elm_textall_curr, elm_textall_error);
 // DOM Menu generation
 const menu = new Menu(elm_menu, true);
+// Skip button if untypable character
+elm_skip.addEventListener('click', function() { success() });
 // colorManager Module call
 loadColorTheme(menu);
 elm_modalbox_btnback.addEventListener('click', function() {

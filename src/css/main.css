@@ -22,6 +22,7 @@ html {
   --color-maindark: #0D7F8B;
   --color-success: #baf5fc;
   --color-error: rgb(255, 0, 98);
+  --color-errorlight: rgb(255, 168, 201);
   --color-gradient: #272939;
   --color-modalborder: #0D7F8B;
   --color-modalbox: #090C1C;

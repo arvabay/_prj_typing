@@ -1,6 +1,45 @@
 
 /* Properties for page typing.html */
 
+.typing {
+  position: relative;
+  z-index: 39;
+}
+
+.typing__skip {
+  display: none;
+  position: absolute;
+  left: 33%;
+  bottom: 5.3rem;
+  text-transform: uppercase;
+  border: 2px solid var(--color-error);
+  color: var(--color-error);
+  line-height: 1.1rem;
+  padding: 2.5px 6px;
+  border-radius: 8px;
+  font-size: 0.62rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.typing__skip:hover {
+  border: 2px solid var(--color-errorlight);
+  color: var(--color-errorlight);
+}
+
+.skip-appear {
+  animation: skip_appear 0.3s forwards ease-in;
+}
+
+@keyframes skip_appear {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
 .typing__container {
   /* background-color: rgba(65, 105, 225, 0.246); */
   display: inline-block;
