@@ -1,4 +1,3 @@
-import { addClass, removeClass } from '../modules/helpers'
 
 /**
  * 

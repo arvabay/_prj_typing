@@ -188,6 +188,20 @@ input:-webkit-autofill {
   word-break: break-all;
 }
 
+.text-fadein {
+  animation: text_fadein ease-in 0.3s forwards;
+}
+@keyframes text_fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+
 .form__btns-suits {
   margin-right: 30px;
 }

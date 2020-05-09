@@ -54,7 +54,15 @@ const wordEmitted = function(event) {
   fetcher.fetch(site, word).then( (res) => {
     setTimeout( ()=> { 
       previewer.setPreviewText();
+      // Text showing animation Start
+      elm_text.style.opacity = '0';
+      elm_text.classList.add('text-fadein');
       previewer.setPreviewText(res);
+      // Text showing animation End
+      setTimeout( () => {
+        elm_text.style.opacity = '1';
+        elm_text.classList.remove('text-fadein');
+      }, 300)
     }, 400);
   }).catch( (e) => {
     flashError(e);

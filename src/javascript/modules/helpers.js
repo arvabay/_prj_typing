@@ -44,3 +44,12 @@ export const getWordsByMinute = function (words_number, seconds) {
 export const getErrorsPercent = function (errors_number, chars_number) {
   return Math.round( ((100 * errors_number) / chars_number) * 10 ) / 10;
 }
+
+/**
+ * Return a random number in a given range (can be equal to the min / max given)
+ * @param {number} min - Range start
+ * @param {number} max - Range end
+ */
+export const getRandomNumber = function(min, max) {
+  return Math.random() * (max - min) + min;
+}

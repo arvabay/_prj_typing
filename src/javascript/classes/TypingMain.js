@@ -1,3 +1,4 @@
+import { getRandomNumber } from '../modules/helpers'
 
 /**
  * 
@@ -29,7 +30,7 @@ export default class TypingMain {
 
   createSprite() {
     this.elm_test = document.createElement('div');
-    const nb = Math.round(this.getRandomNumber(1,3));
+    const nb = Math.round(getRandomNumber(1,3));
     if (nb === 1) {
       this.elm_test.classList.add('success-fade-out');
     } else if (nb === 2) {
@@ -37,18 +38,18 @@ export default class TypingMain {
     } else {
       this.elm_test.classList.add('success-fade-out-quick');
     }
-    this.elm_test.style.width = this.getRandomNumber(4, 16) + 'px';
-    this.elm_test.style.height = this.getRandomNumber(4, 16) + 'px';
-    this.elm_test.style.borderRadius = this.getRandomNumber(4, 12) + 'px';
+    this.elm_test.style.width = getRandomNumber(4, 16) + 'px';
+    this.elm_test.style.height = getRandomNumber(4, 16) + 'px';
+    this.elm_test.style.borderRadius = getRandomNumber(4, 12) + 'px';
     this.elm_test.style.background = 'var(--color-main)';
     this.elm_test.style.position = 'absolute';
     this.elm_test.style.zIndex = '51';
-    const spread = this.getRandomNumber(4, 17) + 'px';
+    const spread = getRandomNumber(4, 17) + 'px';
     this.elm_test.style.boxShadow = `0px 0px 30px ${spread} var(--color-main)`;
     this.elm_test.style.top = this.animation_position.y + '10px';
     this.elm_test.style.left = this.animation_position.x + '10px';
     document.body.appendChild(this.elm_test);
-    this.animate_sprite(this.elm_test, 150, this.getRandomNumber(0, 1.4), this.getRandomNumber(0.1, 0.35));
+    this.animate_sprite(this.elm_test, 150, getRandomNumber(0, 1.4), getRandomNumber(0.1, 0.35));
   }
 
   getRandomNumber(min, max) {
@@ -85,7 +86,7 @@ export default class TypingMain {
     if (this.first_success) {
       this.first_success = false;
     } else {
-      for (let index = 0; index < this.getRandomNumber(1, 3); index++) {
+      for (let index = 0; index < getRandomNumber(1, 3); index++) {
         this.createSprite();
       }
     }
