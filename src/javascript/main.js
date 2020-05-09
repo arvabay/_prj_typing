@@ -8,7 +8,7 @@ import { removeClass, addClass } from './modules/helpers';
 import { loadColorTheme } from './modules/colorManager';
 import { TERMS_NB_IN_SUIT } from '../../config/constants.json';
 import * as fetchers from './modules/fetchers';
-
+import '@grafikart/spinning-dots-element';
 
 // VARIABLES
 //=========================
@@ -49,23 +49,23 @@ const wordEmitted = function(event) {
   flashHide();
   event.preventDefault();
   const word = form__input.value;
-  // >>>>>>> MONTRER LE LOADER
+  previewer.setPreviewText();
+  // Displaying loader from HTML template
   var clon = template_loader.content.cloneNode(true);
   const elm_loader = clon.children[0];
-  console.log(elm_loader);
   elm_text.appendChild(elm_loader);
-  elm_loader.style.display = 'block';
-  // >> simulation de recherche longue : Enlever le setTimeout pour passage en prod
-  setTimeout(()=>{
-    fetcher.fetch(site, word).then( (res) => {
-      // >>>>>>> CACHER LE LOADER
-      elm_loader.style.display = 'none';
+  fetcher.fetch(site, word).then( (res) => {
+    setTimeout( ()=> { 
       previewer.setPreviewText();
-      previewer.setPreviewText(res);    
-    }).catch( (e) => {
-      flashError(e);
-    });
-  }, 1000);
+      previewer.setPreviewText(res);
+    }, 400);
+  }).catch( (e) => {
+    flashError(e);
+  }).finally( () => {
+    // Loader Hiding
+    elm_loader.classList.add('spinningdots-fadeout');
+  });
+
 
 
 }
