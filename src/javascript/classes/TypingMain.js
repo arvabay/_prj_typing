@@ -63,7 +63,6 @@ export default class TypingMain {
     let y = 0;
     const y_direction = Math.random() >= 0.5 ? '-' : '';
     const interval = setInterval( ()=>{
-      console.log('moving');
       elm.style.transform = `translate(-${x}px, ${y_direction}${y}px)`;
       x += x_increase;
       y += y_increase;

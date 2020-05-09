@@ -85,6 +85,10 @@ export default class TypingOverview {
   moveChar(elm_from, elm_to) {
     const text = elm_from.innerText;
     let char = text.substring(0, 1);
+    // Making errors on 'space character' visibles
+    if (char === " " && elm_to === this.elm_error) {
+      char = "␣";
+    }
     if (elm_to === this.elm_prev) {
       char = this.colorizeChar(char, elm_from);
     }
