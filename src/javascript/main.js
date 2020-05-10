@@ -130,6 +130,8 @@ btns.forEach(btn => btn.addEventListener('click', (e) => {
     // Input display for Online text fetch
     form__submitbtn.style.display = 'inline';
     form__input.style.display = 'inline';
+    form__input.focus();
+    form__input.select();
     window.localStorage.removeItem('terms_number');
   } else {
     // Locale generation (suit of characters)

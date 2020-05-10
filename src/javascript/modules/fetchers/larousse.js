@@ -22,7 +22,7 @@ export const larousse = function(word) {
         // console.log(corps.innerHTML);
         resolve(corps.innerHTML);
       } else {
-        reject(not_found);
+        reject();
       }
     }).catch(e => {
       reject('error : ' + e);

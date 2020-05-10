@@ -20,10 +20,12 @@ export default class TextPreviewer {
     this.scroll_bar = document.createElement('div');
     this.scroll_bar.classList.add('text__scrollbar');
     this.scroll_cursor = document.createElement('div');
+    this.elm_p = document.createElement('p');
     this.scroll_cursor.classList.add('text__scrollcursor');
     this.scrolling = false; // true when user is scrolling our custom scroll bar
     this.scroll_cursor_Y_max = null; // cursor Y position shall never exceed this value 
     this.scroll_bar_Y = null; // Y Position of our custom scroll bar
+    this.scroll_bar_height = null; // Height of our custom scroll bar
     this.eventsInitialization();
   }
   
@@ -39,18 +41,51 @@ export default class TextPreviewer {
     this.elm_start.addEventListener('click', () => { 
       this.start();
     });
-    this.elm_p = document.createElement('p');
     document.body.addEventListener('mousemove', e=> {
       if(this.scrolling) { this.scrollEvent(e) };
     });
+    this.scroll_bar.addEventListener('wheel', e=> {
+      e.preventDefault();
+      const direction = e.deltaY.toString().substring(0,1) === '-' ? true : false;
+      this.scrollEvent(e, direction);
+    });
+    this.scroll_cursor.addEventListener('wheel', e=> {
+      e.preventDefault();
+      const direction = e.deltaY.toString().substring(0,1) === '-' ? true : false;
+      this.scrollEvent(e, direction);
+    });    
   }
 
-  scrollEvent(e) {
-    const y_pos = e.clientY - this.scroll_bar_Y;
+
+  scrollEvent(e, direction = null) {
+    let new_cursor_y_pos;
+    // Drag Event
+    if (direction === null) {
+      new_cursor_y_pos = e.clientY - this.scroll_bar_Y;
+    // Wheel Event
+    } else {
+      new_cursor_y_pos = this.scroll_cursor.style.top.replace('px', '');
+      const scroll_amount = this.scroll_bar_height / 14;
+      new_cursor_y_pos = direction  ? parseInt(new_cursor_y_pos, 10) - scroll_amount :
+                                      parseInt(new_cursor_y_pos, 10) + scroll_amount;
+    }
     self = this;
     // Animation callback
     function anim() {
-      self.scroll_cursor.style.top = y_pos + "px";
+      self.scroll_cursor.style.top = new_cursor_y_pos + "px";
+      self.limitCursor().then( ()=> {
+        const top_after = parseInt(self.scroll_cursor.style.top.substring(0, self.scroll_cursor.style.top.length -2));
+        const percent = Math.ceil(top_after * 100 / self.scroll_cursor_Y_max);
+        self.changeTextLength(percent);
+      });
+    }
+    // Proper animation call
+    window.requestAnimationFrame(anim);
+  }
+
+
+  async limitCursor() {
+    return new Promise( (resolve, reject) => {
       const top = parseInt(self.scroll_cursor.style.top.substring(0, self.scroll_cursor.style.top.length -2));
       if (top < 0) {
         self.scroll_cursor.style.top = 0 + "px";
@@ -58,12 +93,8 @@ export default class TextPreviewer {
       else if (top > self.scroll_cursor_Y_max) {
         self.scroll_cursor.style.top = self.scroll_cursor_Y_max + "px";
       }
-      const top_after = parseInt(self.scroll_cursor.style.top.substring(0, self.scroll_cursor.style.top.length -2));
-      const percent = Math.ceil(top_after * 100 / self.scroll_cursor_Y_max);
-      self.changeTextLength(percent);
-    }
-    // Proper animation call
-    window.requestAnimationFrame(anim);
+      resolve();
+    });
   }
   
   /**
@@ -129,6 +160,7 @@ export default class TextPreviewer {
     this.scroll_cursor_Y_max = this.scroll_bar.offsetHeight - this.scroll_cursor.offsetHeight;
     this.scroll_bar_Y = posY + this.scroll_cursor.offsetHeight / 2;
     this.scroll_cursor.style.top = this.scroll_bar.offsetHeight - this.scroll_cursor.offsetHeight + "px";
+    this.scroll_bar_height = this.scroll_bar.offsetHeight;
   }
 
   /**

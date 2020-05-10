@@ -41,8 +41,7 @@ export const universalis = async function(word) {
               const ps = corps.querySelector('p');
               resolve(ps.innerHTML);
             } else {
-              
-              reject(not_found);
+              reject();
             }
           });
         }
