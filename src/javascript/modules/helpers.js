@@ -9,6 +9,21 @@ export const addClass = function(elem, class_name) {
     !elem.classList.contains(class_name) ? elem.classList.add(class_name) : '' ;
   }
 
+
+
+export const readLocalFile = async function(file)
+{
+  return new Promise( (resolve, reject) => {
+    fetch(file, {mode: 'no-cors'})
+    .then(response => response.text())
+    .then(data=> resolve(data))
+    .catch(error => console.error(error));
+  });
+}
+
+
+
+
 /**
  * 
  * Remove given class from Element only if it has

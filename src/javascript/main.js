@@ -1,10 +1,11 @@
 import '../css/main.css';
 import '../css/index.css';
 import '../css/resets/resetButton.css';
+import svg_keyboard from '../assets/keyboard.svg';
 import Fetcher from './classes/Fetcher';
 import TextPreviewer from './classes/TextPreviewer';
 import Menu from './classes/Menu';
-import { removeClass, addClass } from './modules/helpers';
+import { removeClass, addClass, readLocalFile } from './modules/helpers';
 import { loadColorTheme } from './modules/colorManager';
 import { TERMS_NB_IN_SUIT } from '../../config/constants.json';
 import * as fetchers from './modules/fetchers';
@@ -20,6 +21,8 @@ const form = document.querySelector('.textrequest');
 const elm_text = document.querySelector('.text__textandbutton');
 const elm_flash = document.querySelector('.flash');
 const elm_menu = document.querySelector('.menu');
+const elm_img_home = document.querySelector('.imghome');
+const elm_img_home_svg = document.querySelector('.imghome-svg');
 // VARIABLES (others)
 let close = null;
 const CHANGE_LENGTH = 70;
@@ -102,6 +105,11 @@ const flashHide = function() {
 const menu = new Menu(elm_menu, false);
 // colorManager Module call
 loadColorTheme(menu);
+// We want plain file content (not just a link to the file)
+// for convenient svg colors manipulations in CSS
+readLocalFile(svg_keyboard).then( (content) => {
+  elm_img_home_svg.innerHTML = content;
+});
 
 form.addEventListener('submit', wordEmitted);
 
@@ -121,6 +129,7 @@ const btns = document.querySelectorAll('.buttons__button');
 btns.forEach(btn => btn.addEventListener('click', (e) => {
   e.preventDefault();
   flashHide();
+  elm_img_home.style.display = 'none';
   previewer.setPreviewText();
   const btn = event.target || event.srcElement;
   addClass(btn, 'buttons__button-selected');

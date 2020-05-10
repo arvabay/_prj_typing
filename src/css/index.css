@@ -179,6 +179,72 @@ input:-webkit-autofill {
   }
 }
 
+
+
+.imghome {
+  position: relative;
+  opacity: 0.7;
+  margin-left: auto;
+  margin-right: auto;
+  width: 32%;
+  margin-top: 20vh;
+}
+
+.imghome-shadow {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  animation: imghome_shadow 8s cubic-bezier(.63,1.17,.96,.96) infinite;
+}
+
+@keyframes imghome_shadow {
+  /* Sequence */
+  16% {
+    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
+  }
+  20% {
+    opacity: 0.4;
+    box-shadow: 0px 0px 15px 0px var(--color-main), inset 0px -4px 16px 12px var(--color-main);    
+  }
+  30% {
+    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
+  } 
+  /* Sequence */
+  35% {
+    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
+  }
+  40% {
+    opacity: 0.4;
+    box-shadow: 0px 0px 20px 0px var(--color-main), inset 0px -4px 20px 10px var(--color-main);    
+  }
+  50% {
+    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
+  } 
+  /* Sequence */
+  55% {
+    opacity: 0.4;
+    box-shadow: 0px 0px 30px 0px var(--color-main), inset 0px -4px 30px 15px var(--color-main);    
+  }
+  70% {
+    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
+  } 
+  /* Sequence */
+  80% {
+    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
+  }
+  85% {
+    opacity: 0.4;
+    box-shadow: 0px 0px 20px 0px var(--color-main), inset 0px -4px 20px 10px var(--color-main);    
+  }
+  100% {
+    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
+  }  
+}
+
+.imghome svg path {
+  stroke: var(--color-main);
+}
+
 .text {
   margin-left: auto;
   margin-right: auto;
