@@ -1,4 +1,7 @@
 
+import { addClass, removeClass } from '../modules/helpers';
+
+
 /**
  * 
  * @classdesc Build DOM representation of text supposed to be typed.
@@ -19,6 +22,7 @@ export default class TextPreviewer {
     this.cut_position = null; // used for text length changes
     this.scroll_bar = document.createElement('div');
     this.scroll_bar.classList.add('text__scrollbar');
+    this.scroll_bar.classList.add('text__scrollbar-hoverable');
     this.scroll_cursor = document.createElement('div');
     this.elm_p = document.createElement('p');
     this.scroll_cursor.classList.add('text__scrollcursor');
@@ -36,6 +40,7 @@ export default class TextPreviewer {
     });
     document.body.addEventListener('mouseup', e=> {
       this.scrolling = false;
+      addClass(this.scroll_bar, 'text__scrollbar-hoverable');
     });
     this.elm_start = document.createElement('a');
     this.elm_start.addEventListener('click', () => { 
@@ -53,19 +58,23 @@ export default class TextPreviewer {
       e.preventDefault();
       const direction = e.deltaY.toString().substring(0,1) === '-' ? true : false;
       this.scrollEvent(e, direction);
-    });    
+    });
+    this.scroll_bar.addEventListener('click', e=> {
+      const direction = e.clientY < this.scroll_cursor.getBoundingClientRect().top ? true : false;
+      this.scrollEvent(e, direction, true);
+    })  
   }
 
 
-  scrollEvent(e, direction = null) {
+  scrollEvent(e, direction = null, bar_click = false) {
     let new_cursor_y_pos;
     // Drag Event
     if (direction === null) {
       new_cursor_y_pos = e.clientY - this.scroll_bar_Y;
-    // Wheel Event
+    // Wheel or Bar click Event
     } else {
       new_cursor_y_pos = this.scroll_cursor.style.top.replace('px', '');
-      const scroll_amount = this.scroll_bar_height / 14;
+      const scroll_amount = bar_click ? this.scroll_bar_height / 5 : this.scroll_bar_height / 14;
       new_cursor_y_pos = direction  ? parseInt(new_cursor_y_pos, 10) - scroll_amount :
                                       parseInt(new_cursor_y_pos, 10) + scroll_amount;
     }
@@ -110,6 +119,7 @@ export default class TextPreviewer {
 
   cursorMouseDown(e) {
     this.scrolling = true;
+    removeClass(this.scroll_bar, 'text__scrollbar-hoverable');
     this.scroll_cursor.classList.add("text__scrollcursor-scrolling");
     document.body.style.cursor = "grab";
     const scroll_interval = setInterval( ()=>{

@@ -280,6 +280,7 @@ input:-webkit-autofill {
 }
 
 .text__scrollbar {
+  cursor: pointer;
   position: relative;
   left: 50%;
   transform: translateX(-50%) translate3d(0, 0, 0);
@@ -291,11 +292,16 @@ input:-webkit-autofill {
   width: 20px;
   height: 100%;
   background: var(--color-mainreallydark);
-  box-shadow: inset 0px 0px 5px 1px rgba(0,0,0, 0.8);
   box-shadow: inset 0px 0px 12px 5px rgba(0,0,0, 0.5);
   min-height: 80px;
   max-height: 280px;
   border-radius: 6px;
+  transition: all .12s ease-out;
+}
+
+.text__scrollbar-hoverable:hover {
+  /* box-shadow: inset 0px 0px 12px 7px rgba(0,0,0, 0.6); */
+  box-shadow: inset 0px 0px 12px 7px rgba(0,0,0, 0.55);
 }
 
 .text__scrollcursor {
