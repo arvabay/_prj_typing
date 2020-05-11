@@ -367,10 +367,7 @@ input:-webkit-autofill {
 
 .text__scrollbar-hoverable:hover {
   /* box-shadow: inset 0px 0px 12px 7px rgba(0,0,0, 0.6); */
-<<<<<<< HEAD
   cursor: pointer;
-=======
->>>>>>> 2af7bfd72de99ce5b97aa20881ab5549ba334ec1
   box-shadow: inset 0px 0px 12px 7px rgba(0,0,0, 0.55);
 }
 
