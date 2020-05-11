@@ -1,9 +1,15 @@
 
 const url = "https://www.larousse.fr/dictionnaires/francais/";
 
+/**
+ * Return an article content after a research on the well known french site Larousse 
+ * @returns {Promise} - Promise object represents the article content
+ * @param {string} word - Word from which we want to search an article content 
+ */
 export const larousse = function(word) {
 
   return new Promise( (resolve, reject) => {
+
     fetch(url + word + '/').then( response => {
       // console.log(response.headers.get('status'));
       if (response.ok) {
@@ -27,8 +33,8 @@ export const larousse = function(word) {
     }).catch(e => {
       reject('error : ' + e);
     });
-});  
 
+  });
 
 }
 

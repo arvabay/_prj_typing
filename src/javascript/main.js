@@ -43,7 +43,8 @@ let site = null; // The current site/fetcher we want to use for research (change
 //=========================
 /**
  * Remove the specified selection-class on all main buttons,
- * excepted the button passed in parameter 
+ * excepted the button passed in parameter
+ * @returns {void}
  * @param {Element} elm_btn - The element we want it stay unmodified
  */
 const removeBtnsSelection = function(elm_btn) {
@@ -57,6 +58,7 @@ const removeBtnsSelection = function(elm_btn) {
 /**
  * Online text fetch - Get the string typed in input form, show and hide spinner loader,
  * get result of search (Fetcher class job) from specified site name and pass it to TextPreviewer
+ * @returns {void}
  * @param {MouseEvent} event 
  */
 const wordEmitted = function(event) {
@@ -94,6 +96,7 @@ const wordEmitted = function(event) {
 
 /**
  * Create the DOM element in charge to close flash messages box
+ * @returns {void}
  */
 const createCloseElm = function() {
   close = document.createElement("span");
@@ -106,6 +109,7 @@ const createCloseElm = function() {
 
 /**
  * Display a flash box showing the string passed in parameter + a close button
+ * @returns {void}
  * @param {string} message 
  */
 const flashError = function(message) {
@@ -117,6 +121,7 @@ const flashError = function(message) {
 
 /**
  * Close the actual displayed flash box
+ * @returns {void}
  */
 const flashHide = function() {
   elm_flash.style.display = "none";

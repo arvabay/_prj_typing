@@ -18,7 +18,7 @@ import { addClass } from './modules/helpers';
 
 // VARIABLES
 //=========================
-// VARIABLES (DOM elements)
+// -- VARIABLES (DOM elements)
 const elm_skip = document.querySelector('.typing__skip');
 const elm_text_to_type = document.querySelector('.typing__text');
 const elm_cursor = document.querySelector('.typing__cursor');
@@ -31,7 +31,7 @@ const elm_modalbg = document.querySelector('.modalbg');
 const elm_modalbox = document.querySelector('.modalbox');
 const elm_modalbox_btnback = document.querySelector('.modalbox__btn-back');
 const elm_modalbox_btnagain = document.querySelector('.modalbox__btn-again');
-// VARIABLES (others)
+// -- VARIABLES (others)
 let terminated = false;
 let nb_chars_valid = 0;
 const TEXT_TO_TYPE_LGTH = 80;
@@ -51,6 +51,7 @@ function debugPress(e, char_to_type) {
 
 /**
  * Terminate the typing session. Count errors number, and launch session report (modal-box)
+ * @returns {void}
  */
 const terminate = function() {
   terminated = true;
@@ -65,7 +66,8 @@ const terminate = function() {
 
 /**
  * Proceed after success key typed : inform typers, hide skip button, and check if session is over
- * Can be called if : 1- correct Key pressed OR 2- character is skipped by skip button click 
+ * Can be called if : 1- correct Key pressed OR 2- character is skipped by skip button click
+ * @returns {void}
  */
 const success = function() {
   typing_overview.manageChar(true);
@@ -83,6 +85,7 @@ const success = function() {
 /**
  * When key pressed on Keyboard, get the current character and check if it
  * corresponds to key pressed. Calls appropriate operations in cases of Success / Error
+ * @returns {void}
  * @param {KeyEvent} e 
  */
 const keyPressed = function(e) {

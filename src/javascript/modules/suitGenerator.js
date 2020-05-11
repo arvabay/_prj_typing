@@ -1,24 +1,42 @@
 
+const special = ['!', '@', '#', '$', '%', '&', '*', '(', ')', '-', '_', '+', '=', 
+'[', ']', '{', '}', ':', ';', '\'', '"', '<', '>', '/', '?'];
+
 // Private
 //////////////////////////////////////////
-const special = ['!', '@', '#', '$', '%', '&', '*', '(', ')', '-', '_', '+', '=', 
-          '[', ']', '{', '}', ':', ';', '\'', '"', '<', '>', '/', '?'];
-
+/**
+ * Returns a random number in a given range
+ * @private
+ * @returns {number}
+ * @param {number} min - Range start
+ * @param {number} max - Range end
+ */
 const getRandomInt = function(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/**
+ * Returns a block of numbers
+ * @private
+ * @returns {string}
+ * @param {*} term_length - number of characters in the block
+ */
 const generate_number_suit = function(term_length) {
-  // return (Math.random() * Math.pow(10, 17)).toString();
   let term = "";
   for (let index = 0; index < term_length; index++) {
     term += Math.floor(Math.random() * (9 - 1 + 1)) + 1; 
   }
   return term;
 }
-  
+
+/**
+ * Returns a block of symbols
+ * @private
+ * @returns {string}
+ * @param {*} term_length  - number of characters in the block
+ */
 const generate_symbols_suit = function(term_length) {
   let suit = "";
   for (let index = 0; index < term_length; index++) {
@@ -32,6 +50,12 @@ const generate_symbols_suit = function(term_length) {
 
 // Exported
 //////////////////////////////////////////
+/**
+ * Generate a suit of many blocks of numbers.
+ * @returns {string}
+ * @param {number} term_length - The number of characters in a block
+ * @param {number} terms_nb  - The number of blocks in the suit
+ */
 export const generateNumbers = function(term_length, terms_nb) {
   let suit = "";
   for (let index = 0; index < terms_nb; index++) {
@@ -40,7 +64,13 @@ export const generateNumbers = function(term_length, terms_nb) {
   }
   return suit;
 }
-  
+
+/**
+ * Generate a suit of many blocks of symbols.
+ * @returns {string}
+ * @param {number} term_length - The number of characters in a block
+ * @param {number} terms_nb - The number of blocks in the suit
+ */
 export const generateSymbols = function(term_length, terms_nb) {
   let suit = "";
   for (let index = 0; index < terms_nb; index++) {

@@ -1,11 +1,13 @@
-
+// import configs
 import color_themes from '../../../config/color-themes.json';
+// import classes
 import { Menu } from '../classes/Menu';
 
 const CURRENT_ICON_COLOR_OPACITY = 0.25;
 
 /**
- * 
+ * Load a color theme
+ * @returns {void}
  * @param {Menu} menu - Instance of Menu class. Needed for coloring menu DOM icon elements
  * @param {string} color_name - name of the color config ("color: ")
  */
@@ -17,7 +19,8 @@ export const loadColorTheme = function(menu, color_name = null) {
 }
 
 /**
- * 
+ * Keep in browser memory (local storage) the selected color theme name. Call the color theme load
+ * @returns {void}
  * @param {Menu} menu - Instance of Menu class
  * @param {string} color_name - name of the color config ("color: ")
  */
@@ -27,9 +30,10 @@ export const setColorTheme = function(menu, color_name) {
 }
 
 /**
- * 
+ * Change CSS variables for each entry in selected color theme (cf. config : color-themes.json)
  * @private
- * @param {Object} name - item of list in Colors config file
+ * @returns {void}
+ * @param {Object} obj - Current selected color items-list (color-themes.json)
  */
 const changeCssColors = function(obj) {
   Object.entries(obj).forEach( (entry) => {
@@ -39,10 +43,11 @@ const changeCssColors = function(obj) {
 }
 
 /**
- * 
+ * Change appareance of buttons in colors menu selection
  * @private
+ * @returns {void}
  * @param {Menu} menu - Instance of Menu class
- * @param {Object} obj - item of list in Colors config file
+ * @param {Object} obj - Current selected color items-list (color-themes.json)
  */
 const changeMenuStyle = function(menu, obj) {
   const elm_colors = menu.getDivColors();
@@ -56,8 +61,9 @@ const changeMenuStyle = function(menu, obj) {
 }
 
 /**
- * 
+ * Try to find and return a color-items-list from a given theme-name
  * @private
+ * @returns {object}
  * @param {string} name - Name of the color theme to find in the list
  */
 const findTheme = function(name) {
