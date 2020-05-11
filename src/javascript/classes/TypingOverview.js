@@ -10,7 +10,6 @@
 export default class TypingOverview {
 
 /**
- * 
  * @constructor
  * @param {Element} elm_prev - Block containing characters already typed
  * @param {Element} elm_curr - Block containing the entire text that's still need to be typed
@@ -24,7 +23,6 @@ export default class TypingOverview {
   }
 
   /**
-   * 
    * Returns innerText of current-block
    * @returns {string}
    */
@@ -33,20 +31,18 @@ export default class TypingOverview {
   }
 
   /**
-   * 
    * Set Text of current-block
+   * @returns {void}
    * @param {string} text
-   * @returns {Void}
    */
   setCurrentText(text) {
     this.elm_curr.innerText = text;
   }
 
   /**
-   * 
    * Set HTML of current-block. Delete last character if it's a space
+   * @returns {void}
    * @param {string} text 
-   * @returns {Void}
    */
   setCurrentHTML(text) {
     this.elm_curr.innerHTML = text;
@@ -57,10 +53,9 @@ export default class TypingOverview {
   }
 
   /**
-   * 
-   * Specify move of current letter supposed to be typed, in every cases (is the key pressed correct ? And is this the first try or did we already failed > in this last case elm-error isn't empty)
-   * @param {boolean} success
-   * @returns {Void}
+   * Specifies move of current letter supposed to be typed, in every cases (is the key pressed correct ? And is this the first try or did we already failed > in this last case elm-error isn't empty)
+   * @returns {void}
+   * @param {boolean} success - true: key pressed correct - false: key pressed incorrect
    */
   manageChar(success) {
     // Is keyPressed correct ?
@@ -75,12 +70,11 @@ export default class TypingOverview {
   }
 
   /**
-   * 
    * Controls move of current letter supposed to be typed : from a specified block to another.
    * @private
+   * @returns {void}
    * @param {Element} elm_from 
    * @param {Element} elm_to 
-   * @returns {Void}
    */
   moveChar(elm_from, elm_to) {
     const text = elm_from.innerText;
@@ -97,7 +91,6 @@ export default class TypingOverview {
   }
 
 /**
- * 
  * In the case of letter insertion in prev-block (test needed), letter is colorized with correct or incorrect color (<span> with class tag added)
  * @private
  * @param {string} char 

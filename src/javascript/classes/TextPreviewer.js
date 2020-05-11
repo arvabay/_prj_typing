@@ -3,7 +3,6 @@ import { addClass, removeClass } from '../modules/helpers';
 
 
 /**
- * 
  * @classdesc Build DOM representation of text supposed to be typed.
  * Build following blocks in a given root_element : button start, 
  * scroll minus / plus (reduce or increase text length), and text
@@ -11,7 +10,6 @@ import { addClass, removeClass } from '../modules/helpers';
 export default class TextPreviewer {
 
   /**
-   * 
    * @param {Element} elm_root - The DOM Element in wich text and scroll will be append
    */
   constructor(elm_root) {
@@ -31,6 +29,11 @@ export default class TextPreviewer {
     this.eventsInitialization();
   }
   
+  /**
+   * Provides all events listeners of the preview (for now, start button click and scrollbar interactions)
+   * @private
+   * @returns {void}
+   */
   eventsInitialization() {
     this.scroll_cursor.addEventListener('mousedown', e=> {
       e.preventDefault();
@@ -63,7 +66,15 @@ export default class TextPreviewer {
     })  
   }
 
-
+  /**
+   * Provides every scroll interaction with the scrollbar
+   * (1-drag cursor, 2-wheel, or 3-click on the bar) and move the cursor
+   * @private
+   * @returns {void}
+   * @param {Event} e - Event context
+   * @param {boolean} direction - true = to top, false = to bottom (In case of wheel interaction or scrollbar click)
+   * @param {boolean} bar_click - determinates the action of clicking on the scroll bar (not a wheel action or cursor drag)
+   */
   scrollEvent(e, direction = null, bar_click = false) {
     let new_cursor_y_pos;
     // Drag Event
@@ -90,7 +101,11 @@ export default class TextPreviewer {
     window.requestAnimationFrame(anim);
   }
 
-
+  /**
+   * If scrollbar cursor y-position go out of range of the scrollbar, move it to the y-min / y-max allowed
+   * @private
+   * @returns {Promise} - Represents the end of the repositioning operation
+   */
   async limitCursor() {
     return new Promise( (resolve, reject) => {
       const top = parseInt(self.scroll_cursor.style.top.substring(0, self.scroll_cursor.style.top.length -2));
@@ -105,9 +120,10 @@ export default class TextPreviewer {
   }
   
   /**
-   * 
    * Reduce / increase displayed text length supposed to by typed, from a given percent
-   * @param {*} percent - Percent of text we want to show
+   * @private
+   * @returns {void}
+   * @param {number} percent - Percent of text we want to show
    */
   changeTextLength(percent) {
     percent = percent < 1 ? 1 : percent;
@@ -115,6 +131,12 @@ export default class TextPreviewer {
     this.elm_p.innerHTML = this.current_text.substring(0, cut_position);
   }
 
+  /**
+   * Represents the drag and drag-end move of the scrollbar cursor
+   * @private
+   * @returns {void}
+   * @param {Event} e - Event context
+   */
   cursorMouseDown(e) {
     this.scrolling = true;
     removeClass(this.scroll_bar, 'text__scrollbar-hoverable');
@@ -130,12 +152,11 @@ export default class TextPreviewer {
     }, 100);
   }
 
-
   /**
-   * 
-   * Initialize DOM blocks (representating what is supposed to type) with given text
-   * @param {string} text
-   * @returns {Void} 
+   * Initialize DOM blocks (represents what is supposed to be typed) with given text
+   * + scrollbar + button Start
+   * @returns {void} 
+   * @param {string} text - text to display : what is supposed to be typed.
    */
   setPreviewText(text = null) { 
     if (!text) { 
@@ -172,10 +193,10 @@ export default class TextPreviewer {
   }
 
   /**
-   * 
-   * Result of a click button. Start typing : Delete last char of text if it's a space, set text in local storage for next page transmission, and go to typing URL
+   * Result of a start click button. Start typing : Delete last char of text if it's a space,
+   * set text in local storage for next page transmission, and redirect to typing Page
    * @private
-   * @returns {Void}
+   * @returns {void}
    */
   start() {
     if (this.elm_start.classList.contains('disabled')) {

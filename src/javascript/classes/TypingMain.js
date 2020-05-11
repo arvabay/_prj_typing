@@ -1,14 +1,12 @@
 import { getRandomNumber } from '../modules/helpers'
 
 /**
- * 
  * @classdesc Represents the main graphical rendering of what users are typing.
  * Take DOMElements parameters in order to update them at each key pressed 
  */
 export default class TypingMain {
 
 /**
- * 
  * @constructor
  * @param {Element} elm_text_to_type - block containing a piece of the text supposed to be typed soon
  * @param {Element} elm_cursor - block containing the current key to be typed
@@ -26,7 +24,11 @@ export default class TypingMain {
                                 y: this.elm_cursor.getBoundingClientRect().top + this.elm_cursor.offsetHeight / 2};
   }
 
-
+  /**
+   * Creates a div representing a fragment of Letter being pulverized at much speed
+   * @private
+   * @returns {void}
+   */
   createSprite() {
     this.elm_test = document.createElement('div');
     const nb = Math.round(getRandomNumber(1,3));
@@ -51,10 +53,15 @@ export default class TypingMain {
     this.animate_sprite(this.elm_test, 150, getRandomNumber(0, 1.4), getRandomNumber(0.1, 0.35));
   }
 
-  getRandomNumber(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
+  /**
+   * Provides the pulverization animation of the given element (sprite)
+   * @private
+   * @returns {void}
+   * @param {Element} elm - Element to animate
+   * @param {number} max_cycles - Number of movements operated on the element
+   * @param {number} x_increase - Number of pixels on x-axis substracted at each cycle to element position
+   * @param {number} y_increase - Number of pixels on y-axis added at each cycle to element position
+   */
   animate_sprite(elm, max_cycles, x_increase, y_increase) {
     let cycles = 0;
     let x = 0;
@@ -74,10 +81,9 @@ export default class TypingMain {
 
 
 /**
- * 
  * Set Graphical rendering for next character to type after a correct key pressed.
- * @param {string} text - First character of text is put in cursor element, rest of the text put in text-to-type element
  * @return {Void}
+ * @param {string} text - First character of this variable is put in cursor element, rest of characters are put in text-to-type element
  */
   typingSuccess(text) {
     if (this.first_success) {
@@ -109,10 +115,9 @@ export default class TypingMain {
   }
 
 /**
- * 
- * Set Graphical rendering after an correct key pressed.
- * @param {string} char_to_type - Need to know if it's a space, to correctly color the character in cursor
- * @return {Void}
+ * Set Graphical rendering after an incorrect key pressed.
+ * @return {void}
+ * @param {string} char_to_type - The character supposed to by typed. Need to know if it's a space, to correctly color the character in cursor
  */
   typingError(char_to_type) {
     this.elm_cursor.style.background = this.CURSOR_COLOR.false;

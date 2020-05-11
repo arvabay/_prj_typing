@@ -1,5 +1,9 @@
 import { getTime, getWordsByMinute, getErrorsPercent } from '../modules/helpers';
 
+
+/**
+ * @classdesc Supplies statistic informations in report modal box when the typing session is over
+ */
 export default class TypingResult {
 
   constructor(elm_root, text) {
@@ -17,6 +21,7 @@ export default class TypingResult {
     // this.debugProperties()
   }
 
+  // DEV only
   debugProperties() {
     let array = Object.getOwnPropertyNames(this);
     array.forEach( (entry) => {
@@ -24,10 +29,20 @@ export default class TypingResult {
     });
   }
 
+  /**
+   * Count the number of seconds since the typing session start
+   * @private
+   * @returns {void}
+   */
   startDuration() {
     this.duration_interval = setInterval( ()=>{ this.duration += 1 }, 1000 );
   }
 
+  /**
+   * Put the statistic informations in the modal box
+   * @returns {void}
+   * @param {number} errors_number 
+   */
   terminate(errors_number) {
     if (this.duration_interval) {
       // Info - duration

@@ -3,8 +3,19 @@ import { removeClass, addClass } from '../modules/helpers';
 import { setColorTheme } from '../modules/colorManager';
 import color_themes from '../../../config/color-themes.json'
 
+
+/**
+ * @classdesc Create a DOM element Menu in order for example
+ * to change the color theme or back to the home page.
+ */
 export default class Menu {
   
+  /**
+   * Create the DOM elements of the menu. Append the menu to the given root element
+   * @returns {void}
+   * @param {Element} elm_root - the given DOM element the menu will be appended
+   * @param {boolean} append_home_icon - if true, a button linked to the homepage will be appended to the menu.
+   */
   constructor(elm_root, append_home_icon) {
     this.elm_root = elm_root;
     this.append_home_icon = append_home_icon;
@@ -24,35 +35,47 @@ export default class Menu {
   }
 
 
+  /**
+   * Returns the DOM element containing all the color-theme selection buttons
+   * @returns {Element}
+   */
   getDivColors() {
     return this.div_colors;
   }
 
+  /**
+   * Returns the DOM element represents the button deploying all color themes available
+   * @returns {Element}
+   */
   getBtnColorChange() {
     return this.a_colorchange;
   }
 
   /**
-   * 
-   * @param {*} color_name 
+   * Change the color theme by calling the colorManager
    * @private
+   * @returns {void}
+   * @param {string} color_name
    */
   clickOnIconColor(color_name) {
     setColorTheme(this, color_name);
   }
 
   /**
-   * 
+   * Replies the DOM element containing all the color-theme selection buttons
    * @private
+   * @returns {void}
    */
-  replyMenu() {
+  replyColorSelectionMenu() {
     this.div_form_and_colors.classList.remove('menu__colors-deploy');
     this.div_form_and_colors.classList.add('menu__colors-deploy-reverse');
     removeClass(this.a_colorchange, 'menu__item-selected'); 
   }
 
   /**
+   * Build the menu (DOM) and append it to the given root element. Provides the color-theme selection sub-menu
    * @private
+   * @returns {void}
    */
   appendMenu() {
     if (!this.elm_root) {
@@ -112,11 +135,11 @@ export default class Menu {
         this.div_form_2.style.display = 'inline-block';
         this.div_form_and_colors.classList.add('menu__colors-deploy');
       } else {
-        this.replyMenu();
+        this.replyColorSelectionMenu();
       }
     });
     document.body.addEventListener('click', (e) => {
-      this.replyMenu();
+      this.replyColorSelectionMenu();
     });
   }
   

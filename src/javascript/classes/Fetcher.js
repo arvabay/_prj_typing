@@ -3,6 +3,7 @@ import * as generator from '../modules/suitGenerator';
 import * as seekers from '../modules/fetchers';
 import { TERMS_NB_IN_SUIT, SUIT_TERM_LENGTH } from '../../../config/constants.json';
 
+
 /**
  *  @classdesc Manage specific task in order to return expected text :
  * <p> - Fetch online article using appropriate fetcher included in ../modules/fetchers/ </p>
@@ -10,14 +11,16 @@ import { TERMS_NB_IN_SUIT, SUIT_TERM_LENGTH } from '../../../config/constants.js
  */
 export default class Fetcher {
 
+  /**
+   */
   constructor() {
   }
 
   /**
-   * 
    * Returns expected text by analysing type of request
+   * @returns {Promise} - Promise object represents the text result (string)
    * @param {*} name - Name of the seeker (web fetch), or name of suit type (algorithm)
-   * @param {*} word - only for web fetch - Search an article from the word
+   * @param {*} word - only for web fetch - Search an article from this word
    */
   async fetch(name, word = null) {
     return new Promise( (resolve, reject) => {
@@ -49,6 +52,7 @@ export default class Fetcher {
    * 
    * Returns appropriate seeker-function from Name among all fetchers specified in ../modules/fetchers/
    * @private
+   * @returns {Promise} - Promise object represents the fetcher (function)
    * @param {string} param_name 
    */
   async findSeekerFunction(param_name) {
@@ -66,6 +70,7 @@ export default class Fetcher {
    * 
    * Call appropriate function from ../modules/suitGenerator based on suit Name
    * @private
+   * @returns {Promise} - Promise object represents the suit result (string)
    * @param {string} name - 'number' or 'symbol'
    */
   async generate(name) {
