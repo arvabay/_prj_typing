@@ -9,7 +9,7 @@ import { TERMS_NB_IN_SUIT, SUIT_TERM_LENGTH } from '../../../config/constants.js
  * <p> - Fetch online article using appropriate fetcher included in ../modules/fetchers/ </p>
  * <p> - Request suit generation from module suitGenerator  </p>
  */
-export default class Fetcher {
+class Fetcher {
 
   /**
    */
@@ -86,3 +86,5 @@ export default class Fetcher {
   }
 
 }
+
+export default Fetcher;

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-dev": "webpack --mode=development --config webpack.config.js --watch --watchOptions:{ignored: '/node_modules/'}",
     "build-prod": "npm run build-doc && cross-env NODE_ENV=production webpack --mode=production --config webpack.config.js",
-    "build-doc": "jsdoc -r src/javascript"
+    "build-doc": "rm -rf jsdoc && jsdoc -r src/javascript -d jsdoc"
   },
   "author": "",
   "license": "ISC",

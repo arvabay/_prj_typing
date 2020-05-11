@@ -4,7 +4,7 @@ import { getTime, getWordsByMinute, getErrorsPercent } from '../modules/helpers'
 /**
  * @classdesc Supplies statistic informations in report modal box when the typing session is over
  */
-export default class TypingResult {
+class TypingResult {
 
   constructor(elm_root, text) {
     this.text_length = text.length;
@@ -58,3 +58,5 @@ export default class TypingResult {
   }
 
 }
+
+export default TypingResult;

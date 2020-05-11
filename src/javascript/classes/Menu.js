@@ -8,7 +8,7 @@ import color_themes from '../../../config/color-themes.json'
  * @classdesc Create a DOM element Menu in order for example
  * to change the color theme or back to the home page.
  */
-export default class Menu {
+class Menu {
   
   /**
    * Create the DOM elements of the menu. Append the menu to the given root element
@@ -144,4 +144,6 @@ export default class Menu {
   }
   
 }
+
+export default Menu;
   

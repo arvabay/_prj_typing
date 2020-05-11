@@ -7,7 +7,7 @@
  * colored in cases of success / error)
  */
 
-export default class TypingOverview {
+class TypingOverview {
 
 /**
  * @constructor
@@ -102,5 +102,6 @@ export default class TypingOverview {
     return `<span class='${class_name}'>${char}</span>`;
   }
 
-  
 }
+
+export default TypingOverview;

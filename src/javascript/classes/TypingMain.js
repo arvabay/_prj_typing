@@ -4,7 +4,7 @@ import { getRandomNumber } from '../modules/helpers'
  * @classdesc Represents the main graphical rendering of what users are typing.
  * Take DOMElements parameters in order to update them at each key pressed 
  */
-export default class TypingMain {
+class TypingMain {
 
 /**
  * @constructor
@@ -129,5 +129,6 @@ export default class TypingMain {
     }
   }
 
-
 }
+
+export default TypingMain;

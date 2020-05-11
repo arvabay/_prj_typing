@@ -7,7 +7,7 @@ import { addClass, removeClass } from '../modules/helpers';
  * Build following blocks in a given root_element : button start, 
  * scroll minus / plus (reduce or increase text length), and text
  */
-export default class TextPreviewer {
+class TextPreviewer {
 
   /**
    * @param {Element} elm_root - The DOM Element in wich text and scroll will be append
@@ -215,3 +215,6 @@ export default class TextPreviewer {
 
 
 }
+
+
+export default TextPreviewer;
