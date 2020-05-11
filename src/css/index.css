@@ -194,51 +194,63 @@ input:-webkit-autofill {
   height: 100%;
   width: 100%;
   position: absolute;
-  animation: imghome_shadow 8s cubic-bezier(.63,1.17,.96,.96) infinite;
+  animation: imghome_shadow 8s cubic-bezier(.53,.54,.71,.71) infinite;
 }
 
+
 @keyframes imghome_shadow {
-  /* Sequence */
-  16% {
-    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
-  }
-  20% {
-    opacity: 0.4;
-    box-shadow: 0px 0px 15px 0px var(--color-main), inset 0px -4px 16px 12px var(--color-main);    
-  }
-  30% {
-    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
-  } 
-  /* Sequence */
-  35% {
-    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
-  }
-  40% {
-    opacity: 0.4;
-    box-shadow: 0px 0px 20px 0px var(--color-main), inset 0px -4px 20px 10px var(--color-main);    
-  }
-  50% {
-    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
-  } 
-  /* Sequence */
-  55% {
-    opacity: 0.4;
-    box-shadow: 0px 0px 30px 0px var(--color-main), inset 0px -4px 30px 15px var(--color-main);    
-  }
-  70% {
-    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
-  } 
-  /* Sequence */
-  80% {
-    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
-  }
-  85% {
-    opacity: 0.4;
-    box-shadow: 0px 0px 20px 0px var(--color-main), inset 0px -4px 20px 10px var(--color-main);    
-  }
-  100% {
-    box-shadow: 0px 0px 0px 0px var(--color-main), inset 0px -0px 0px 0px var(--color-main);
-  }  
+0% {
+  opacity: 0.6;
+  box-shadow: 0px 4px 70px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);
+}
+10% {
+  opacity: 0.9;
+  box-shadow: 0px 4px 60px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);    
+}
+20% {
+  opacity: 0.4;
+  box-shadow: 0px 4px 50px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);    
+}
+25% {
+  opacity: 0.4;
+  box-shadow: 0px 4px 50px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);    
+}
+30% {
+  opacity: 0.7;
+  box-shadow: 0px 4px 70px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);    
+}
+40% {
+  opacity: 0.2;
+  box-shadow: 0px 4px 30px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);    
+}
+50% {
+  opacity: 0.5;
+  box-shadow: 0px 4px 50px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);    
+}
+55% {
+  opacity: 0.3;
+  box-shadow: 0px 4px 50px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);    
+}
+60% {
+  opacity: 0.7;
+  box-shadow: 0px 4px 50px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);    
+}
+70% {
+  opacity: 0.2;
+  box-shadow: 0px 4px 50px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);    
+}
+80% {
+  opacity: 0.6;
+  box-shadow: 0px 4px 60px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);    
+}
+90% {
+  opacity: 0.3;
+  box-shadow: 0px 4px 50px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);    
+}
+100% {
+  opacity: 0.6;
+  box-shadow: 0px 4px 70px 0px var(--color-main), inset 0px -4px 50px 0px var(--color-main);    
+}
 }
 
 .imghome svg path {
