@@ -13,11 +13,9 @@ export default class TextPreviewer {
   /**
    * 
    * @param {Element} elm_root - The DOM Element in wich text and scroll will be append
-   * @param {number} CHANGE_LENGTH - The number of chars added / removed at each change of text length 
    */
-  constructor(elm_root, CHANGE_LENGTH) {
+  constructor(elm_root) {
     this.elm_root = elm_root;
-    this.CHANGE_LENGTH = CHANGE_LENGTH;
     this.current_text = ''; // used for text length changes and text dislay
     this.cut_position = null; // used for text length changes
     this.scroll_bar = document.createElement('div');

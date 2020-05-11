@@ -1,11 +1,19 @@
+// import CSS
 import '../css/main.css';
 import '../css/typing.css';
+// import classes
 import Menu from './classes/Menu';
 import TypingMain from './classes/TypingMain';
 import TypingOverview from './classes/TypingOverview';
 import TypingResult from './classes/TypingResult';
+// import modules
 import { loadColorTheme } from './modules/colorManager';
 import { addClass } from './modules/helpers';
+
+/**
+ * @typedef {object} KeyEvent
+ */
+
 
 
 // VARIABLES
@@ -35,13 +43,15 @@ const CURSOR_COLOR = {
 
 // FUNCTIONS
 //=========================
-// Debug key pressed
+// ONLY FOR DEV - Debug key pressed
 function debugPress(e, char_to_type) {
   console.log('char typed : ' + String.fromCharCode(e.keyCode) + ', code : ' + e.keyCode);
   console.log('char to type : ' + char_to_type + ', code : ' + char_to_type.charCodeAt() );
 }
 
-// Typing is over
+/**
+ * Terminate the typing session. Count errors number, and launch session report (modal-box)
+ */
 const terminate = function() {
   terminated = true;
   const errors_number = document.querySelectorAll('.color-error').length;
@@ -53,7 +63,10 @@ const terminate = function() {
   addClass(elm_modalbox, "box-appear");
 }
 
-// Can be called if : 1- correct Key pressed OR 2- character skipped by skip button click 
+/**
+ * Proceed after success key typed : inform typers, hide skip button, and check if session is over
+ * Can be called if : 1- correct Key pressed OR 2- character is skipped by skip button click 
+ */
 const success = function() {
   typing_overview.manageChar(true);
   elm_skip.style.display = "none";
@@ -67,7 +80,11 @@ const success = function() {
   }
 }
 
-// When key pressed
+/**
+ * When key pressed on Keyboard, get the current character and check if it
+ * corresponds to key pressed. Calls appropriate operations in cases of Success / Error
+ * @param {KeyEvent} e 
+ */
 const keyPressed = function(e) {
   e.preventDefault();
   e = e || window.event;
@@ -92,35 +109,37 @@ const keyPressed = function(e) {
 };
 
 
-
 // SCRIPT BEGINNING
 //=========================
-// Text fetch
+// Text to type fetch
 let text = window.localStorage.getItem('text_to_type');
 // basics 'hard to type' chars replacement
 const regexp = /(«|»|–|—|œ|’)/g;
 text = text.replace(regexp, ()=>{return '-'});
 // DOM typing mechanisms initializations
-const typing_main = new TypingMain(elm_text_to_type, elm_cursor, elm_typing_container, CURSOR_COLOR);
-const typing_overview = new TypingOverview(elm_textall_prev, elm_textall_curr, elm_textall_error);
+const typing_main = new TypingMain( elm_text_to_type, elm_cursor, elm_typing_container, CURSOR_COLOR );
+const typing_overview = new TypingOverview( elm_textall_prev, elm_textall_curr, elm_textall_error );
 // DOM Menu generation
 const menu = new Menu(elm_menu, true);
-// Skip button if untypable character
+// Skip button event - if untypable character encountered
 elm_skip.addEventListener('click', function() { success() });
 // colorManager Module call
 loadColorTheme(menu);
+// End report modal box buttons events
 elm_modalbox_btnback.addEventListener('click', function() {
   window.location = "./index.html";
 });
 elm_modalbox_btnagain.addEventListener('click', function() {
   window.location.reload();
 });
-// We need a clean text (without html tags)
+// Setting text to typing mechanism
 typing_overview.setCurrentHTML(text);
+// We need a clean text (without html tags)
 text = typing_overview.getCurrentText();
 // End typing Results statistics in modal-box 
 const typing_result = new TypingResult(elm_modalbox, text);
 typing_main.typingSuccess(text);
+// Keyboard key pressed Listening
 document.onkeypress = function(e) { 
   if (elm_textall_curr.innerText.length > 0 || elm_textall_error.innerText.length > 0) {
     keyPressed(e);

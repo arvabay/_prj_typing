@@ -2,4 +2,4 @@
 // (for adding DOM buttons automatically)
 export * from './universalis';
 export * from './larousse';
-export * from './test';
+// export * from './test';

@@ -24,7 +24,6 @@ export default class TypingMain {
     // Source position of animations
     this.animation_position = { x: this.elm_cursor.getBoundingClientRect().left,
                                 y: this.elm_cursor.getBoundingClientRect().top + this.elm_cursor.offsetHeight / 2};
-    console.log(this.animation_position);
   }
 
 
@@ -53,7 +52,6 @@ export default class TypingMain {
   }
 
   getRandomNumber(min, max) {
-    console.log(Math.random() * (max - min) + min);
     return Math.random() * (max - min) + min;
   }
 
