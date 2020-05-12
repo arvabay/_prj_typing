@@ -12,8 +12,8 @@ import { addClass } from './modules/helpers';
 
 /**
  * @typedef {object} KeyEvent
+ * 
  */
-
 
 
 // VARIABLES
@@ -41,75 +41,84 @@ const CURSOR_COLOR = {
 }
 
 
-// FUNCTIONS
+// FUNCTIONS USED FOR  THIS PAGE (namespace typing)
 //=========================
-// ONLY FOR DEV - Debug key pressed
-function debugPress(e, char_to_type) {
-  console.log('char typed : ' + String.fromCharCode(e.keyCode) + ', code : ' + e.keyCode);
-  console.log('char to type : ' + char_to_type + ', code : ' + char_to_type.charCodeAt() );
-}
-
 /**
- * Terminate the typing session. Count errors number, and launch session report (modal-box)
- * @returns {void}
+ * Page "typing.html" entry point
+ * @namespace
  */
-const terminate = function() {
-  terminated = true;
-  const errors_number = document.querySelectorAll('.color-error').length;
-  typing_result.terminate(errors_number);
-  // Modal box end-report apparition
-  elm_modalbg.style.zIndex = "51";
-  addClass(elm_modalbg, "opacity-100");
-  elm_modalbox.style.zIndex = "52";
-  addClass(elm_modalbox, "box-appear");
-}
+const typing = {
 
-/**
- * Proceed after success key typed : inform typers, hide skip button, and check if session is over
- * Can be called if : 1- correct Key pressed OR 2- character is skipped by skip button click
- * @returns {void}
- */
-const success = function() {
-  typing_overview.manageChar(true);
-  elm_skip.style.display = "none";
-  elm_skip.classList.remove('skip-appear');
-  const next_text = text.substring(nb_chars_valid + 1, nb_chars_valid + TEXT_TO_TYPE_LGTH);
-  typing_main.typingSuccess(next_text);
-  nb_chars_valid++;
-  // Is typing over ?
-  if (nb_chars_valid >= text.length) {
-    terminate();
+  // ONLY FOR DEV - Debug key pressed
+  debugPress: function (e, char_to_type) {
+    console.log('char typed : ' + String.fromCharCode(e.keyCode) + ', code : ' + e.keyCode);
+    console.log('char to type : ' + char_to_type + ', code : ' + char_to_type.charCodeAt() );
+  },
+
+  /**
+   * Terminate the typing session. Count errors number, and launch session report (modal-box)
+   * @returns {void}
+   */
+  terminate: function() {
+    terminated = true;
+    const errors_number = document.querySelectorAll('.color-error').length;
+    typing_result.terminate(errors_number);
+    // Modal box end-report apparition
+    elm_modalbg.style.zIndex = "51";
+    addClass(elm_modalbg, "opacity-100");
+    elm_modalbox.style.zIndex = "52";
+    addClass(elm_modalbox, "box-appear");
+  },
+
+  /**
+   * Proceed after success key typed : inform typers, hide skip button, and check if session is over
+   * Can be called if : 1- correct Key pressed OR 2- character is skipped by skip button click
+   * @returns {void}
+   */
+  success: function() {
+    typing_overview.manageChar(true);
+    elm_skip.style.display = "none";
+    elm_skip.classList.remove('skip-appear');
+    const next_text = text.substring(nb_chars_valid + 1, nb_chars_valid + TEXT_TO_TYPE_LGTH);
+    typing_main.typingSuccess(next_text);
+    nb_chars_valid++;
+    // Is typing over ?
+    if (nb_chars_valid >= text.length) {
+      this.terminate();
+    }
+  },
+
+  /**
+   * When key pressed on Keyboard, get the current character and check if it
+   * corresponds to key pressed. Calls appropriate operations in cases of Success / Error
+   * @returns {void}
+   * @param {KeyEvent} e 
+   */
+  keyPressed: function(e) {
+    e.preventDefault();
+    e = e || window.event;
+    let char_to_type = text.substring(nb_chars_valid, nb_chars_valid + 1);
+    // Transforming non-breaking space into breaking space
+    char_to_type = char_to_type.charCodeAt() === 160 ? " " : char_to_type;
+    // this.debugPress(e, char_to_type);
+    // KEY PRESSED CORRECT  
+    if(char_to_type === String.fromCharCode(e.keyCode)) {
+      this.success();
+    // KEY PRESSED INCORRECT
+    } else {
+      typing_overview.manageChar(false);
+      typing_main.typingError(char_to_type);
+      elm_skip.style.display = "inline-block";
+      elm_skip.classList.add('skip-appear');
+    }
+    // Is typing over ?
+    if (nb_chars_valid >= text.length && !terminated) {
+      this.terminate();
+    }
   }
 }
 
-/**
- * When key pressed on Keyboard, get the current character and check if it
- * corresponds to key pressed. Calls appropriate operations in cases of Success / Error
- * @returns {void}
- * @param {KeyEvent} e 
- */
-const keyPressed = function(e) {
-  e.preventDefault();
-  e = e || window.event;
-  let char_to_type = text.substring(nb_chars_valid, nb_chars_valid + 1);
-  // Transforming non-breaking space into breaking space
-  char_to_type = char_to_type.charCodeAt() === 160 ? " " : char_to_type;
-  // debugPress(e, char_to_type);
-  // KEY PRESSED CORRECT  
-  if(char_to_type === String.fromCharCode(e.keyCode)) {
-    success();
-  // KEY PRESSED INCORRECT
-  } else {
-    typing_overview.manageChar(false);
-    typing_main.typingError(char_to_type);
-    elm_skip.style.display = "inline-block";
-    elm_skip.classList.add('skip-appear');
-  }
-  // Is typing over ?
-  if (nb_chars_valid >= text.length && !terminated) {
-    terminate();
-  }
-};
+
 
 
 // SCRIPT BEGINNING
@@ -125,7 +134,7 @@ const typing_overview = new TypingOverview( elm_textall_prev, elm_textall_curr, 
 // DOM Menu generation
 const menu = new Menu(elm_menu, true);
 // Skip button event - if untypable character encountered
-elm_skip.addEventListener('click', function() { success() });
+elm_skip.addEventListener('click', function() { typing.success() });
 // colorManager Module call
 loadColorTheme(menu);
 // End report modal box buttons events
@@ -145,6 +154,6 @@ typing_main.typingSuccess(text);
 // Keyboard key pressed Listening
 document.onkeypress = function(e) { 
   if (elm_textall_curr.innerText.length > 0 || elm_textall_error.innerText.length > 0) {
-    keyPressed(e);
+    typing.keyPressed(e);
   }
 }

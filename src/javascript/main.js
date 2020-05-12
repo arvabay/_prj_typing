@@ -20,6 +20,7 @@ import '@grafikart/spinning-dots-element';
  */
 
 
+
 // VARIABLES
 //=========================
 // -- VARIABLES (DOM elements)
@@ -39,93 +40,102 @@ const previewer = new TextPreviewer(elm_text); // his job is to display start bu
 let site = null; // The current site/fetcher we want to use for research (changed after main-buttons clicks)
 
 
-// FUNCTIONS
+
+// FUNCTIONS USED FOR  THIS PAGE (namespace main)
 //=========================
 /**
- * Remove the specified selection-class on all main buttons,
- * excepted the button passed in parameter
- * @returns {void}
- * @param {Element} elm_btn - The element we want it stay unmodified
+ * Page "main.html" entry point
+ * @namespace
  */
-const removeBtnsSelection = function(elm_btn) {
-  for (let i = 0; i < btns.length; i++) {
-    if (btns[i] !== elm_btn) {
-      removeClass(btns[i], 'buttons__button-selected')
+const main = {
+  
+  /**
+   * Remove the specified selection-class on all main buttons,
+   * excepted the button passed in parameter
+   * @returns {void}
+   * @param {Element} elm_btn - The element we want it stay unmodified
+   */
+  removeBtnsSelection: function(elm_btn) {
+    for (let i = 0; i < btns.length; i++) {
+      if (btns[i] !== elm_btn) {
+        removeClass(btns[i], 'buttons__button-selected')
+      }
     }
+  },
+  
+  /**
+   * Online text fetch - Get the string typed in input form, show and hide spinner loader,
+   * get result of search (Fetcher class job) from specified site name and pass it to TextPreviewer
+   * @returns {void}
+   * @param {MouseEvent} event 
+   */
+  wordEmitted: function(event) {
+    if (!site) {
+      this.flashError("Aucun site n'est actuellement sélectionné pour la recherche");
+    }
+    this.flashHide();
+    event.preventDefault();
+    const word = form__input.value;
+    previewer.setPreviewText();
+    // Loader displaying ( Grafikart Library : <spinning-dots></spinning-dots> )
+    const elm_loader = document.createElement('spinning-dots');
+    elm_loader.classList.add('spinningdots');
+    elm_text.appendChild(elm_loader);
+    fetcher.fetch(site, word).then( (res) => {
+      setTimeout( ()=> { 
+        previewer.setPreviewText();
+        // Text showing animation Start
+        elm_text.style.opacity = '0';
+        elm_text.classList.add('text-fadein');
+        previewer.setPreviewText(res);
+        // Text showing animation End
+        setTimeout( () => {
+          elm_text.style.opacity = '1';
+          elm_text.classList.remove('text-fadein');
+        }, 300)
+      }, 400);
+    }).catch( (e) => {
+      this.flashError(e);
+    }).finally( () => {
+      // Loader hiding
+      elm_loader.classList.add('spinningdots-fadeout');
+    });
+  },
+  
+  /**
+   * Create the DOM element in charge to close flash messages box
+   * @returns {void}
+   */
+  createCloseElm: function() {
+    close = document.createElement("span");
+    close.classList.add("flash-close");
+    close.innerHTML = "&nbsp;&nbsp;X&nbsp;&nbsp;";
+    close.addEventListener('click', function() {
+      this.flashHide();
+    })
+  },
+  
+  /**
+   * Display a flash box showing the string passed in parameter + a close button
+   * @returns {void}
+   * @param {string} message 
+   */
+  flashError: function(message) {
+    if ( close === null ) { this.createCloseElm(); }
+    elm_flash.innerHTML = message;
+    elm_flash.appendChild(close);
+    elm_flash.style.display = "inline";    
+  },
+  
+  /**
+   * Close the actual displayed flash box
+   * @returns {void}
+   */
+  flashHide: function() {
+    elm_flash.style.display = "none";
   }
 }
 
-/**
- * Online text fetch - Get the string typed in input form, show and hide spinner loader,
- * get result of search (Fetcher class job) from specified site name and pass it to TextPreviewer
- * @returns {void}
- * @param {MouseEvent} event 
- */
-const wordEmitted = function(event) {
-  if (!site) {
-    flashError("Aucun site n'est actuellement sélectionné pour la recherche");
-  }
-  flashHide();
-  event.preventDefault();
-  const word = form__input.value;
-  previewer.setPreviewText();
-  // Loader displaying ( Grafikart Library : <spinning-dots></spinning-dots> )
-  const elm_loader = document.createElement('spinning-dots');
-  elm_loader.classList.add('spinningdots');
-  elm_text.appendChild(elm_loader);
-  fetcher.fetch(site, word).then( (res) => {
-    setTimeout( ()=> { 
-      previewer.setPreviewText();
-      // Text showing animation Start
-      elm_text.style.opacity = '0';
-      elm_text.classList.add('text-fadein');
-      previewer.setPreviewText(res);
-      // Text showing animation End
-      setTimeout( () => {
-        elm_text.style.opacity = '1';
-        elm_text.classList.remove('text-fadein');
-      }, 300)
-    }, 400);
-  }).catch( (e) => {
-    flashError(e);
-  }).finally( () => {
-    // Loader hiding
-    elm_loader.classList.add('spinningdots-fadeout');
-  });
-}
-
-/**
- * Create the DOM element in charge to close flash messages box
- * @returns {void}
- */
-const createCloseElm = function() {
-  close = document.createElement("span");
-  close.classList.add("flash-close");
-  close.innerHTML = "&nbsp;&nbsp;X&nbsp;&nbsp;";
-  close.addEventListener('click', function() {
-    flashHide();
-  })
-}
-
-/**
- * Display a flash box showing the string passed in parameter + a close button
- * @returns {void}
- * @param {string} message 
- */
-const flashError = function(message) {
-  if ( close === null ) { createCloseElm(); }
-  elm_flash.innerHTML = message;
-  elm_flash.appendChild(close);
-  elm_flash.style.display = "inline";    
-}
-
-/**
- * Close the actual displayed flash box
- * @returns {void}
- */
-const flashHide = function() {
-  elm_flash.style.display = "none";
-}
 
 
 // SCRIPT BEGINNING
@@ -140,7 +150,7 @@ readLocalFile(svg_keyboard).then( (content) => {
   elm_img_home_svg.innerHTML = content;
 });
 // Launch a research
-form.addEventListener('submit', wordEmitted);
+form.addEventListener('submit', main.wordEmitted);
 // Main-buttons generation (some are by default -directly in html template-,
 // others depend on fetchers added in /modules/fetchers/)
 Object.entries(fetchers).forEach(([name, exported]) => {
@@ -157,13 +167,13 @@ const btns = document.querySelectorAll('.buttons__button');
 btns.forEach(btn => btn.addEventListener('click', (e) => {
   // Resetting displayed elements
   e.preventDefault();
-  flashHide();
+  main.flashHide();
   elm_img_home.style.display = 'none';
   previewer.setPreviewText();
   // Stylinzing main-buttons (selection and unselection)
   const btn = event.target || event.srcElement;
   addClass(btn, 'buttons__button-selected');
-  removeBtnsSelection(btn);
+  main.removeBtnsSelection(btn);
   // Input display for Online text fetch
   if (btn.dataset.type === 'online') {
     site = btn.dataset.site;
