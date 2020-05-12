@@ -10,14 +10,10 @@ import TextPreviewer from './classes/TextPreviewer';
 import Menu from './classes/Menu';
 // import modules
 import { removeClass, addClass, readLocalFile } from './modules/helpers';
-import { loadColorTheme } from './modules/colorManager';
+import { changeColorTheme } from './modules/colorManager';
 import * as fetchers from './modules/fetchers';
 // import external libraries
 import '@grafikart/spinning-dots-element';
-
-/**
- * @typedef {object} MouseEvent
- */
 
 
 
@@ -67,14 +63,12 @@ const main = {
    * Online text fetch - Get the string typed in input form, show and hide spinner loader,
    * get result of search (Fetcher class job) from specified site name and pass it to TextPreviewer
    * @returns {void}
-   * @param {MouseEvent} event 
    */
-  wordEmitted: function(event) {
+  wordEmitted: function() {
     if (!site) {
       this.flashError("Aucun site n'est actuellement sélectionné pour la recherche");
     }
     this.flashHide();
-    event.preventDefault();
     const word = form__input.value;
     previewer.setPreviewText();
     // Loader displaying ( Grafikart Library : <spinning-dots></spinning-dots> )
@@ -143,14 +137,17 @@ const main = {
 // DOM Menu generation
 const menu = new Menu(elm_menu, false);
 // colorManager Module call
-loadColorTheme(menu);
+changeColorTheme(menu);
 // Image home : We want plain file content (not just a link to the file)
 // for convenient svg colors manipulations in CSS
 readLocalFile(svg_keyboard).then( (content) => {
   elm_img_home_svg.innerHTML = content;
 });
 // Launch a research
-form.addEventListener('submit', main.wordEmitted);
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  main.wordEmitted();
+});
 // Main-buttons generation (some are by default -directly in html template-,
 // others depend on fetchers added in /modules/fetchers/)
 Object.entries(fetchers).forEach(([name, exported]) => {

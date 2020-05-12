@@ -5,12 +5,12 @@ import { addClass, removeClass } from '../modules/helpers';
 /**
  * @classdesc Build DOM representation of text supposed to be typed.
  * Build following blocks in a given root_element : button start, 
- * scroll minus / plus (reduce or increase text length), and text
+ * scrollbar, and text
  */
 class TextPreviewer {
 
   /**
-   * @param {Element} elm_root - The DOM Element in wich text and scroll will be append
+   * @param {Element} elm_root - The DOM Element in wich button start, text and scrollbar will be append
    */
   constructor(elm_root) {
     this.elm_root = elm_root;

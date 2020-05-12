@@ -1,6 +1,6 @@
 import '../../css/menu.css';
 import { removeClass, addClass } from '../modules/helpers';
-import { setColorTheme } from '../modules/colorManager';
+import { saveAndChangeColorTheme } from '../modules/colorManager';
 import color_themes from '../../../config/color-themes.json'
 
 
@@ -58,7 +58,7 @@ class Menu {
    * @param {string} color_name
    */
   clickOnIconColor(color_name) {
-    setColorTheme(this, color_name);
+    saveAndChangeColorTheme(this, color_name);
   }
 
   /**

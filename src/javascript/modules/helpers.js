@@ -1,7 +1,7 @@
 
 /**
  * @module helpers
- * @description Utilitaries fonctions for various deteached operations
+ * @description Utilitaries functions for various deteached operations
  */
 
 

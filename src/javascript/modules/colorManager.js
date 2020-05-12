@@ -17,7 +17,7 @@ const CURRENT_ICON_COLOR_OPACITY = 0.25;
  * @param {Menu} menu - Instance of Menu class. Needed for coloring menu DOM icon elements
  * @param {string} color_name - name of the color config ("color: ")
  */
-const loadColorTheme = function(menu, color_name = null) {
+const changeColorTheme = function(menu, color_name = null) {
   let storage_color = color_name ?? window.localStorage.getItem('color-theme');
   const obj = findTheme(storage_color);
   changeCssColors(obj);
@@ -29,9 +29,9 @@ const loadColorTheme = function(menu, color_name = null) {
  * @param {Menu} menu - Instance of Menu class
  * @param {string} color_name - name of the color config ("color: ")
  */
-const setColorTheme = function(menu, color_name) {
+const saveAndChangeColorTheme = function(menu, color_name) {
   window.localStorage.setItem('color-theme', color_name);
-  loadColorTheme(menu, color_name);
+  changeColorTheme(menu, color_name);
 }
 
 /**
@@ -79,4 +79,4 @@ const findTheme = function(name) {
 
 
 // renommer en changeColorTheme et saveAndChangeColorTheme
-export {loadColorTheme, setColorTheme};
+export {changeColorTheme, saveAndChangeColorTheme};

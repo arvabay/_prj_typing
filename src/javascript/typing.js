@@ -7,7 +7,7 @@ import TypingMain from './classes/TypingMain';
 import TypingOverview from './classes/TypingOverview';
 import TypingResult from './classes/TypingResult';
 // import modules
-import { loadColorTheme } from './modules/colorManager';
+import { changeColorTheme } from './modules/colorManager';
 import { addClass } from './modules/helpers';
 
 /**
@@ -136,7 +136,7 @@ const menu = new Menu(elm_menu, true);
 // Skip button event - if untypable character encountered
 elm_skip.addEventListener('click', function() { typing.success() });
 // colorManager Module call
-loadColorTheme(menu);
+changeColorTheme(menu);
 // End report modal box buttons events
 elm_modalbox_btnback.addEventListener('click', function() {
   window.location = "./index.html";
