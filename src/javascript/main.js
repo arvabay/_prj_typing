@@ -148,6 +148,9 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   main.wordEmitted();
 });
+// Prevent menus collision
+const menu_width = elm_menu.offsetWidth.toString();
+elm_buttons.style.width = `calc(100% - ${menu_width}px - 60px)`;
 // Main-buttons generation (some are by default -directly in html template-,
 // others depend on fetchers added in /modules/fetchers/)
 Object.entries(fetchers).forEach(([name, exported]) => {

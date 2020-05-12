@@ -1,6 +1,7 @@
 
 /* Properties for page index.html */
 
+
 p {
   margin: 0;
 }
@@ -134,7 +135,6 @@ input:-webkit-autofill {
   display: flex;
   justify-content: center;
 }
-
 
 .buttons {
   padding-top: 26px;
@@ -401,4 +401,17 @@ input:-webkit-autofill {
 
 .text__scrollcursor:hover, .text__scrollcursor-scrolling {
   box-shadow: inset 0px 0px 10px 4px rgba(255,255,255, 0.9), 0px 0px 10px black;
+}
+
+
+/* RESPONSIVE */
+/* ====================== */
+
+@media screen and (max-width: 820px) {
+  .form__buttonlaunch {
+    width: 200px;
+  }
+  .text {
+    width: 80%;
+  }
 }
