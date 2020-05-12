@@ -1,10 +1,16 @@
 
 /**
+ * @module helpers
+ * @description Utilitaries fonctions for various deteached operations
+ */
+
+
+/**
  * Return the content of a file
  * @returns {Promise} - Promise object represents the content of the file
  * @param {string} file_path - the file path the content need to be returned 
  */
-export const readLocalFile = async function(file_path)
+const readLocalFile = async function(file_path)
 {
   return new Promise( (resolve, reject) => {
     fetch(file_path, {mode: 'no-cors'})
@@ -20,7 +26,7 @@ export const readLocalFile = async function(file_path)
  * @param {number} min - Range start
  * @param {number} max - Range end
  */
-export const getRandomNumber = function(min, max) {
+const getRandomNumber = function(min, max) {
   return Math.random() * (max - min) + min;
 }
 
@@ -30,7 +36,7 @@ export const getRandomNumber = function(min, max) {
  * @param {Element} elem - DOM Element to treat
  * @param {string} class_name - Name of the class
  */
-export const addClass = function(elem, class_name) {
+const addClass = function(elem, class_name) {
     !elem.classList.contains(class_name) ? elem.classList.add(class_name) : '' ;
   }
 
@@ -40,16 +46,16 @@ export const addClass = function(elem, class_name) {
  * @param {Element} elem - DOM Element to treat
  * @param {string} class_name - Name of the class
  */
-export const removeClass = function(elem, class_name) {
+const removeClass = function(elem, class_name) {
     elem.classList.contains(class_name) ? elem.classList.remove(class_name) : ''
   }
-
+  
 /**
  * Transform a number of seconds into a string readable by humans
  * @returns {number}
  * @param {number} duration - Number of seconds we need to convert into hours / minutes / seconds
  */
-export const getTime = function(duration) {
+const getTime = function(duration) {
   if (duration >= 3600) {
     return "+ d'1 heure"
   }
@@ -67,7 +73,7 @@ export const getTime = function(duration) {
  * @param {number} words_number 
  * @param {number} seconds 
  */
-export const getWordsByMinute = function (words_number, seconds) {
+const getWordsByMinute = function (words_number, seconds) {
   return Math.floor((60 * words_number) / seconds);
 }
 
@@ -77,6 +83,10 @@ export const getWordsByMinute = function (words_number, seconds) {
  * @param {*} errors_number 
  * @param {*} chars_number 
  */
-export const getErrorsPercent = function (errors_number, chars_number) {
+const getErrorsPercent = function (errors_number, chars_number) {
   return Math.round( ((100 * errors_number) / chars_number) * 10 ) / 10;
 }
+
+
+
+export { readLocalFile, getRandomNumber, addClass, removeClass, getTime, getWordsByMinute, getErrorsPercent };

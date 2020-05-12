@@ -1,4 +1,9 @@
 
+/**
+ * @module suitGenerator
+ * @description Provides random generations of various string suits types (symbols, numbers)
+ */
+
 const special = ['!', '@', '#', '$', '%', '&', '*', '(', ')', '-', '_', '+', '=', 
 '[', ']', '{', '}', ':', ';', '\'', '"', '<', '>', '/', '?'];
 
@@ -56,7 +61,7 @@ const generate_symbols_suit = function(term_length) {
  * @param {number} term_length - The number of characters in a block
  * @param {number} terms_nb  - The number of blocks in the suit
  */
-export const generateNumbers = function(term_length, terms_nb) {
+const generateNumbers = function(term_length, terms_nb) {
   let suit = "";
   for (let index = 0; index < terms_nb; index++) {
     const space = index === terms_nb - 1 ? '' : ' &nbsp;';
@@ -71,7 +76,7 @@ export const generateNumbers = function(term_length, terms_nb) {
  * @param {number} term_length - The number of characters in a block
  * @param {number} terms_nb - The number of blocks in the suit
  */
-export const generateSymbols = function(term_length, terms_nb) {
+const generateSymbols = function(term_length, terms_nb) {
   let suit = "";
   for (let index = 0; index < terms_nb; index++) {
     const space = index === terms_nb - 1 ? '' : " &nbsp;";
@@ -80,3 +85,5 @@ export const generateSymbols = function(term_length, terms_nb) {
   return suit;
 }
 //////////////////////////////////////////
+
+export { generateNumbers, generateSymbols };
