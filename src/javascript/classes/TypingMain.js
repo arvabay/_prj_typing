@@ -19,7 +19,17 @@ class TypingMain {
     this.elm_typing_container = elm_typing_container;
     this.CURSOR_COLOR = CURSOR_COLOR;
     this.first_success = true;
-    // Source position of animations
+    // x / y position for starting sprites animations
+    this.redefineAnimationPosition();
+    window.onresize = () => { this.redefineAnimationPosition(); };
+  }
+
+
+
+  /**
+   * Update position of sprites animations start 
+   */
+  redefineAnimationPosition() {
     this.animation_position = { x: this.elm_cursor.getBoundingClientRect().left,
                                 y: this.elm_cursor.getBoundingClientRect().top + this.elm_cursor.offsetHeight / 2};
   }
@@ -30,27 +40,27 @@ class TypingMain {
    * @returns {void}
    */
   createSprite() {
-    this.elm_test = document.createElement('div');
+    this.elm_sprite = document.createElement('div');
     const nb = Math.round(getRandomNumber(1,3));
     if (nb === 1) {
-      this.elm_test.classList.add('success-fade-out');
+      this.elm_sprite.classList.add('success-fade-out');
     } else if (nb === 2) {
-      this.elm_test.classList.add('success-fade-out-slow');
+      this.elm_sprite.classList.add('success-fade-out-slow');
     } else {
-      this.elm_test.classList.add('success-fade-out-quick');
+      this.elm_sprite.classList.add('success-fade-out-quick');
     }
-    this.elm_test.style.width = getRandomNumber(4, 16) + 'px';
-    this.elm_test.style.height = getRandomNumber(4, 16) + 'px';
-    this.elm_test.style.borderRadius = getRandomNumber(4, 12) + 'px';
-    this.elm_test.style.background = 'var(--color-main)';
-    this.elm_test.style.position = 'absolute';
-    this.elm_test.style.zIndex = '51';
+    this.elm_sprite.style.width = getRandomNumber(4, 16) + 'px';
+    this.elm_sprite.style.height = getRandomNumber(4, 16) + 'px';
+    this.elm_sprite.style.borderRadius = getRandomNumber(4, 12) + 'px';
+    this.elm_sprite.style.background = 'var(--color-main)';
+    this.elm_sprite.style.position = 'absolute';
+    this.elm_sprite.style.zIndex = '51';
     const spread = getRandomNumber(4, 17) + 'px';
-    this.elm_test.style.boxShadow = `0px 0px 30px ${spread} var(--color-main)`;
-    this.elm_test.style.top = this.animation_position.y + '10px';
-    this.elm_test.style.left = this.animation_position.x + '10px';
-    document.body.appendChild(this.elm_test);
-    this.animate_sprite(this.elm_test, 150, getRandomNumber(0, 1.4), getRandomNumber(0.1, 0.35));
+    this.elm_sprite.style.boxShadow = `0px 0px 30px ${spread} var(--color-main)`;
+    this.elm_sprite.style.top = (this.animation_position.y) + 'px';
+    this.elm_sprite.style.left = (this.animation_position.x) + 'px';
+    document.body.appendChild(this.elm_sprite);
+    this.animate_sprite(this.elm_sprite, 150, getRandomNumber(0, 1.4), getRandomNumber(0.1, 0.35));
   }
 
   /**

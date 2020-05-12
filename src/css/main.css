@@ -43,6 +43,13 @@ html, body {
   margin: 0;
 }
 
+body {
+  color: var(--color-main);
+  font-family: palanquin-medium, sans-serif;
+  background: linear-gradient(#030616 45%, var(--color-gradient));
+  min-height: 100vh;
+}
+
 .strong {
   font-weight: bold;
 }
@@ -61,24 +68,5 @@ html, body {
 }
 
 .color-success {
-  /* color: var(--color-success); */
   color: var(--color-main);
 }
-
-body {
-  color: var(--color-main);
-  /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
-  font-family: palanquin-medium, sans-serif;
-  /* background: linear-gradient(#131220, #2c2c2c); */
-  background: linear-gradient(#030616 45%, var(--color-gradient));
-  min-height: 100vh;
-  /* hyphens: auto; */
-
-}
-
-/* .test {
-  background-image: url('../assets/test.jpg');
-  background-position: center center;
-  height: 100px;
-  width: 400px;
-} */
