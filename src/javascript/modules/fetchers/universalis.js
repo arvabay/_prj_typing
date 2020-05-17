@@ -2,7 +2,8 @@
 const url = "https://www.universalis.fr/encyclopedie/";
 
 /**
- * Return an article content after a research on the well known french site Universalis 
+ * Return an article content after a research on the well known french site Universalis
+ * @function
  * @returns {Promise} - Promise object represents the article content
  * @param {string} word - Word from which we want to search an article content 
  */

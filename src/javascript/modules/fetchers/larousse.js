@@ -2,7 +2,8 @@
 const url = "https://www.larousse.fr/dictionnaires/francais/";
 
 /**
- * Return an article content after a research on the well known french site Larousse 
+ * Return an article content after a research on the well known french site Larousse
+ * @function
  * @returns {Promise} - Promise object represents the article content
  * @param {string} word - Word from which we want to search an article content 
  */
