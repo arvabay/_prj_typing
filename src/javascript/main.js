@@ -3,18 +3,19 @@ import '../css/main.css';
 import '../css/index.css';
 import '../css/resets/resetButton.css';
 import svg_keyboard from '../assets/keyboard.svg';
+import favicon from '../assets/favicon.ico';
 import { TERMS_NB_IN_SUIT } from '../../config/constants.json';
 // import classes
 import Fetcher from './classes/Fetcher';
 import TextPreviewer from './classes/TextPreviewer';
 import Menu from './classes/Menu';
 // import modules
-import { removeClass, addClass, readLocalFile } from './modules/helpers';
+import { removeClass, addClass } from './modules/helpers';
 import { changeColorTheme } from './modules/colorManager';
 import * as fetchers from './modules/fetchers';
 // import external libraries
 import '@grafikart/spinning-dots-element';
-import '../assets/favicon.ico';
+
 
 
 // VARIABLES
@@ -134,15 +135,14 @@ const main = {
 
 // SCRIPT BEGINNING
 //=========================
+var link = document.querySelector("link[rel*='icon']");
+link.href = favicon;
 // DOM Menu generation
 const menu = new Menu(elm_menu, false);
 // colorManager Module call
 changeColorTheme(menu);
-// Image home : We want plain file content (not just a link to the file)
-// for convenient svg colors manipulations in CSS
-readLocalFile(svg_keyboard).then( (content) => {
-  elm_img_home_svg.innerHTML = content;
-});
+// Home image (with content, not only path, for convenient CSS manipulations)
+elm_img_home_svg.innerHTML = svg_keyboard;
 // Launch a research
 form.addEventListener('submit', (e) => {
   e.preventDefault();

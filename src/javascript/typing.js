@@ -1,6 +1,7 @@
-// import CSS
+// import CSS and Assets
 import '../css/main.css';
 import '../css/typing.css';
+import favicon from '../assets/favicon.ico';
 // import classes
 import Menu from './classes/Menu';
 import TypingMain from './classes/TypingMain';
@@ -123,6 +124,8 @@ const typing = {
 
 // SCRIPT BEGINNING
 //=========================
+var link = document.querySelector("link[rel*='icon']");
+link.href = favicon;
 // Text to type fetch
 let text = window.localStorage.getItem('text_to_type');
 // basics 'hard to type' chars replacement

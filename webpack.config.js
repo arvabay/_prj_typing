@@ -1,7 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -10,7 +9,6 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    // filename: 'bundle.js'
     filename: '[name].js',
   },
   plugins: [
@@ -27,7 +25,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].css"
     }),
-    // new CleanWebpackPlugin()
   ],
   module: {
     rules: [
@@ -59,7 +56,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|jpe?g|gif|ico|svg)$/,
+        test: /\.(png|jpe?g|gif|ico)$/,
         use: [
           {
             loader: "file-loader",
@@ -71,6 +68,10 @@ module.exports = {
             loader: 'image-webpack-loader'
           }
         ]
+      },
+      {
+        test: /\.svg$/,
+        use: 'raw-loader'
       },
       {
         test: /\.(woff|woff2|ttf|otf|eot)$/,

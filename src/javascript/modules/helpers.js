@@ -6,21 +6,6 @@
 
 
 /**
- * Return the content of a file
- * @returns {Promise} - Promise object represents the content of the file
- * @param {string} file_path - the file path the content need to be returned 
- */
-const readLocalFile = async function(file_path)
-{
-  return new Promise( (resolve, reject) => {
-    fetch(file_path, {mode: 'no-cors'})
-    .then(response => response.text())
-    .then(data=> resolve(data))
-    .catch(error => console.error(error));
-  });
-}
-
-/**
  * Return a random number in a given range (can be equal to the min / max given)
  * @returns {number}
  * @param {number} min - Range start
@@ -89,4 +74,4 @@ const getErrorsPercent = function (errors_number, chars_number) {
 
 
 
-export { readLocalFile, getRandomNumber, addClass, removeClass, getTime, getWordsByMinute, getErrorsPercent };
+export { getRandomNumber, addClass, removeClass, getTime, getWordsByMinute, getErrorsPercent };
