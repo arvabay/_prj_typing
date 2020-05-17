@@ -78,7 +78,16 @@ This will automatically generates a new button menu in order the user to access 
   
   
 
+## Color Themes
+In order to add a color theme, add the following with your own hexa / rgb color values in the file ***config/color-themes.json***
+```
+{"color": "your-color-theme-name", "main": "#0ABDD2", "mainlight": "#8FF3FF", "maindark": "#0D7F8B", "mainreallydark": "#0D7F8B", "modalbox": "#070916", "modalborder": "rgba(10, 190, 210, 0.3)", "success": "#BAF5FC", "gradient": "#171E33"},
+```
+This will automatically generates a new button in colors menu in order the user to switch to your new color theme.
+  
+  
+
 ## Contributing
 
-This repository is more a showcase for the author than a project requiring participation. However, feel free to take and modify it as your need.  
+This repository is more a showcase for the author than a project requiring participation. However, feel free to take and modify it as you need.  
 This project is licensed under the MIT License.

@@ -14,7 +14,7 @@ import { changeColorTheme } from './modules/colorManager';
 import * as fetchers from './modules/fetchers';
 // import external libraries
 import '@grafikart/spinning-dots-element';
-
+import '../assets/favicon.ico';
 
 
 // VARIABLES
