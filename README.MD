@@ -56,13 +56,13 @@ src/javascript/modules/fetchers/my-fetcher-name.js
 ```
 This file must contains the code returning the text for training, from a specific word search. Name a constant function returning a promise representing the fetch result, and taking the word as parameter. Example :
 ```
-export const my-fetcher-name = function(word) {
+export const my-fetcher-name = async function(word) {
   return new Promise( (resolve, reject) => {  
 
     ** Code fetching text from other website **  
 
     resolve(text_fetch);
-  }
+  });
 }
 ```
 You can take as an example existing fetchers. 
@@ -75,16 +75,16 @@ to the ***index.js*** in :
 ```
 src/javascript/modules/fetchers/index.js
 ```
-This will automatically generates a new button menu in order the user to access your new fetcher. Search box for word submitting is also automatically generated.
+After rebuilding the project, this will automatically generates a new button menu in order the user to access your new fetcher. Search box for word submitting is also automatically generated.
   
   
 
 ## Color Themes
 In order to add a color theme, add the following with your own hexa / rgb color values in the file ***config/color-themes.json***
 ```
-{"color": "your-color-theme-name", "main": "#0ABDD2", "mainlight": "#8FF3FF", "maindark": "#0D7F8B", "mainreallydark": "#0D7F8B", "modalbox": "#070916", "modalborder": "rgba(10, 190, 210, 0.3)", "success": "#BAF5FC", "gradient": "#171E33"},
+{"color": "your-color-theme-name", "main": "#0ABDD2", "mainlight": "#8FF3FF", "maindark": "#0D7F8B", "mainreallydark": "#0D7F8B", "modalbox": "#070916", "modalborder": "rgba(10, 190, 210, 0.3)", "success": "#BAF5FC", "gradient": "#171E33"}
 ```
-This will automatically generates a new button in colors menu in order the user to switch to your new color theme.
+After rebuilding the project,this will automatically generates a new button in colors menu in order the user to switch to your new color theme.
   
   
 
