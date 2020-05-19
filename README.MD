@@ -34,10 +34,11 @@ npm run watch-dev
 
 ## Code documentation
 
-A complete documentation of the code can be found in :  
+A complete documentation of code can be found in :  
 ***jsdoc/index.html***
 
-Documentation is generated at each sources compilation. Generates a new documentation manually using :
+Generates a new documentation manually using :  
+(need jsdoc installed locally, see https://www.npmjs.com/package/jsdoc) :
 ```
 npm run build-doc
 ```
