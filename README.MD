@@ -9,7 +9,7 @@
 
 Clone this repo to your local machine using
 ```
-git clone https://github.com/arvabay/typing
+git clone https://github.com/lysiaan/typing
 ```
 
 Install the packages using npm
@@ -25,7 +25,7 @@ npm run build-prod
 Run ***dist/index.html*** in a web browser
 
 ### Development
-This project uses webpack for sources compilation. For dynamic compilation, use
+This project uses webpack for sources compilation. For dynamic compilation during development, use :
 ```
 npm run watch-dev
 ```
@@ -34,10 +34,10 @@ npm run watch-dev
 
 ## Code documentation
 
-A complete documentation of the code can be found at  
+A complete documentation of the code can be found in :  
 ***jsdoc/index.html***
 
-Documentation is generated at each sources compilation. Generates a new documentation manually using
+Documentation is generated at each sources compilation. Generates a new documentation manually using :
 ```
 npm run build-doc
 ```
@@ -47,13 +47,13 @@ npm run build-doc
 ## Fetchers
 
 The main purpose of **Typing** is to fetch some articles from various websites in order to training.
-To add a new fetcher, do the following :
+To add a new fetcher, do the following (assuming my-fetcher-name is the name you desire for your fetcher) :
 
-**1 - create a new file named** ***my-fetcher-name.js*** **in**  
+**1 - create a new file named** ***my-fetcher-name.js*** **in :**  
 ```
 src/javascript/modules/fetchers/my-fetcher-name.js
 ```
-The new file must contains the code returning the text for training, from a specific word search. Name a constant function returning a promise representing the fetch result, and taking the word as parameter. Example :
+This file must contains the code returning the text for training, from a specific word search. Name a constant function returning a promise representing the fetch result, and taking the word as parameter. Example :
 ```
 export const my-fetcher-name = function(word) {
   return new Promise( (resolve, reject) => {  
@@ -64,13 +64,13 @@ export const my-fetcher-name = function(word) {
   }
 }
 ```
-You can take as an example the existing fetchers. 
+You can take as an example existing fetchers. 
 
-**2 - Reference your fetcher by adding**
+**2 - Reference your fetcher by adding following line :**
 ```
 export * from './my-fetcher-name';
 ```
-to the ***index.js*** in 
+to the ***index.js*** in :
 ```
 src/javascript/modules/fetchers/index.js
 ```
