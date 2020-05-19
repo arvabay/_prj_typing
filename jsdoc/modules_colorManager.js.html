@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>modules/colorManager.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Fetcher.html">Fetcher</a><ul class='methods'><li data-type='method'><a href="Fetcher.html#fetch">fetch</a></li></ul></li><li><a href="Menu.html">Menu</a><ul class='methods'><li data-type='method'><a href="Menu.html#getBtnColorChange">getBtnColorChange</a></li><li data-type='method'><a href="Menu.html#getDivColors">getDivColors</a></li></ul></li><li><a href="TextPreviewer.html">TextPreviewer</a><ul class='methods'><li data-type='method'><a href="TextPreviewer.html#setPreviewText">setPreviewText</a></li></ul></li><li><a href="TypingMain.html">TypingMain</a><ul class='methods'><li data-type='method'><a href="TypingMain.html#redefineAnimationPosition">redefineAnimationPosition</a></li><li data-type='method'><a href="TypingMain.html#typingError">typingError</a></li><li data-type='method'><a href="TypingMain.html#typingSuccess">typingSuccess</a></li></ul></li><li><a href="TypingOverview.html">TypingOverview</a><ul class='methods'><li data-type='method'><a href="TypingOverview.html#getCurrentText">getCurrentText</a></li><li data-type='method'><a href="TypingOverview.html#manageChar">manageChar</a></li><li data-type='method'><a href="TypingOverview.html#setCurrentHTML">setCurrentHTML</a></li><li data-type='method'><a href="TypingOverview.html#setCurrentText">setCurrentText</a></li></ul></li><li><a href="TypingResult.html">TypingResult</a><ul class='methods'><li data-type='method'><a href="TypingResult.html#terminate">terminate</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-colorManager.html">colorManager</a><ul class='methods'><li data-type='method'><a href="module-colorManager.html#~changeColorTheme">changeColorTheme</a></li><li data-type='method'><a href="module-colorManager.html#~saveAndChangeColorTheme">saveAndChangeColorTheme</a></li></ul></li><li><a href="module-helpers.html">helpers</a><ul class='methods'><li data-type='method'><a href="module-helpers.html#~addClass">addClass</a></li><li data-type='method'><a href="module-helpers.html#~getErrorsPercent">getErrorsPercent</a></li><li data-type='method'><a href="module-helpers.html#~getRandomNumber">getRandomNumber</a></li><li data-type='method'><a href="module-helpers.html#~getTime">getTime</a></li><li data-type='method'><a href="module-helpers.html#~getWordsByMinute">getWordsByMinute</a></li><li data-type='method'><a href="module-helpers.html#~removeClass">removeClass</a></li></ul></li><li><a href="module-suitGenerator.html">suitGenerator</a><ul class='methods'><li data-type='method'><a href="module-suitGenerator.html#~generateNumbers">generateNumbers</a></li><li data-type='method'><a href="module-suitGenerator.html#~generateSymbols">generateSymbols</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="main.html">main</a><ul class='methods'><li data-type='method'><a href="main.html#.createCloseElm">createCloseElm</a></li><li data-type='method'><a href="main.html#.flashError">flashError</a></li><li data-type='method'><a href="main.html#.flashHide">flashHide</a></li><li data-type='method'><a href="main.html#.removeBtnsSelection">removeBtnsSelection</a></li><li data-type='method'><a href="main.html#.wordEmitted">wordEmitted</a></li></ul></li><li><a href="typing.html">typing</a><ul class='methods'><li data-type='method'><a href="typing.html#.keyPressed">keyPressed</a></li><li data-type='method'><a href="typing.html#.success">success</a></li><li data-type='method'><a href="typing.html#.terminate">terminate</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#larousse">larousse</a></li><li><a href="global.html#universalis">universalis</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">modules/colorManager.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// import configs
+import color_themes from '../../../config/color-themes.json';
+// import classes
+import { Menu } from '../classes/Menu';
+
+
+/**
+ * @module colorManager
+ * @description Manage the color themes (save, change, and find from color-themes file)
+ */
+
+const CURRENT_ICON_COLOR_OPACITY = 0.25;
+
+/**
+ * Load a color theme
+ * @returns {void}
+ * @param {Menu} menu - Instance of Menu class. Needed for coloring menu DOM icon elements
+ * @param {string} color_name - name of the color config ("color: ")
+ */
+const changeColorTheme = function(menu, color_name = null) {
+  let storage_color = color_name ?? window.localStorage.getItem('color-theme');
+  const obj = findTheme(storage_color);
+  changeCssColors(obj);
+  changeMenuStyle(menu, obj);
+}
+/**
+ * Keep in browser memory (local storage) the selected color theme name. Call the color theme load
+ * @returns {void}
+ * @param {Menu} menu - Instance of Menu class
+ * @param {string} color_name - name of the color config ("color: ")
+ */
+const saveAndChangeColorTheme = function(menu, color_name) {
+  window.localStorage.setItem('color-theme', color_name);
+  changeColorTheme(menu, color_name);
+}
+
+/**
+ * Change CSS variables for each entry in selected color theme (cf. config : color-themes.json)
+ * @private
+ * @returns {void}
+ * @param {Object} obj - Current selected color items-list (color-themes.json)
+ */
+const changeCssColors = function(obj) {
+  Object.entries(obj).forEach( (entry) => {
+    if (entry[0] === "color") { return; }
+    document.documentElement.style.setProperty('--color-'+entry[0], entry[1]);
+  });
+}
+
+/**
+ * Change appareance of buttons in colors menu selection
+ * @private
+ * @returns {void}
+ * @param {Menu} menu - Instance of Menu class
+ * @param {Object} obj - Current selected color items-list (color-themes.json)
+ */
+const changeMenuStyle = function(menu, obj) {
+  const elm_colors = menu.getDivColors();
+  const elm_btn_colorchange = menu.getBtnColorChange();
+  elm_btn_colorchange.querySelector('.circle').style.fill = obj.main;
+  const children = elm_colors.children;
+  for (let i = 0; i &lt; children.length; i++) {
+    const child = children[i];
+    child.style.opacity = child.dataset.color === obj.color ? CURRENT_ICON_COLOR_OPACITY : 1
+  }
+}
+
+/**
+ * Try to find and return a color-items-list from a given theme-name
+ * @private
+ * @returns {object}
+ * @param {string} name - Name of the color theme to find in the list
+ */
+const findTheme = function(name) {
+  const obj = name ? color_themes.list.find( obj => obj.color === name ) :
+  color_themes.list[0];
+  return obj;
+}
+
+
+// renommer en changeColorTheme et saveAndChangeColorTheme
+export {changeColorTheme, saveAndChangeColorTheme};</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Tue May 19 2020 20:55:01 GMT+0200 (heure d’été d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

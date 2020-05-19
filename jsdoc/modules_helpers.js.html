@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>modules/helpers.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Fetcher.html">Fetcher</a><ul class='methods'><li data-type='method'><a href="Fetcher.html#fetch">fetch</a></li></ul></li><li><a href="Menu.html">Menu</a><ul class='methods'><li data-type='method'><a href="Menu.html#getBtnColorChange">getBtnColorChange</a></li><li data-type='method'><a href="Menu.html#getDivColors">getDivColors</a></li></ul></li><li><a href="TextPreviewer.html">TextPreviewer</a><ul class='methods'><li data-type='method'><a href="TextPreviewer.html#setPreviewText">setPreviewText</a></li></ul></li><li><a href="TypingMain.html">TypingMain</a><ul class='methods'><li data-type='method'><a href="TypingMain.html#redefineAnimationPosition">redefineAnimationPosition</a></li><li data-type='method'><a href="TypingMain.html#typingError">typingError</a></li><li data-type='method'><a href="TypingMain.html#typingSuccess">typingSuccess</a></li></ul></li><li><a href="TypingOverview.html">TypingOverview</a><ul class='methods'><li data-type='method'><a href="TypingOverview.html#getCurrentText">getCurrentText</a></li><li data-type='method'><a href="TypingOverview.html#manageChar">manageChar</a></li><li data-type='method'><a href="TypingOverview.html#setCurrentHTML">setCurrentHTML</a></li><li data-type='method'><a href="TypingOverview.html#setCurrentText">setCurrentText</a></li></ul></li><li><a href="TypingResult.html">TypingResult</a><ul class='methods'><li data-type='method'><a href="TypingResult.html#terminate">terminate</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-colorManager.html">colorManager</a><ul class='methods'><li data-type='method'><a href="module-colorManager.html#~changeColorTheme">changeColorTheme</a></li><li data-type='method'><a href="module-colorManager.html#~saveAndChangeColorTheme">saveAndChangeColorTheme</a></li></ul></li><li><a href="module-helpers.html">helpers</a><ul class='methods'><li data-type='method'><a href="module-helpers.html#~addClass">addClass</a></li><li data-type='method'><a href="module-helpers.html#~getErrorsPercent">getErrorsPercent</a></li><li data-type='method'><a href="module-helpers.html#~getRandomNumber">getRandomNumber</a></li><li data-type='method'><a href="module-helpers.html#~getTime">getTime</a></li><li data-type='method'><a href="module-helpers.html#~getWordsByMinute">getWordsByMinute</a></li><li data-type='method'><a href="module-helpers.html#~removeClass">removeClass</a></li></ul></li><li><a href="module-suitGenerator.html">suitGenerator</a><ul class='methods'><li data-type='method'><a href="module-suitGenerator.html#~generateNumbers">generateNumbers</a></li><li data-type='method'><a href="module-suitGenerator.html#~generateSymbols">generateSymbols</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="main.html">main</a><ul class='methods'><li data-type='method'><a href="main.html#.createCloseElm">createCloseElm</a></li><li data-type='method'><a href="main.html#.flashError">flashError</a></li><li data-type='method'><a href="main.html#.flashHide">flashHide</a></li><li data-type='method'><a href="main.html#.removeBtnsSelection">removeBtnsSelection</a></li><li data-type='method'><a href="main.html#.wordEmitted">wordEmitted</a></li></ul></li><li><a href="typing.html">typing</a><ul class='methods'><li data-type='method'><a href="typing.html#.keyPressed">keyPressed</a></li><li data-type='method'><a href="typing.html#.success">success</a></li><li data-type='method'><a href="typing.html#.terminate">terminate</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#larousse">larousse</a></li><li><a href="global.html#universalis">universalis</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">modules/helpers.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+/**
+ * @module helpers
+ * @description Utilitaries functions for various deteached operations
+ */
+
+
+/**
+ * Return a random number in a given range (can be equal to the min / max given)
+ * @returns {number}
+ * @param {number} min - Range start
+ * @param {number} max - Range end
+ */
+const getRandomNumber = function(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+/**
+ * Add given class name on Element only if it doesn't already has
+ * @returns {void}
+ * @param {Element} elem - DOM Element to treat
+ * @param {string} class_name - Name of the class
+ */
+const addClass = function(elem, class_name) {
+    !elem.classList.contains(class_name) ? elem.classList.add(class_name) : '' ;
+  }
+
+/**
+ * Remove given class from Element only if it has
+ * @returns {void}
+ * @param {Element} elem - DOM Element to treat
+ * @param {string} class_name - Name of the class
+ */
+const removeClass = function(elem, class_name) {
+    elem.classList.contains(class_name) ? elem.classList.remove(class_name) : ''
+  }
+  
+/**
+ * Transform a number of seconds into a string readable by humans
+ * @returns {number}
+ * @param {number} duration - Number of seconds we need to convert into hours / minutes / seconds
+ */
+const getTime = function(duration) {
+  if (duration >= 3600) {
+    return "+ d'1 heure"
+  }
+  if (duration &lt;= 59) {
+    return duration + " sec"
+  }
+  let sec = Math.floor(duration % 60);
+  if (sec.toString().length === 1) { sec = '0'+sec }
+  return Math.floor(duration / 60) + " mn " + sec + " sec";
+}
+
+/**
+ * Returns an average number of words by minuts in function of given seconds
+ * @returns {number}
+ * @param {number} words_number 
+ * @param {number} seconds 
+ */
+const getWordsByMinute = function (words_number, seconds) {
+  return Math.floor((60 * words_number) / seconds);
+}
+
+/**
+ * Returns a percent of errors in function of an errors number in a total characters number
+ * @returns {number}
+ * @param {*} errors_number 
+ * @param {*} chars_number 
+ */
+const getErrorsPercent = function (errors_number, chars_number) {
+  return Math.round( ((100 * errors_number) / chars_number) * 10 ) / 10;
+}
+
+
+
+export { getRandomNumber, addClass, removeClass, getTime, getWordsByMinute, getErrorsPercent };</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Tue May 19 2020 20:55:01 GMT+0200 (heure d’été d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

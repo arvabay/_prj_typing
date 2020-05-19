@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>classes/TypingOverview.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Fetcher.html">Fetcher</a><ul class='methods'><li data-type='method'><a href="Fetcher.html#fetch">fetch</a></li></ul></li><li><a href="Menu.html">Menu</a><ul class='methods'><li data-type='method'><a href="Menu.html#getBtnColorChange">getBtnColorChange</a></li><li data-type='method'><a href="Menu.html#getDivColors">getDivColors</a></li></ul></li><li><a href="TextPreviewer.html">TextPreviewer</a><ul class='methods'><li data-type='method'><a href="TextPreviewer.html#setPreviewText">setPreviewText</a></li></ul></li><li><a href="TypingMain.html">TypingMain</a><ul class='methods'><li data-type='method'><a href="TypingMain.html#redefineAnimationPosition">redefineAnimationPosition</a></li><li data-type='method'><a href="TypingMain.html#typingError">typingError</a></li><li data-type='method'><a href="TypingMain.html#typingSuccess">typingSuccess</a></li></ul></li><li><a href="TypingOverview.html">TypingOverview</a><ul class='methods'><li data-type='method'><a href="TypingOverview.html#getCurrentText">getCurrentText</a></li><li data-type='method'><a href="TypingOverview.html#manageChar">manageChar</a></li><li data-type='method'><a href="TypingOverview.html#setCurrentHTML">setCurrentHTML</a></li><li data-type='method'><a href="TypingOverview.html#setCurrentText">setCurrentText</a></li></ul></li><li><a href="TypingResult.html">TypingResult</a><ul class='methods'><li data-type='method'><a href="TypingResult.html#terminate">terminate</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-colorManager.html">colorManager</a><ul class='methods'><li data-type='method'><a href="module-colorManager.html#~changeColorTheme">changeColorTheme</a></li><li data-type='method'><a href="module-colorManager.html#~saveAndChangeColorTheme">saveAndChangeColorTheme</a></li></ul></li><li><a href="module-helpers.html">helpers</a><ul class='methods'><li data-type='method'><a href="module-helpers.html#~addClass">addClass</a></li><li data-type='method'><a href="module-helpers.html#~getErrorsPercent">getErrorsPercent</a></li><li data-type='method'><a href="module-helpers.html#~getRandomNumber">getRandomNumber</a></li><li data-type='method'><a href="module-helpers.html#~getTime">getTime</a></li><li data-type='method'><a href="module-helpers.html#~getWordsByMinute">getWordsByMinute</a></li><li data-type='method'><a href="module-helpers.html#~removeClass">removeClass</a></li></ul></li><li><a href="module-suitGenerator.html">suitGenerator</a><ul class='methods'><li data-type='method'><a href="module-suitGenerator.html#~generateNumbers">generateNumbers</a></li><li data-type='method'><a href="module-suitGenerator.html#~generateSymbols">generateSymbols</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="main.html">main</a><ul class='methods'><li data-type='method'><a href="main.html#.createCloseElm">createCloseElm</a></li><li data-type='method'><a href="main.html#.flashError">flashError</a></li><li data-type='method'><a href="main.html#.flashHide">flashHide</a></li><li data-type='method'><a href="main.html#.removeBtnsSelection">removeBtnsSelection</a></li><li data-type='method'><a href="main.html#.wordEmitted">wordEmitted</a></li></ul></li><li><a href="typing.html">typing</a><ul class='methods'><li data-type='method'><a href="typing.html#.keyPressed">keyPressed</a></li><li data-type='method'><a href="typing.html#.success">success</a></li><li data-type='method'><a href="typing.html#.terminate">terminate</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#larousse">larousse</a></li><li><a href="global.html#universalis">universalis</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">classes/TypingOverview.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+/**
+ * 
+ * @classdesc Represents the graphical rendering overview of what user is typing.
+ * It contains entire text supposed to be typed. Move letter per letter from
+ * current-block to error-block or prev-block, at each key typed (letter is correctly
+ * colored in cases of success / error)
+ */
+
+class TypingOverview {
+
+/**
+ * @constructor
+ * @param {Element} elm_prev - Block containing characters already typed
+ * @param {Element} elm_curr - Block containing the entire text that's still need to be typed
+ * @param {Element} elm_error - Block containing : either empty if last character typed is correct,
+ *                                                 or current letter to type if last character typed is incorrect
+ */
+  constructor(elm_prev, elm_curr, elm_error) {
+    this.elm_prev = elm_prev;
+    this.elm_curr = elm_curr;
+    this.elm_error = elm_error;
+  }
+
+  /**
+   * Returns innerText of current-block
+   * @returns {string}
+   */
+  getCurrentText() {
+    return this.elm_curr.innerText;
+  }
+
+  /**
+   * Set Text of current-block
+   * @returns {void}
+   * @param {string} text
+   */
+  setCurrentText(text) {
+    this.elm_curr.innerText = text;
+  }
+
+  /**
+   * Set HTML of current-block. Delete last character if it's a space
+   * @returns {void}
+   * @param {string} text 
+   */
+  setCurrentHTML(text) {
+    this.elm_curr.innerHTML = text;
+    // Last character space prevention.
+    if ( this.getCurrentText().substring(text.length-1, text.length) === " " ) {
+      this.setCurrentText(text.substring(0, text.length - 1));
+    }
+  }
+
+  /**
+   * Specifies move of current letter supposed to be typed, in every cases (is the key pressed correct ? And is this the first try or did we already failed > in this last case elm-error isn't empty)
+   * @returns {void}
+   * @param {boolean} success - true: key pressed correct - false: key pressed incorrect
+   */
+  manageChar(success) {
+    // Is keyPressed correct ?
+    if (success) {
+      // Is there something in the transitionnal-error text block ?
+      this.elm_error.innerText === '' ? this.moveChar(this.elm_curr, this.elm_prev) : 
+                                        this.moveChar(this.elm_error, this.elm_prev);
+    } else {
+      this.elm_error.innerText === '' ? this.moveChar(this.elm_curr, this.elm_error) : 
+                                        '';
+    }
+  }
+
+  /**
+   * Controls move of current letter supposed to be typed : from a specified block to another.
+   * @private
+   * @returns {void}
+   * @param {Element} elm_from 
+   * @param {Element} elm_to 
+   */
+  moveChar(elm_from, elm_to) {
+    const text = elm_from.innerText;
+    let char = text.substring(0, 1);
+    // Making errors on 'space character' visibles
+    if (char === " " &amp;&amp; elm_to === this.elm_error) {
+      char = "␣";
+    }
+    if (elm_to === this.elm_prev) {
+      char = this.colorizeChar(char, elm_from);
+    }
+    elm_to.innerHTML = elm_to.innerHTML + char;
+    elm_from.innerHTML = text.substring(1, text.length);
+  }
+
+/**
+ * In the case of letter insertion in prev-block (test needed), letter is colorized with correct or incorrect color (&lt;span> with class tag added)
+ * @private
+ * @param {string} char 
+ * @param {Element} elm_from 
+ * @returns {string}
+ */
+  colorizeChar(char, elm_from) {
+    const class_name = elm_from === this.elm_curr ? "color-success" : "color-error";
+    return `&lt;span class='${class_name}'>${char}&lt;/span>`;
+  }
+
+}
+
+export default TypingOverview;</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Tue May 19 2020 20:55:01 GMT+0200 (heure d’été d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

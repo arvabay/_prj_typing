@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>typing.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Fetcher.html">Fetcher</a><ul class='methods'><li data-type='method'><a href="Fetcher.html#fetch">fetch</a></li></ul></li><li><a href="Menu.html">Menu</a><ul class='methods'><li data-type='method'><a href="Menu.html#getBtnColorChange">getBtnColorChange</a></li><li data-type='method'><a href="Menu.html#getDivColors">getDivColors</a></li></ul></li><li><a href="TextPreviewer.html">TextPreviewer</a><ul class='methods'><li data-type='method'><a href="TextPreviewer.html#setPreviewText">setPreviewText</a></li></ul></li><li><a href="TypingMain.html">TypingMain</a><ul class='methods'><li data-type='method'><a href="TypingMain.html#redefineAnimationPosition">redefineAnimationPosition</a></li><li data-type='method'><a href="TypingMain.html#typingError">typingError</a></li><li data-type='method'><a href="TypingMain.html#typingSuccess">typingSuccess</a></li></ul></li><li><a href="TypingOverview.html">TypingOverview</a><ul class='methods'><li data-type='method'><a href="TypingOverview.html#getCurrentText">getCurrentText</a></li><li data-type='method'><a href="TypingOverview.html#manageChar">manageChar</a></li><li data-type='method'><a href="TypingOverview.html#setCurrentHTML">setCurrentHTML</a></li><li data-type='method'><a href="TypingOverview.html#setCurrentText">setCurrentText</a></li></ul></li><li><a href="TypingResult.html">TypingResult</a><ul class='methods'><li data-type='method'><a href="TypingResult.html#terminate">terminate</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-colorManager.html">colorManager</a><ul class='methods'><li data-type='method'><a href="module-colorManager.html#~changeColorTheme">changeColorTheme</a></li><li data-type='method'><a href="module-colorManager.html#~saveAndChangeColorTheme">saveAndChangeColorTheme</a></li></ul></li><li><a href="module-helpers.html">helpers</a><ul class='methods'><li data-type='method'><a href="module-helpers.html#~addClass">addClass</a></li><li data-type='method'><a href="module-helpers.html#~getErrorsPercent">getErrorsPercent</a></li><li data-type='method'><a href="module-helpers.html#~getRandomNumber">getRandomNumber</a></li><li data-type='method'><a href="module-helpers.html#~getTime">getTime</a></li><li data-type='method'><a href="module-helpers.html#~getWordsByMinute">getWordsByMinute</a></li><li data-type='method'><a href="module-helpers.html#~removeClass">removeClass</a></li></ul></li><li><a href="module-suitGenerator.html">suitGenerator</a><ul class='methods'><li data-type='method'><a href="module-suitGenerator.html#~generateNumbers">generateNumbers</a></li><li data-type='method'><a href="module-suitGenerator.html#~generateSymbols">generateSymbols</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="main.html">main</a><ul class='methods'><li data-type='method'><a href="main.html#.createCloseElm">createCloseElm</a></li><li data-type='method'><a href="main.html#.flashError">flashError</a></li><li data-type='method'><a href="main.html#.flashHide">flashHide</a></li><li data-type='method'><a href="main.html#.removeBtnsSelection">removeBtnsSelection</a></li><li data-type='method'><a href="main.html#.wordEmitted">wordEmitted</a></li></ul></li><li><a href="typing.html">typing</a><ul class='methods'><li data-type='method'><a href="typing.html#.keyPressed">keyPressed</a></li><li data-type='method'><a href="typing.html#.success">success</a></li><li data-type='method'><a href="typing.html#.terminate">terminate</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#larousse">larousse</a></li><li><a href="global.html#universalis">universalis</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">typing.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// import CSS and Assets
+import '../css/main.css';
+import '../css/typing.css';
+import favicon from '../assets/favicon.ico';
+// import classes
+import Menu from './classes/Menu';
+import TypingMain from './classes/TypingMain';
+import TypingOverview from './classes/TypingOverview';
+import TypingResult from './classes/TypingResult';
+// import modules
+import { changeColorTheme } from './modules/colorManager';
+import { addClass } from './modules/helpers';
+
+/**
+ * @typedef {object} KeyEvent
+ * 
+ */
+
+
+// VARIABLES
+//=========================
+// -- VARIABLES (DOM elements)
+const elm_skip = document.querySelector('.typing__skip');
+const elm_text_to_type = document.querySelector('.typing__text');
+const elm_cursor = document.querySelector('.typing__cursor');
+const elm_typing_container = document.querySelector('.typing__container');
+const elm_textall_prev = document.querySelector('.textall__prev');
+const elm_textall_curr = document.querySelector('.textall__current');
+const elm_textall_error = document.querySelector('.textall__error');
+const elm_menu = document.querySelector('.menu');
+const elm_modalbg = document.querySelector('.modalbg');
+const elm_modalbox = document.querySelector('.modalbox');
+const elm_modalbox_btnback = document.querySelector('.modalbox__btn-back');
+const elm_modalbox_btnagain = document.querySelector('.modalbox__btn-again');
+// -- VARIABLES (others)
+let terminated = false;
+let nb_chars_valid = 0;
+const TEXT_TO_TYPE_LGTH = 80;
+const CURSOR_COLOR = {
+  true: 'var(--color-main)',
+  false: 'var(--color-error)'
+}
+
+
+// FUNCTIONS USED FOR  THIS PAGE (namespace typing)
+//=========================
+/**
+ * Page "typing.html" entry point
+ * @namespace
+ */
+const typing = {
+
+  // ONLY FOR DEV - Debug key pressed
+  debugPress: function (e, char_to_type) {
+    console.log('char typed : ' + String.fromCharCode(e.keyCode) + ', code : ' + e.keyCode);
+    console.log('char to type : ' + char_to_type + ', code : ' + char_to_type.charCodeAt() );
+  },
+
+  /**
+   * Terminate the typing session. Count errors number, and launch session report (modal-box)
+   * @returns {void}
+   */
+  terminate: function() {
+    terminated = true;
+    const errors_number = document.querySelectorAll('.color-error').length;
+    typing_result.terminate(errors_number);
+    // Modal box end-report apparition
+    elm_modalbg.style.zIndex = "51";
+    addClass(elm_modalbg, "opacity-100");
+    elm_modalbox.style.zIndex = "52";
+    addClass(elm_modalbox, "box-appear");
+  },
+
+  /**
+   * Proceed after success key typed : inform typers, hide skip button, and check if session is over
+   * Can be called if : 1- correct Key pressed OR 2- character is skipped by skip button click
+   * @returns {void}
+   */
+  success: function() {
+    typing_overview.manageChar(true);
+    elm_skip.style.display = "none";
+    elm_skip.classList.remove('skip-appear');
+    const next_text = text.substring(nb_chars_valid + 1, nb_chars_valid + TEXT_TO_TYPE_LGTH);
+    typing_main.typingSuccess(next_text);
+    nb_chars_valid++;
+    // Is typing over ?
+    if (nb_chars_valid >= text.length) {
+      this.terminate();
+    }
+  },
+
+  /**
+   * When key pressed on Keyboard, get the current character and check if it
+   * corresponds to key pressed. Calls appropriate operations in cases of Success / Error
+   * @returns {void}
+   * @param {KeyEvent} e 
+   */
+  keyPressed: function(e) {
+    e.preventDefault();
+    e = e || window.event;
+    let char_to_type = text.substring(nb_chars_valid, nb_chars_valid + 1);
+    // Transforming non-breaking space into breaking space
+    char_to_type = char_to_type.charCodeAt() === 160 ? " " : char_to_type;
+    // this.debugPress(e, char_to_type);
+    // KEY PRESSED CORRECT  
+    if(char_to_type === String.fromCharCode(e.keyCode)) {
+      this.success();
+    // KEY PRESSED INCORRECT
+    } else {
+      typing_overview.manageChar(false);
+      typing_main.typingError(char_to_type);
+      elm_skip.style.display = "inline-block";
+      elm_skip.classList.add('skip-appear');
+    }
+    // Is typing over ?
+    if (nb_chars_valid >= text.length &amp;&amp; !terminated) {
+      this.terminate();
+    }
+  }
+}
+
+
+
+
+// SCRIPT BEGINNING
+//=========================
+var link = document.querySelector("link[rel*='icon']");
+link.href = favicon;
+// Text to type fetch
+let text = window.localStorage.getItem('text_to_type');
+// basics 'hard to type' chars replacement
+const regexp = /(«|»|–|—|œ|’)/g;
+text = text.replace(regexp, ()=>{return '-'});
+// DOM typing mechanisms initializations
+const typing_main = new TypingMain( elm_text_to_type, elm_cursor, elm_typing_container, CURSOR_COLOR );
+const typing_overview = new TypingOverview( elm_textall_prev, elm_textall_curr, elm_textall_error );
+// DOM Menu generation
+const menu = new Menu(elm_menu, true);
+// Skip button event - if untypable character encountered
+elm_skip.addEventListener('click', function() { typing.success() });
+// colorManager Module call
+changeColorTheme(menu);
+// End report modal box buttons events
+elm_modalbox_btnback.addEventListener('click', function() {
+  window.location = "./index.html";
+});
+elm_modalbox_btnagain.addEventListener('click', function() {
+  window.location.reload();
+});
+// Setting text to typing mechanism
+typing_overview.setCurrentHTML(text);
+// We need a clean text (without html tags)
+text = typing_overview.getCurrentText();
+// End typing Results statistics in modal-box 
+const typing_result = new TypingResult(elm_modalbox, text);
+typing_main.typingSuccess(text);
+// Keyboard key pressed Listening
+document.onkeypress = function(e) { 
+  if (elm_textall_curr.innerText.length > 0 || elm_textall_error.innerText.length > 0) {
+    typing.keyPressed(e);
+  }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Tue May 19 2020 20:55:01 GMT+0200 (heure d’été d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

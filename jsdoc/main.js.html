@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>main.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Fetcher.html">Fetcher</a><ul class='methods'><li data-type='method'><a href="Fetcher.html#fetch">fetch</a></li></ul></li><li><a href="Menu.html">Menu</a><ul class='methods'><li data-type='method'><a href="Menu.html#getBtnColorChange">getBtnColorChange</a></li><li data-type='method'><a href="Menu.html#getDivColors">getDivColors</a></li></ul></li><li><a href="TextPreviewer.html">TextPreviewer</a><ul class='methods'><li data-type='method'><a href="TextPreviewer.html#setPreviewText">setPreviewText</a></li></ul></li><li><a href="TypingMain.html">TypingMain</a><ul class='methods'><li data-type='method'><a href="TypingMain.html#redefineAnimationPosition">redefineAnimationPosition</a></li><li data-type='method'><a href="TypingMain.html#typingError">typingError</a></li><li data-type='method'><a href="TypingMain.html#typingSuccess">typingSuccess</a></li></ul></li><li><a href="TypingOverview.html">TypingOverview</a><ul class='methods'><li data-type='method'><a href="TypingOverview.html#getCurrentText">getCurrentText</a></li><li data-type='method'><a href="TypingOverview.html#manageChar">manageChar</a></li><li data-type='method'><a href="TypingOverview.html#setCurrentHTML">setCurrentHTML</a></li><li data-type='method'><a href="TypingOverview.html#setCurrentText">setCurrentText</a></li></ul></li><li><a href="TypingResult.html">TypingResult</a><ul class='methods'><li data-type='method'><a href="TypingResult.html#terminate">terminate</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-colorManager.html">colorManager</a><ul class='methods'><li data-type='method'><a href="module-colorManager.html#~changeColorTheme">changeColorTheme</a></li><li data-type='method'><a href="module-colorManager.html#~saveAndChangeColorTheme">saveAndChangeColorTheme</a></li></ul></li><li><a href="module-helpers.html">helpers</a><ul class='methods'><li data-type='method'><a href="module-helpers.html#~addClass">addClass</a></li><li data-type='method'><a href="module-helpers.html#~getErrorsPercent">getErrorsPercent</a></li><li data-type='method'><a href="module-helpers.html#~getRandomNumber">getRandomNumber</a></li><li data-type='method'><a href="module-helpers.html#~getTime">getTime</a></li><li data-type='method'><a href="module-helpers.html#~getWordsByMinute">getWordsByMinute</a></li><li data-type='method'><a href="module-helpers.html#~removeClass">removeClass</a></li></ul></li><li><a href="module-suitGenerator.html">suitGenerator</a><ul class='methods'><li data-type='method'><a href="module-suitGenerator.html#~generateNumbers">generateNumbers</a></li><li data-type='method'><a href="module-suitGenerator.html#~generateSymbols">generateSymbols</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="main.html">main</a><ul class='methods'><li data-type='method'><a href="main.html#.createCloseElm">createCloseElm</a></li><li data-type='method'><a href="main.html#.flashError">flashError</a></li><li data-type='method'><a href="main.html#.flashHide">flashHide</a></li><li data-type='method'><a href="main.html#.removeBtnsSelection">removeBtnsSelection</a></li><li data-type='method'><a href="main.html#.wordEmitted">wordEmitted</a></li></ul></li><li><a href="typing.html">typing</a><ul class='methods'><li data-type='method'><a href="typing.html#.keyPressed">keyPressed</a></li><li data-type='method'><a href="typing.html#.success">success</a></li><li data-type='method'><a href="typing.html#.terminate">terminate</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#larousse">larousse</a></li><li><a href="global.html#universalis">universalis</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">main.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// import CSS, assets and configs
+import '../css/main.css';
+import '../css/index.css';
+import '../css/resets/resetButton.css';
+import svg_keyboard from '../assets/keyboard.svg';
+import favicon from '../assets/favicon.ico';
+import { TERMS_NB_IN_SUIT } from '../../config/constants.json';
+// import classes
+import Fetcher from './classes/Fetcher';
+import TextPreviewer from './classes/TextPreviewer';
+import Menu from './classes/Menu';
+// import modules
+import { removeClass, addClass } from './modules/helpers';
+import { changeColorTheme } from './modules/colorManager';
+import * as fetchers from './modules/fetchers';
+// import external libraries
+import '@grafikart/spinning-dots-element';
+
+
+
+// VARIABLES
+//=========================
+// -- VARIABLES (DOM elements)
+const elm_buttons = document.querySelector('.buttons');
+const form__submitbtn = document.querySelector('.textrequest__container button')
+const form__input = document.querySelector('.textrequest__container input')
+const form = document.querySelector('.textrequest');
+const elm_text = document.querySelector('.text__textandbutton');
+const elm_flash = document.querySelector('.flash');
+const elm_menu = document.querySelector('.menu');
+const elm_img_home = document.querySelector('.imghome');
+const elm_img_home_svg = document.querySelector('.imghome-svg');
+// -- VARIABLES (others)
+let close = null; // The button to close the actual displayed flash box
+const fetcher = new Fetcher(); // his job is to get the text to display for starting a session
+const previewer = new TextPreviewer(elm_text); // his job is to display start button, scrollbar and text given by Fetcher
+let site = null; // The current site/fetcher we want to use for research (changed after main-buttons clicks)
+
+
+
+// FUNCTIONS USED FOR  THIS PAGE (namespace main)
+//=========================
+/**
+ * Page "main.html" entry point
+ * @namespace
+ */
+const main = {
+  
+  /**
+   * Remove the specified selection-class on all main buttons,
+   * excepted the button passed in parameter
+   * @returns {void}
+   * @param {Element} elm_btn - The element we want it stay unmodified
+   */
+  removeBtnsSelection: function(elm_btn) {
+    for (let i = 0; i &lt; btns.length; i++) {
+      if (btns[i] !== elm_btn) {
+        removeClass(btns[i], 'buttons__button-selected')
+      }
+    }
+  },
+  
+  /**
+   * Online text fetch - Get the string typed in input form, show and hide spinner loader,
+   * get result of search (Fetcher class job) from specified site name and pass it to TextPreviewer
+   * @returns {void}
+   */
+  wordEmitted: function() {
+    if (!site) {
+      this.flashError("Aucun site n'est actuellement sélectionné pour la recherche");
+    }
+    this.flashHide();
+    const word = form__input.value;
+    previewer.setPreviewText();
+    // Loader displaying ( Grafikart Library : &lt;spinning-dots>&lt;/spinning-dots> )
+    const elm_loader = document.createElement('spinning-dots');
+    elm_loader.classList.add('spinningdots');
+    elm_text.appendChild(elm_loader);
+    fetcher.fetch(site, word).then( (res) => {
+      setTimeout( ()=> { 
+        previewer.setPreviewText();
+        // Text showing animation Start
+        elm_text.style.opacity = '0';
+        elm_text.classList.add('text-fadein');
+        previewer.setPreviewText(res);
+        // Text showing animation End
+        setTimeout( () => {
+          elm_text.style.opacity = '1';
+          elm_text.classList.remove('text-fadein');
+        }, 300)
+      }, 400);
+    }).catch( (e) => {
+      this.flashError(e);
+    }).finally( () => {
+      // Loader hiding
+      elm_loader.classList.add('spinningdots-fadeout');
+    });
+  },
+  
+  /**
+   * Create the DOM element in charge to close flash messages box
+   * @returns {void}
+   */
+  createCloseElm: function() {
+    close = document.createElement("span");
+    close.classList.add("flash-close");
+    close.innerHTML = "&amp;nbsp;&amp;nbsp;X&amp;nbsp;&amp;nbsp;";
+    close.addEventListener('click', function() {
+      this.flashHide();
+    })
+  },
+  
+  /**
+   * Display a flash box showing the string passed in parameter + a close button
+   * @returns {void}
+   * @param {string} message 
+   */
+  flashError: function(message) {
+    if ( close === null ) { this.createCloseElm(); }
+    elm_flash.innerHTML = message;
+    elm_flash.appendChild(close);
+    elm_flash.style.display = "inline";    
+  },
+  
+  /**
+   * Close the actual displayed flash box
+   * @returns {void}
+   */
+  flashHide: function() {
+    elm_flash.style.display = "none";
+  }
+}
+
+
+
+// SCRIPT BEGINNING
+//=========================
+var link = document.querySelector("link[rel*='icon']");
+link.href = favicon;
+// DOM Menu generation
+const menu = new Menu(elm_menu, false);
+// colorManager Module call
+changeColorTheme(menu);
+// Home image (with content, not only path, for convenient CSS manipulations)
+elm_img_home_svg.innerHTML = svg_keyboard;
+// Launch a research
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  main.wordEmitted();
+});
+// Prevent menus collision
+const menu_width = elm_menu.offsetWidth.toString();
+elm_buttons.style.width = `calc(100% - ${menu_width}px - 60px)`;
+// Main-buttons generation (some are by default -directly in html template-,
+// others depend on fetchers added in /modules/fetchers/)
+Object.entries(fetchers).forEach(([name, exported]) => {
+  const button = document.createElement('button');
+  button.classList.add('buttons__button');
+  button.dataset.type = 'online';
+  button.dataset.site = name;
+  button.innerText = name;
+  elm_buttons.appendChild(button);
+});
+const btns = document.querySelectorAll('.buttons__button');
+
+// Text generation after Main-buttons clicks
+btns.forEach(btn => btn.addEventListener('click', (e) => {
+  // Resetting displayed elements
+  e.preventDefault();
+  main.flashHide();
+  elm_img_home.style.display = 'none';
+  previewer.setPreviewText();
+  // Stylinzing main-buttons (selection and unselection)
+  const btn = event.target || event.srcElement;
+  addClass(btn, 'buttons__button-selected');
+  main.removeBtnsSelection(btn);
+  // Input display for Online text fetch
+  if (btn.dataset.type === 'online') {
+    site = btn.dataset.site;
+    form__submitbtn.style.display = 'inline';
+    form__input.style.display = 'inline';
+    form__input.focus();
+    form__input.select();
+    window.localStorage.removeItem('terms_number');
+  // Locale generation (suit of characters)
+  } else {
+    form__submitbtn.style.display = 'none';
+    form__input.style.display = 'none';
+    window.localStorage.setItem('terms_number', TERMS_NB_IN_SUIT);
+    fetcher.fetch(btn.dataset.type).then( (res) => {
+      previewer.setPreviewText(res);
+    });
+  }
+}));
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Tue May 19 2020 20:55:01 GMT+0200 (heure d’été d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

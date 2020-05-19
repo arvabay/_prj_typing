@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>classes/TypingMain.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Fetcher.html">Fetcher</a><ul class='methods'><li data-type='method'><a href="Fetcher.html#fetch">fetch</a></li></ul></li><li><a href="Menu.html">Menu</a><ul class='methods'><li data-type='method'><a href="Menu.html#getBtnColorChange">getBtnColorChange</a></li><li data-type='method'><a href="Menu.html#getDivColors">getDivColors</a></li></ul></li><li><a href="TextPreviewer.html">TextPreviewer</a><ul class='methods'><li data-type='method'><a href="TextPreviewer.html#setPreviewText">setPreviewText</a></li></ul></li><li><a href="TypingMain.html">TypingMain</a><ul class='methods'><li data-type='method'><a href="TypingMain.html#redefineAnimationPosition">redefineAnimationPosition</a></li><li data-type='method'><a href="TypingMain.html#typingError">typingError</a></li><li data-type='method'><a href="TypingMain.html#typingSuccess">typingSuccess</a></li></ul></li><li><a href="TypingOverview.html">TypingOverview</a><ul class='methods'><li data-type='method'><a href="TypingOverview.html#getCurrentText">getCurrentText</a></li><li data-type='method'><a href="TypingOverview.html#manageChar">manageChar</a></li><li data-type='method'><a href="TypingOverview.html#setCurrentHTML">setCurrentHTML</a></li><li data-type='method'><a href="TypingOverview.html#setCurrentText">setCurrentText</a></li></ul></li><li><a href="TypingResult.html">TypingResult</a><ul class='methods'><li data-type='method'><a href="TypingResult.html#terminate">terminate</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-colorManager.html">colorManager</a><ul class='methods'><li data-type='method'><a href="module-colorManager.html#~changeColorTheme">changeColorTheme</a></li><li data-type='method'><a href="module-colorManager.html#~saveAndChangeColorTheme">saveAndChangeColorTheme</a></li></ul></li><li><a href="module-helpers.html">helpers</a><ul class='methods'><li data-type='method'><a href="module-helpers.html#~addClass">addClass</a></li><li data-type='method'><a href="module-helpers.html#~getErrorsPercent">getErrorsPercent</a></li><li data-type='method'><a href="module-helpers.html#~getRandomNumber">getRandomNumber</a></li><li data-type='method'><a href="module-helpers.html#~getTime">getTime</a></li><li data-type='method'><a href="module-helpers.html#~getWordsByMinute">getWordsByMinute</a></li><li data-type='method'><a href="module-helpers.html#~removeClass">removeClass</a></li></ul></li><li><a href="module-suitGenerator.html">suitGenerator</a><ul class='methods'><li data-type='method'><a href="module-suitGenerator.html#~generateNumbers">generateNumbers</a></li><li data-type='method'><a href="module-suitGenerator.html#~generateSymbols">generateSymbols</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="main.html">main</a><ul class='methods'><li data-type='method'><a href="main.html#.createCloseElm">createCloseElm</a></li><li data-type='method'><a href="main.html#.flashError">flashError</a></li><li data-type='method'><a href="main.html#.flashHide">flashHide</a></li><li data-type='method'><a href="main.html#.removeBtnsSelection">removeBtnsSelection</a></li><li data-type='method'><a href="main.html#.wordEmitted">wordEmitted</a></li></ul></li><li><a href="typing.html">typing</a><ul class='methods'><li data-type='method'><a href="typing.html#.keyPressed">keyPressed</a></li><li data-type='method'><a href="typing.html#.success">success</a></li><li data-type='method'><a href="typing.html#.terminate">terminate</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#larousse">larousse</a></li><li><a href="global.html#universalis">universalis</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">classes/TypingMain.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { getRandomNumber } from '../modules/helpers'
+
+/**
+ * @classdesc Represents the main graphical rendering of what users are typing.
+ * Take DOMElements parameters in order to update them at each key pressed 
+ */
+class TypingMain {
+
+/**
+ * @constructor
+ * @param {Element} elm_text_to_type - block containing a piece of the text supposed to be typed soon
+ * @param {Element} elm_cursor - block containing the current key to be typed
+ * @param {Element} elm_typing_container - block containing both cursor and text-to-type
+ * @param {Object} CURSOR_COLOR - object containing the two colors to be applied (true: correct / false: error)
+ */
+  constructor(elm_text_to_type, elm_cursor, elm_typing_container, CURSOR_COLOR) {
+    this.elm_text_to_type = elm_text_to_type;
+    this.elm_cursor = elm_cursor;
+    this.elm_typing_container = elm_typing_container;
+    this.CURSOR_COLOR = CURSOR_COLOR;
+    this.first_success = true;
+    // x / y position for starting sprites animations
+    this.redefineAnimationPosition();
+    window.onresize = () => { this.redefineAnimationPosition(); };
+  }
+
+
+
+  /**
+   * Update position of sprites animations start 
+   */
+  redefineAnimationPosition() {
+    this.animation_position = { x: this.elm_cursor.getBoundingClientRect().left,
+                                y: this.elm_cursor.getBoundingClientRect().top + this.elm_cursor.offsetHeight / 2};
+  }
+
+  /**
+   * Creates a div representing a fragment of Letter being pulverized at much speed
+   * @private
+   * @returns {void}
+   */
+  createSprite() {
+    this.elm_sprite = document.createElement('div');
+    const nb = Math.round(getRandomNumber(1,3));
+    if (nb === 1) {
+      this.elm_sprite.classList.add('success-fade-out');
+    } else if (nb === 2) {
+      this.elm_sprite.classList.add('success-fade-out-slow');
+    } else {
+      this.elm_sprite.classList.add('success-fade-out-quick');
+    }
+    this.elm_sprite.style.width = getRandomNumber(4, 16) + 'px';
+    this.elm_sprite.style.height = getRandomNumber(4, 16) + 'px';
+    this.elm_sprite.style.borderRadius = getRandomNumber(4, 12) + 'px';
+    this.elm_sprite.style.background = 'var(--color-main)';
+    this.elm_sprite.style.position = 'absolute';
+    this.elm_sprite.style.zIndex = '51';
+    const spread = getRandomNumber(4, 17) + 'px';
+    this.elm_sprite.style.boxShadow = `0px 0px 30px ${spread} var(--color-main)`;
+    this.elm_sprite.style.top = (this.animation_position.y) + 'px';
+    this.elm_sprite.style.left = (this.animation_position.x) + 'px';
+    document.body.appendChild(this.elm_sprite);
+    this.animate_sprite(this.elm_sprite, 150, getRandomNumber(0, 1.4), getRandomNumber(0.1, 0.35));
+  }
+
+  /**
+   * Provides the pulverization animation of the given element (sprite)
+   * @private
+   * @returns {void}
+   * @param {Element} elm - Element to animate
+   * @param {number} max_cycles - Number of movements operated on the element
+   * @param {number} x_increase - Number of pixels on x-axis substracted at each cycle to element position
+   * @param {number} y_increase - Number of pixels on y-axis added at each cycle to element position
+   */
+  animate_sprite(elm, max_cycles, x_increase, y_increase) {
+    let cycles = 0;
+    let x = 0;
+    let y = 0;
+    const y_direction = Math.random() >= 0.5 ? '-' : '';
+    const interval = setInterval( ()=>{
+      elm.style.transform = `translate(-${x}px, ${y_direction}${y}px)`;
+      x += x_increase;
+      y += y_increase;
+      cycles++;
+      if (cycles >= max_cycles) {
+        clearInterval(interval);
+        elm.parentNode.removeChild(elm);
+      }
+    }, 2);
+  }
+
+
+/**
+ * Set Graphical rendering for next character to type after a correct key pressed.
+ * @return {Void}
+ * @param {string} text - First character of this variable is put in cursor element, rest of characters are put in text-to-type element
+ */
+  typingSuccess(text) {
+    if (this.first_success) {
+      this.first_success = false;
+    } else {
+      for (let index = 0; index &lt; getRandomNumber(1, 3); index++) {
+        this.createSprite();
+      }
+    }
+    let char_to_type = text.substring(0,1); 
+    this.elm_cursor.style.background = this.CURSOR_COLOR.true;
+    this.elm_typing_container.style.border = "4px solid var(--color-main)";
+    this.elm_text_to_type.style.color = "var(--color-main)";
+    // Security, we don't want to block mechanism in case of unexpected character
+    if (isNaN(char_to_type.charCodeAt(0)) || char_to_type.charCodeAt(0) === 160 ) {
+      // console.warn('nan encountered');
+      char_to_type = ' ';
+    }
+    // Need to keep the right dimension of div cursor. Let's fill it with an invisible char
+    if (char_to_type === ' ') {
+      this.elm_cursor.style.color = this.CURSOR_COLOR.true
+      this.elm_cursor.innerText = '~';
+    }
+    else {
+      this.elm_cursor.style.color= "white";
+      this.elm_cursor.innerText = char_to_type;
+    }
+    this.elm_text_to_type.innerHTML = text.substring(1, text.length);
+  }
+
+/**
+ * Set Graphical rendering after an incorrect key pressed.
+ * @return {void}
+ * @param {string} char_to_type - The character supposed to by typed. Need to know if it's a space, to correctly color the character in cursor
+ */
+  typingError(char_to_type) {
+    this.elm_cursor.style.background = this.CURSOR_COLOR.false;
+    this.elm_typing_container.style.border = "4px solid var(--color-error)";
+    this.elm_text_to_type.style.color = "var(--color-error)";
+    // Need to render our fake character (~) invisible again (because background color changed)
+    if (char_to_type === ' ') {
+      this.elm_cursor.style.color = this.CURSOR_COLOR.false;
+    }
+  }
+
+}
+
+export default TypingMain;</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Tue May 19 2020 20:55:01 GMT+0200 (heure d’été d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
