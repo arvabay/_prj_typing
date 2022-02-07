@@ -9,7 +9,7 @@
 
 Clone this repo to your local machine using
 ```
-git clone https://github.com/lysiaan/typing
+git clone https://github.com/arvabay/typing
 ```
 
 Install the packages using npm
